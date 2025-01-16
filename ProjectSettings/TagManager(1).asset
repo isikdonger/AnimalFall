@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - TopSpike
+  - KillCoin
+  - BeamPlatform
+  - BreakablePlatform
+  - FreezePlatform
+  - MovingPlatformLeft
+  - MovingPlatformRight
+  - StandartPlatform
+  - OptionsMenu
+  - GoldCoin
+  - SilverCoin
+  - MainMenu
+  - PauseBtn
+  - PauseMenu
+  - Language
+  - LanguageMenu
+  - Sound
+  - Back
+  - StartGame
+  - OptionsBtn
+  - CharacterSelect
+  - CreditsBtn
+  - BronzeCoin
+  - BronzCoin
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
