@@ -9,9 +9,10 @@ public class PlatfromSpawner : MonoBehaviour
     public GameObject freezePlatform;
     public GameObject beamPlatform;
     public GameObject[] movingPlatforms;
+    public static bool isPaused = false;
     public static float platform_Spawn_Timer = 75f;
     public static float current_Platform_Spawn_Timer = 0f;
-    private float min_X = -2.335f, max_X = 2.335f;
+    private float min_X = -1.7f, max_X = 1.7f;
 
     void Update()
     {
@@ -29,7 +30,7 @@ public class PlatfromSpawner : MonoBehaviour
                 platform_Spawn_Timer -= 0.035f;
             }
         }
-        else
+        else if (!isPaused)
         {
             current_Platform_Spawn_Timer += 0.035f;
         }

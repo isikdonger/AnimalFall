@@ -25,6 +25,7 @@ public class PauseScript : MonoBehaviour
             }
             PauseMenu.SetActive(true);
             Time.timeScale = 0;
+            PlatfromSpawner.isPaused = true;
         }
         else
         {
@@ -34,6 +35,7 @@ public class PauseScript : MonoBehaviour
             }
             PauseMenu.SetActive(false);
             Time.timeScale = 1;
+            PlatfromSpawner.isPaused = false;
         }
     }
     public void BacktoGame()

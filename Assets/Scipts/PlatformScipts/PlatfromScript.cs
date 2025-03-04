@@ -11,7 +11,7 @@ public class PlatfromScript : MonoBehaviour
     void Awake()
     {
         Owl = GameObject.FindGameObjectWithTag("Player");
-        animFreeze = Owl.GetComponent<Animator>();
+        animFreeze = GameObject.Find("FreezeController").GetComponent<Animator>();
         if (is_Breakable)
         {
             BreakablePltatform = GameObject.FindGameObjectWithTag("BreakablePlatform");
@@ -22,10 +22,6 @@ public class PlatfromScript : MonoBehaviour
     {
         move_Speed += 0.00005f;
         Move();
-        if (collisionCount == 0)
-        {
-            Dissolve();
-        }
     }
     void Move()
     {
@@ -37,84 +33,11 @@ public class PlatfromScript : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    void Dissolve()
-    {
-        if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("OwlFreeze5"))
-        {
-            Invoke("Dissolve5to4", 0.5f);
-        }
-        if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("OwlFreeze4"))
-        {
-            Invoke("Dissolve4to3", 0.5f);
-        }
-        if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("OwlFreeze3"))
-        {
-            Invoke("Dissolve3to2", 0.5f);
-        }
-        if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("OwlFreeze2"))
-        {
-            Invoke("Dissolve2to1", 0.5f);
-        }
-        if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("OwlFreeze1"))
-        {
-            Invoke("Dissolve1to0", 0.5f);
-        }
-    }
-    void BreakableDeactivate()
-    {
-
-        Invoke("DeactivateGameObject", 0.35f);
-    }
-    void DeactivateGameObject()
-    {
-        gameObject.SetActive(false);
-        //SoundManager.instance.BreakSound();
-    }
-    void Freeze0to1()
-    {
-        animFreeze.Play("OwlFreeze1");
-    }
-    void Freeze1to2()
-    {
-        animFreeze.Play("OwlFreeze2");
-    }
-    void Freeze2to3()
-    {
-        animFreeze.Play("OwlFreeze3");
-    }
-    void Freeze3to4()
-    {
-        animFreeze.Play("OwlFreeze4");
-    }
-    void Freeze4to5()
-    {
-        animFreeze.Play("OwlFreeze5");
-    }
-    void Dissolve5to4()
-    {
-        animFreeze.Play("OwlFreeze4");
-    }
-    void Dissolve4to3()
-    {
-        animFreeze.Play("OwlFreeze3");
-    }
-    void Dissolve3to2()
-    {
-        animFreeze.Play("OwlFreeze2");
-    }
-    void Dissolve2to1()
-    {
-        animFreeze.Play("OwlFreeze1");
-    }
-    void Dissolve1to0()
-    {
-        animFreeze.Play("OwlFreeze0");
-    }
     void OnTriggerEnter2D(Collider2D target)
     {
-        if(target.gameObject.tag== "Player")
+        if(target.gameObject.tag == "Player")
         {
-            if(is_Beam)
+            if (is_Beam)
             {
                 target.transform.position = new Vector2(target.GetComponent<Transform>().position.x, 3f);
             }
@@ -137,6 +60,8 @@ public class PlatfromScript : MonoBehaviour
             if (is_Freeze)
             {
                 //SoundManager.instance.LandSound();
+                Debug.Log("Freeze");
+                animFreeze.SetTrigger("Freeze");
             }
             if (movingPlatfromLeft)
             {
@@ -155,34 +80,15 @@ public class PlatfromScript : MonoBehaviour
     void OnCollisionExit2D(Collision2D collision)
     {
         collisionCount--;
+        if (is_Freeze)
+        {
+            animFreeze.speed = -1;
+        }
     }
     void OnCollisionStay2D(Collision2D target)
     {
         if (target.gameObject.tag == "Player")
         {
-            if (is_Freeze)
-            {
-                if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("OwlFreeze0"))
-                {
-                    Invoke("Freeze0to1", 0.5f);
-                }
-                if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("OwlFreeze1"))
-                {
-                    Invoke("Freeze1to2", 0.5f);
-                }
-                if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("OwlFreeze2"))
-                {
-                    Invoke("Freeze2to3", 0.5f);
-                }
-                if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("OwlFreeze3"))
-                {
-                    Invoke("Freeze3to4", 0.5f);
-                }
-                if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("OwlFreeze4"))
-                {
-                    Invoke("Freeze4to5", 0.5f);
-                }
-            }
             if (movingPlatfromRight)
             {
                 if (ScoreTextScript.scoreValue <= 10)

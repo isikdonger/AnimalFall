@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class PlayerBounds : MonoBehaviour
 {
-    private Animator anim;
-    private float min_X = -2.645f, max_X = 2.645f, min_Y = -4.83f;
+    private float min_X = -2.15f, max_X = 2.15f, min_Y = -7f;
     private bool out_of_Bounds;
-    void Awake()
-    {
-        anim = GetComponent<Animator>();
-    }
     void Update()
     {
         CheckBounds();
@@ -45,16 +40,11 @@ public class PlayerBounds : MonoBehaviour
             Destroy(gameObject);
             GameManager.instance.RestartGame();
         }
-        if (target.tag ==  "KillCoin")
+        else if (target.tag ==  "KillCoin")
         {
             //SoundManager.instance.DeathSound();
             Destroy(gameObject);
             GameManager.instance.RestartGame();
         }
-    }
-    void Freeze()
-    {
-        GameManager.instance.RestartGame();
-        //SoundManager.instance.FreezeClip();
     }
 }

@@ -22,7 +22,6 @@ public class CustomizePanelScript : MonoBehaviour
         AchievmentsMenu = GameObject.Find("AchievmentsMenu");
         CreditsMenu = GameObject.Find("CreditsMenu");
         ObjectivesMenu = GameObject.Find("ObjectivesMenu");
-        //PlayerSpawn.selectedSprite = GameObject.Find("OwlBtn").transform.GetChild(0).GetComponent<Image>().sprite;
     }
 
     private void Start()
@@ -51,7 +50,7 @@ public class CustomizePanelScript : MonoBehaviour
 
     public void ChangeCharacter(GameObject Button)
     {
-        //PlayerSpawn.selectedSprite = Button.transform.GetChild(0).GetComponent<Image>().sprite;
+        PlayerPrefs.SetInt("characterIndex", Button.transform.GetSiblingIndex());
         CustomizePanel.SetActive(false);
         StartBtn.SetActive(true);
     }

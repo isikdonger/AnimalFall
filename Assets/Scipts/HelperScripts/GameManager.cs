@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
         PlayerMovement.gravityScale = 0.1f;
         PlayerMovement.speedmultiplyer = 0f;
         ScoreTextScript.scoreValue = 0;
+        Die.animator.ResetTrigger("Freeze");
+        Die.animator.ResetTrigger("Unfreeze");
     }
     void RestartAfterTime()
     {
