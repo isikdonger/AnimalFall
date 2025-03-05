@@ -12,9 +12,19 @@ public class PlatfromSpawner : MonoBehaviour
     public static bool isPaused = false;
     public static float platform_Spawn_Timer = 75f;
     public static float current_Platform_Spawn_Timer = 0f;
-    private float min_X = -1.7f, max_X = 1.7f;
+    private float cameraHeight, cameraWidth;
+    private float min_X, max_X;
 
-    void Update()
+    private void Awake()
+    {
+        Bounds prefabBound = GetComponent<Renderer>().bounds;
+        cameraHeight = Camera.main.orthographicSize * 2;
+        cameraWidth = cameraHeight * Camera.main.aspect;
+        min_X = Camera.main.transform.position.x - cameraWidth / 2 + prefabBound.size.x / 2;
+        max_X = Camera.main.transform.position.x + cameraWidth / 2 - prefabBound.size.x / 2;
+    }
+
+    void FixedUpdate()
     {
         PlatformSpawnTimer();
         SpawnPlatforms();

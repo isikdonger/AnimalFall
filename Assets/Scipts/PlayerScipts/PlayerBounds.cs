@@ -4,8 +4,19 @@ using UnityEngine;
 
 public class PlayerBounds : MonoBehaviour
 {
-    private float min_X = -2.15f, max_X = 2.15f, min_Y = -7f;
+    private float cameraHeight, cameraWidth;
+    private float min_X, max_X, min_Y;
     private bool out_of_Bounds;
+
+    private void Awake()
+    {
+        Bounds prefabBound = GetComponent<Renderer>().bounds;
+        cameraHeight = Camera.main.orthographicSize * 2;
+        cameraWidth = cameraHeight * Camera.main.aspect;
+        min_X = Camera.main.transform.position.x - cameraWidth / 2 + prefabBound.size.x / 2;
+        max_X = Camera.main.transform.position.x + cameraWidth / 2 - prefabBound.size.x / 2;
+        min_Y = Camera.main.transform.position.y - cameraHeight / 2 - 0.5f;
+    }
     void Update()
     {
         CheckBounds();

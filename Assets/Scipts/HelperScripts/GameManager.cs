@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class GameManager : MonoBehaviour
     }
     public void RestartGame()
     {
-        Invoke("RestartAfterTime", 1f);
+        Invoke("RestartAfterTime", 0.5f);
         BGScroll.scroll_Speed = 1f;
         CoinSpawner.coin_Spawn_Time = 3f;
         CoinSpawner.current_Coin_Spawn_Timer = 0f;
@@ -30,6 +31,6 @@ public class GameManager : MonoBehaviour
     }
     void RestartAfterTime()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("AnimalFall");
+        SceneManager.LoadScene("AnimalFall", LoadSceneMode.Single);
     }
 }
