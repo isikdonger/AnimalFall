@@ -17,14 +17,14 @@ public class PlatfromSpawner : MonoBehaviour
 
     private void Awake()
     {
-        Bounds prefabBound = GetComponent<Renderer>().bounds;
+        Bounds prefabBound = platformPrefab.GetComponent<Renderer>().bounds;
         cameraHeight = Camera.main.orthographicSize * 2;
         cameraWidth = cameraHeight * Camera.main.aspect;
         min_X = Camera.main.transform.position.x - cameraWidth / 2 + prefabBound.size.x / 2;
         max_X = Camera.main.transform.position.x + cameraWidth / 2 - prefabBound.size.x / 2;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         PlatformSpawnTimer();
         SpawnPlatforms();

@@ -28,12 +28,16 @@ public class PlatfromScript : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D target)
     {
-        if(target.gameObject.tag == "Player")
+        if (target.gameObject.tag == "Player")
         {
             if (is_Beam)
             {
                 target.transform.position = new Vector2(target.GetComponent<Transform>().position.x, 3f);
             }
+        }
+        else if (target.gameObject.tag == "TopSpike")
+        {
+            Destroy(gameObject);
         }
     }
     void OnCollisionEnter2D(Collision2D target)
@@ -50,11 +54,6 @@ public class PlatfromScript : MonoBehaviour
                 Debug.Log("Freeze");
                 animFreeze.SetTrigger("Freeze");
             }
-        }
-        else if (target.gameObject.tag == "TopSpike")
-        {
-            Destroy(gameObject);
-            GameManager.instance.RestartGame();
         }
     }
     void OnCollisionExit2D(Collision2D collision)

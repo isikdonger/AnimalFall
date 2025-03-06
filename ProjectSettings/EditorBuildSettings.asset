@@ -6,9 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/AnimalFall.unity
-    guid: 1cd92f2ec9ed5ee4cbfc660618d98dce
-  - enabled: 1
     path: Assets/Scenes/AnimalFall UI.unity
     guid: fde6eceef86f95c48a78f168f2b239d9
+  - enabled: 1
+    path: Assets/Scenes/AnimalFall.unity
+    guid: c997dfe01c176884fb3ce194bbbe07f4
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
