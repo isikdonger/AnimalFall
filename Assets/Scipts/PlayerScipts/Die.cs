@@ -15,12 +15,11 @@ public class Die : MonoBehaviour
         animator.ResetTrigger("Freeze");
         animator.ResetTrigger("Unfreeze");
     }
-    public void Freeze()
+    public void Froze()
     {
-        GameManager.instance.RestartGame();
+        GameManager.instance.Death();
         Destroy(GameObject.FindGameObjectWithTag("Player"));
     }
-
     public void Unfreeze()
     {
         if(animator.speed == -1)

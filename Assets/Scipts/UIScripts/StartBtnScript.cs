@@ -7,7 +7,6 @@ public class StartBtnScript : MonoBehaviour
 {
     public void StartGame()
     {
-        Time.timeScale = 1;
         SceneManager.LoadScene("AnimalFall", LoadSceneMode.Single);
     }
 }

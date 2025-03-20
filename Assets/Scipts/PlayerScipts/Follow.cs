@@ -7,6 +7,9 @@ public class Follow : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.position = transform.parent.GetChild(1).position;
+        if (transform.parent.childCount == 2)
+        {
+            transform.position = transform.parent.GetChild(1).position;
+        }
     }
 }

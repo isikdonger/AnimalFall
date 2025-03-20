@@ -39,7 +39,7 @@ public class PlayerBounds : MonoBehaviour
             {
                 out_of_Bounds = true;
                 //SoundManager.instance.DeathSound();
-                GameManager.instance.RestartGame();
+                GameManager.instance.Death();
             }
         }
     }
@@ -49,13 +49,27 @@ public class PlayerBounds : MonoBehaviour
         {
             //SoundManager.instance.DeathSound();
             Destroy(gameObject);
-            GameManager.instance.RestartGame();
+            GameManager.instance.Death();
+            if (CustomizePanelScript.characterNames[PlayerPrefs.GetInt("characterIndex")].Equals("moon"))
+            {
+                GooglePlayServicesManager.IsAchievementUnlocked("That's Rough Buddy", isUnlocked =>
+                {
+                    if (!isUnlocked)
+                    {
+                        LocalBackupManager.IncrementSpikeDeathCount();
+                        if (LocalBackupManager.GetBreakCount() == 5)
+                        {
+                            GooglePlayServicesManager.UnlockAchievementCoroutine("That's Rough Buddy");
+                        }
+                    }
+                });
+            }
         }
         else if (target.tag ==  "KillCoin")
         {
             //SoundManager.instance.DeathSound();
             Destroy(gameObject);
-            GameManager.instance.RestartGame();
+            GameManager.instance.Death();
         }
     }
 }

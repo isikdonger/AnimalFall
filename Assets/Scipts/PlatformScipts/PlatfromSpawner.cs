@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class PlatfromSpawner : MonoBehaviour
 {
+    public ScoreTextScript scoreTextScript;
     public GameObject platformPrefab;
     public GameObject breakablePlatform;
     public GameObject freezePlatform;
     public GameObject beamPlatform;
     public GameObject[] movingPlatforms;
     public static bool isPaused = false;
-    public static float platform_Spawn_Timer = 75f;
+    public static float platform_Spawn_Timer = 7.5f;
     public static float current_Platform_Spawn_Timer = 0f;
     private float cameraHeight, cameraWidth;
     private float min_X, max_X;
 
-    private void Awake()
+    private void Start()
     {
         Bounds prefabBound = platformPrefab.GetComponent<Renderer>().bounds;
         cameraHeight = Camera.main.orthographicSize * 2;
@@ -24,7 +25,7 @@ public class PlatfromSpawner : MonoBehaviour
         max_X = Camera.main.transform.position.x + cameraWidth / 2 - prefabBound.size.x / 2;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         PlatformSpawnTimer();
         SpawnPlatforms();
@@ -52,22 +53,20 @@ public class PlatfromSpawner : MonoBehaviour
             Vector3 temp = transform.position;
             temp.x = Random.Range(min_X, max_X);
             GameObject newPlatform = null;
+            scoreTextScript.AddScore();
             if (ScoreTextScript.scoreValue <= 5)
             {
                 newPlatform = Instantiate(platformPrefab, temp, Quaternion.identity);
-                ScoreTextScript.scoreValue += 1;
             }
             else if (ScoreTextScript.scoreValue > 5 && ScoreTextScript.scoreValue <= 10)
             {
                 if (Random.Range(0, 2) > 0)
                 {
                     newPlatform = Instantiate(platformPrefab, temp, Quaternion.identity);
-                    ScoreTextScript.scoreValue += 1;
                 }
                 else
                 {
                     newPlatform = Instantiate(movingPlatforms[Random.Range(0, movingPlatforms.Length)], temp, Quaternion.identity);
-                    ScoreTextScript.scoreValue += 1;
                 }
             }
             else if (ScoreTextScript.scoreValue > 10 && ScoreTextScript.scoreValue <= 16)
@@ -75,17 +74,14 @@ public class PlatfromSpawner : MonoBehaviour
                 if (Random.Range(0, 3) > 1)
                 {
                     newPlatform = Instantiate(platformPrefab, temp, Quaternion.identity);
-                    ScoreTextScript.scoreValue += 1;
                 }
                 else if (Random.Range(0, 3) > 0)
                 {
                     newPlatform = Instantiate(movingPlatforms[Random.Range(0, movingPlatforms.Length)], temp, Quaternion.identity);
-                    ScoreTextScript.scoreValue += 1;
                 }
                 else
                 {
                     newPlatform = Instantiate(breakablePlatform, temp, Quaternion.identity);
-                    ScoreTextScript.scoreValue += 1;
                 }
             }
             else if (ScoreTextScript.scoreValue > 16 && ScoreTextScript.scoreValue <= 23)
@@ -93,22 +89,18 @@ public class PlatfromSpawner : MonoBehaviour
                 if (Random.Range(0, 4) > 2)
                 {
                     newPlatform = Instantiate(platformPrefab, temp, Quaternion.identity);
-                    ScoreTextScript.scoreValue += 1;
                 }
                 else if (Random.Range(0, 4) > 1)
                 {
                     newPlatform = Instantiate(movingPlatforms[Random.Range(0, movingPlatforms.Length)], temp, Quaternion.identity);
-                    ScoreTextScript.scoreValue += 1;
                 }
                 else if (Random.Range(0, 4) > 0)
                 {
                     newPlatform = Instantiate(breakablePlatform, temp, Quaternion.identity);
-                    ScoreTextScript.scoreValue += 1;
                 }
                 else
                 {
                     newPlatform = Instantiate(freezePlatform, temp, Quaternion.identity);
-                    ScoreTextScript.scoreValue += 1;
                 }
             }
             else if (ScoreTextScript.scoreValue > 23)
@@ -116,27 +108,22 @@ public class PlatfromSpawner : MonoBehaviour
                 if (Random.Range(0, 5) > 3)
                 {
                     newPlatform = Instantiate(platformPrefab, temp, Quaternion.identity);
-                    ScoreTextScript.scoreValue += 1;
                 }
                 else if (Random.Range(0, 5) > 2)
                 {
                     newPlatform = Instantiate(movingPlatforms[Random.Range(0, movingPlatforms.Length)], temp, Quaternion.identity);
-                    ScoreTextScript.scoreValue += 1;
                 }
                 else if (Random.Range(0, 5) > 1)
                 {
                     newPlatform = Instantiate(breakablePlatform, temp, Quaternion.identity);
-                    ScoreTextScript.scoreValue += 1;
                 }
                 else if (Random.Range(0, 5) > 0)
                 {
                     newPlatform = Instantiate(freezePlatform, temp, Quaternion.identity);
-                    ScoreTextScript.scoreValue += 1;
                 }
                 else
                 {
                     newPlatform = Instantiate(beamPlatform, temp, Quaternion.identity);
-                    ScoreTextScript.scoreValue += 1;
                 }
             }
             if (newPlatform)

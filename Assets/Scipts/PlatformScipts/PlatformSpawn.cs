@@ -13,10 +13,7 @@ public class PlatformSpawn : MonoBehaviour
 
     public void SpawnPlatform()
     {
-        Vector2 temp = transform.position;
-        temp.x = 0f;
-        temp.x = 0f;
         GameObject platform = null;
-        platform = Instantiate(standartplatform, temp, Quaternion.identity);
+        platform = Instantiate(standartplatform, transform.position, Quaternion.identity);
     }
 }

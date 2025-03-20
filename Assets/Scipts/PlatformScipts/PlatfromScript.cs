@@ -51,8 +51,14 @@ public class PlatfromScript : MonoBehaviour
             }
             else if (is_Freeze)
             {
-                Debug.Log("Freeze");
-                animFreeze.SetTrigger("Freeze");
+                if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                {
+                    animFreeze.SetTrigger("Freeze");
+                }
+                else
+                {
+                    animFreeze.speed = 1;
+                }
             }
         }
     }
@@ -104,6 +110,28 @@ public class PlatfromScript : MonoBehaviour
                 {
                     target.gameObject.GetComponent<PlayerMovement>().PlatformMove(-1.5f);
                 }
+            }
+        }
+    }
+
+    public void Break()
+    {
+        if (is_Breakable)
+        {
+            Destroy(gameObject);
+            if (CustomizePanelScript.characterNames[PlayerPrefs.GetInt("characterIndex")].Equals("narwhal"))
+            {
+                GooglePlayServicesManager.IsAchievementUnlocked("Narwhal Blast", isUnlocked =>
+                {
+                    if (!isUnlocked)
+                    {
+                        LocalBackupManager.IncrementBreakCount();
+                        if (LocalBackupManager.GetBreakCount() == 10)
+                        {
+                            GooglePlayServicesManager.UnlockAchievementCoroutine("Narwhal Blast");
+                        }
+                    }
+                });
             }
         }
     }

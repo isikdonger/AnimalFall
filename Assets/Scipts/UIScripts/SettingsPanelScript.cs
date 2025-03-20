@@ -36,9 +36,9 @@ public class SettingsPanelScript : MonoBehaviour
         MusicPanel = GameObject.Find("MusicSetting");
         MusicOnBtn = MusicPanel.transform.Find("OnBtn").gameObject;
         MusicOffBtn = MusicPanel.transform.Find("OffBtn").gameObject;
-        LanguageMenu = GameObject.Find("LanguageMenu");
         CreditsBtn = GameObject.Find("CreditsBtn");
         FeedbackBtn = GameObject.Find("FeedbackBtn");
+        LanguageMenu = GameObject.Find("LanguageMenu");
     }
 
     private void Start()

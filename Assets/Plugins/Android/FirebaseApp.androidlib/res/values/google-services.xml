@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id">
+  <string name="gcm_defaultSenderId" translatable="false">580825207428</string>
+  <string name="google_storage_bucket" translatable="false">animalfall-664db.firebasestorage.app</string>
+  <string name="project_id" translatable="false">animalfall-664db</string>
+  <string name="google_api_key" translatable="false">AIzaSyBId_wWUEEEokypSGvHsQhgw3KLYAyUKWo</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBId_wWUEEEokypSGvHsQhgw3KLYAyUKWo</string>
+  <string name="google_app_id" translatable="false">1:580825207428:android:f3a93ade57c1e12f2b28d1</string>
+</resources>

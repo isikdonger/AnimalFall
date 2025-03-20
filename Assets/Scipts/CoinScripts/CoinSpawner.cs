@@ -10,18 +10,19 @@ public class CoinSpawner : MonoBehaviour
     private GameObject oldbCoin, oldsCoin, oldgCoin, oldkCoin;
     void FixedUpdate()
     {
+        if (ScoreTextScript.scoreValue > 8)
+        {
+            coin_Spawn_Time -= 0.0005f;
+            Debug.Log(current_Coin_Spawn_Timer);
+            CoinSpawnTimer();
+        }
+    }
+    void Update()
+    {
         oldbCoin = GameObject.Find("coin bronze(Clone)");
         oldsCoin = GameObject.Find("silver coin(Clone)");
         oldgCoin = GameObject.Find("gold coin(Clone)");
         oldkCoin = GameObject.Find("kill coin(Clone)");
-    }
-    void Update()
-    {
-        if (ScoreTextScript.scoreValue > 8)
-        {
-            coin_Spawn_Time -= 0.0005f;
-            CoinSpawnTimer();
-        }
     }
     void CoinSpawnTimer()
     {
@@ -41,9 +42,11 @@ public class CoinSpawner : MonoBehaviour
         temp.x = Random.Range(min_X, max_X);
         temp.y = Random.Range(min_Y, max_Y);
         GameObject newCoin = null;
-        if (ScoreTextScript.scoreValue >= 8 && ScoreTextScript.scoreValue < 15)
+        Debug.Log("Spawn");
+        if (ScoreTextScript.scoreValue < 15)
         {
             newCoin = Instantiate(bronzeCoin, temp, Quaternion.identity);
+            Debug.Log(newCoin);
             Destroy(oldbCoin, 10f);
         }
         else if (ScoreTextScript.scoreValue >= 15 && ScoreTextScript.scoreValue < 22)

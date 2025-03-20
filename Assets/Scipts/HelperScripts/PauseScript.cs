@@ -46,6 +46,7 @@ public class PauseScript : MonoBehaviour
         }
         PauseMenu.SetActive(false);
         Time.timeScale = 1;
+        PlatfromSpawner.isPaused = false;
     }
     public void BacktoMenu()
     {

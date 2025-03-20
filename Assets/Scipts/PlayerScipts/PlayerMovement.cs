@@ -55,11 +55,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetTouch(i).position.x > ScreenWidth / 2)
             {
-                myBody.velocity = new Vector2(MoveSpeed, myBody.velocity.y);
+                myBody.linearVelocity = new Vector2(MoveSpeed, myBody.linearVelocity.y);
             }
             if (Input.GetTouch(i).position.x < ScreenWidth / 2)
             {
-                myBody.velocity = new Vector2(-MoveSpeed, myBody.velocity.y);
+                myBody.linearVelocity = new Vector2(-MoveSpeed, myBody.linearVelocity.y);
             }
             ++i;
         }
@@ -69,15 +69,15 @@ public class PlayerMovement : MonoBehaviour
         MoveSpeed = newMoveSpeed * 10;
         if (Input.GetAxisRaw("Horizontal") > 0f)
         {
-            myBody.velocity = new Vector2(MoveSpeed, myBody.velocity.y);
+            myBody.linearVelocity = new Vector2(MoveSpeed, myBody.linearVelocity.y);
         }
         if (Input.GetAxisRaw("Horizontal") < 0f)
         {
-            myBody.velocity = new Vector2(-MoveSpeed, myBody.velocity.y);
+            myBody.linearVelocity = new Vector2(-MoveSpeed, myBody.linearVelocity.y);
         }
     }
     public void PlatformMove(float x)
     {
-        myBody.velocity = new Vector2(x, myBody.velocity.y);
+        myBody.linearVelocity = new Vector2(x, myBody.linearVelocity.y);
     }
 }
