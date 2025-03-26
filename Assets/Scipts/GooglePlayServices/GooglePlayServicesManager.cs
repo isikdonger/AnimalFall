@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using UnityEngine.SocialPlatforms;
@@ -10,49 +10,68 @@ using Firebase.Firestore;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.Linq;
+using UnityEditor;
+using NUnit.Framework;
 
 public static class GooglePlayServicesManager
 {
     private static bool isInitialized = false;
+    private static TaskCompletionSource<bool> initializationTaskSource;
 
     /// <summary>
     /// Initialize Google Play Services. Call this once in the first scene.
     /// </summary>
-    public static void Initialize()
+    public static async Task<bool> Initialize()
     {
-        if (isInitialized) return; // Prevent re-initialization
+        if (isInitialized)
+        {
+            return true;
+        }
 
-        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-        .RequestIdToken() // Request ID token for Firebase Authentication
-        .EnableSavedGames()  // Optional, if you want cloud saves
-        .Build();
+        initializationTaskSource = new TaskCompletionSource<bool>();
 
-        PlayGamesPlatform.InitializeInstance(config);
-        PlayGamesPlatform.DebugLogEnabled = true;  // Enable debugging (remove in production)
-        PlayGamesPlatform.Activate();
+        try
+        {
+            // Start sign-in process
+            var signInTask = SignIn();
 
-        SignIn();
-        isInitialized = true;
+            // Wait for sign-in to complete
+            bool success = await signInTask;
+
+            isInitialized = success;
+            initializationTaskSource.TrySetResult(success);
+            return success;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Google Play initialization failed: {ex}");
+            initializationTaskSource.TrySetException(ex);
+            isInitialized = false;
+            return false;
+        }
     }
 
-    /// <summary>
-    /// Sign in to Google Play Games.
-    /// </summary>
-    private static void SignIn()
+    public static async Task<bool> SignIn()
     {
-        Social.localUser.Authenticate((bool success) =>
+        var tcs = new TaskCompletionSource<bool>();
+
+        Social.localUser.Authenticate(success => 
         {
             if (success)
             {
                 Debug.Log("Google Play Games sign-in successful.");
-                string idToken = PlayGamesPlatform.Instance.GetIdToken();
-                FirestoreManager.AuthenticateWithFirebase(idToken);
+                tcs.TrySetResult(true);
             }
             else
             {
                 Debug.LogError("Google Play Games sign-in failed.");
+                tcs.TrySetResult(false);
             }
         });
+
+        return await tcs.Task;
     }
 
     /// <summary>
@@ -78,11 +97,13 @@ public static class GooglePlayServicesManager
         if (Social.localUser.authenticated)
         {
             PlayGamesPlatform.Instance.ShowLeaderboardUI();
+            GameObject.Find("Tap to Start").GetComponent<Text>().text = "Showing leaderboard...";
+            Debug.Log("Showing leaderboard...");
         }
         else
         {
             Debug.LogWarning("User is not authenticated! Cannot show leaderboard.");
-            GameObject.Find("Tap to Start").GetComponent<Text>().text = "Sign in to view achievements";
+            GameObject.Find("Tap to Start").GetComponent<Text>().text = "Sign in to view leaderboard";
         }
     }
 
@@ -139,7 +160,6 @@ public static class GooglePlayServicesManager
         return await tcs.Task; // Wait for the result and return it
     }
 
-
     /// <summary>
     /// Show the achievements UI.
     /// </summary>
@@ -148,6 +168,7 @@ public static class GooglePlayServicesManager
         if (Social.localUser.authenticated)
         {
             PlayGamesPlatform.Instance.ShowAchievementsUI();
+            Debug.Log("Showing achievements...");
         }
         else
         {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AccountMenuScript : MonoBehaviour
 {
@@ -29,20 +30,27 @@ public class AccountMenuScript : MonoBehaviour
 
     public void Open_CloseAccountMenu()
     {
-        if (AccountMenu.activeSelf == false)
+        if (Social.localUser.authenticated)
         {
-            StartBtn.SetActive(false);
-            AccountMenu.SetActive(true);
-            CustomizePanel.SetActive(false);
-            SettingsPanel.SetActive(false);
-            AchievmentsMenu.SetActive(false);
-            CreditsMenu.SetActive(false);
-            ObjectivesMenu.SetActive(false);
+            if (AccountMenu.activeSelf == false)
+            {
+                StartBtn.SetActive(false);
+                AccountMenu.SetActive(true);
+                CustomizePanel.SetActive(false);
+                SettingsPanel.SetActive(false);
+                AchievmentsMenu.SetActive(false);
+                CreditsMenu.SetActive(false);
+                ObjectivesMenu.SetActive(false);
+            }
+            else
+            {
+                AccountMenu.SetActive(false);
+                StartBtn.SetActive(true);
+            }
         }
         else
         {
-            AccountMenu.SetActive(false);
-            StartBtn.SetActive(true);
+            GameObject.Find("Tap to Start").GetComponent<Text>().text = "Sign in to view achievements";
         }
     }
 }

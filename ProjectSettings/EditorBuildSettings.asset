@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Loading Scene.unity
+    guid: ce4c1af179680a14bbdbdd3a67a7b319
+  - enabled: 1
     path: Assets/Scenes/AnimalFall UI.unity
     guid: fde6eceef86f95c48a78f168f2b239d9
   - enabled: 1

@@ -1,0 +1,16 @@
+{
+    "name": "GooglePlayGamesRef",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ae849be55d655c44d9e0585b07674176"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,14 +1,22 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Firestore;
+using GooglePlayGames;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public static class FirestoreManager
 {
     private static FirebaseFirestore _firestore;
+    private static FirebaseAuth _auth;
     private static string _userId;  // Google Play User ID
     private static string _encryptionKey;  // Derived from User ID
 
@@ -21,6 +29,7 @@ public static class FirestoreManager
         if (status == DependencyStatus.Available)
         {
             _firestore = FirebaseFirestore.DefaultInstance;
+            _auth = FirebaseAuth.DefaultInstance;
             Debug.Log("Firebase initialized successfully.");
         }
         else
@@ -30,24 +39,48 @@ public static class FirestoreManager
     }
 
     /// <summary>
-    /// Authenticate with Firebase using Google Play Games ID token.
+    /// Authenticate with Firebase using Google Play Games.
     /// </summary>
-    public static async void AuthenticateWithFirebase(string idToken)
+    public static Task<FirebaseUser> AuthenticateFirebase()
     {
-        FirebaseAuth auth = FirebaseAuth.DefaultInstance;
-        Credential credential = GoogleAuthProvider.GetCredential(idToken, null);
+        var tcs = new TaskCompletionSource<FirebaseUser>();
 
-        try
-        {
-            await auth.SignInWithCredentialAsync(credential);
-            _userId = auth.CurrentUser.UserId;
-            _encryptionKey = GenerateEncryptionKey(_userId);  // Generate the encryption key
-            Debug.Log("Firebase authentication successful. User ID: " + _userId);
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError("Firebase authentication failed: " + ex.Message);
-        }
+        // Request auth code using callback
+        PlayGamesPlatform.Instance.RequestServerSideAccess(
+            /* forceRefreshToken= */ false,
+            async authCode =>
+            {
+                if (string.IsNullOrEmpty(authCode))
+                {
+                    Debug.LogError("Failed to retrieve auth code.");
+                    tcs.SetException(new Exception("Failed to get auth code."));
+                    return;
+                }
+
+                Debug.Log("Auth Code Received: " + authCode);
+
+                try
+                {
+                    // Convert auth code to Firebase credential
+                    Credential credential = PlayGamesAuthProvider.GetCredential(authCode);
+
+                    // Sign in to Firebase asynchronously
+                    FirebaseUser newUser = await _auth.SignInWithCredentialAsync(credential);
+                    Debug.Log($"Firebase Sign-In Successful! User: {newUser.DisplayName}");
+
+                    _encryptionKey = GenerateEncryptionKey(newUser.UserId);
+
+                    tcs.SetResult(newUser);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Firebase Sign-In Failed: {e.Message}");
+                    tcs.SetException(e);
+                }
+            }
+        );
+
+        return tcs.Task;
     }
 
     /// <summary>
@@ -55,9 +88,10 @@ public static class FirestoreManager
     /// </summary>
     private static string GenerateEncryptionKey(string userId)
     {
-        using (var deriveBytes = new Rfc2898DeriveBytes(userId, 16, 10000))
+        byte[] salt = Encoding.UTF8.GetBytes(userId); // Use user ID as salt
+        using (var deriveBytes = new Rfc2898DeriveBytes(userId, salt, 100000)) // Increase iteration count
         {
-            return Convert.ToBase64String(deriveBytes.GetBytes(32));
+            return Convert.ToBase64String(deriveBytes.GetBytes(32)); // 256-bit key
         }
     }
 
@@ -85,37 +119,42 @@ public static class FirestoreManager
             return;
         }
 
-        DocumentReference docRef = _firestore.Collection("game_progress").Document(_userId);
-        DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
-
-        if (snapshot.Exists)
+        try
         {
-            // Load progress from Firestore
-            string encryptedData = snapshot.GetValue<string>("data");
-            string jsonData = SecureDataManager.Decrypt(encryptedData, _encryptionKey);
-            GameProgress cloudProgress = JsonUtility.FromJson<GameProgress>(jsonData);
+            DocumentReference docRef = _firestore.Collection("game_progress").Document(_userId);
+            DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
 
-            Debug.Log("Loaded progress from Firestore.");
-
-            // Merge cloud and local progress (higher high score, total coins sum)
-            GameProgress localProgress = LocalBackupManager.LoadProgress();
-            GameProgress mergedProgress = new GameProgress
+            if (snapshot.Exists)
             {
-                highScore = Mathf.Max(localProgress.highScore, cloudProgress.highScore),
-                coinSpent = localProgress.coinSpent + cloudProgress.coinSpent
-            };
+                string encryptedData = snapshot.GetValue<string>("data");
+                string jsonData = SecureDataManager.Decrypt(encryptedData, _encryptionKey);
+                GameProgress cloudProgress = JsonUtility.FromJson<GameProgress>(jsonData);
 
-            LocalBackupManager.SaveProgress(mergedProgress);  // Save merged data locally
-            await SaveProgressToCloud(JsonUtility.ToJson(mergedProgress));  // Save merged data to Firestore
-        }
-        else
-        {
-            Debug.Log("No cloud save found. Uploading local progress.");
-            string localJson = JsonUtility.ToJson(LocalBackupManager.LoadProgress());
-            if (!string.IsNullOrEmpty(localJson))
-            {
-                await SaveProgressToCloud(localJson);  // Upload local progress if it exists
+                Debug.Log("Loaded progress from Firestore.");
+
+                GameProgress localProgress = LocalBackupManager.LoadProgress();
+                GameProgress mergedProgress = new GameProgress
+                {
+                    highScore = Mathf.Max(localProgress.highScore, cloudProgress.highScore),
+                    coinSpent = localProgress.coinSpent + cloudProgress.coinSpent
+                };
+
+                LocalBackupManager.SaveProgress(mergedProgress);  // Save merged data locally
+                await SaveProgressToCloud(JsonUtility.ToJson(mergedProgress));  // Save merged data to Firestore
             }
+            else
+            {
+                Debug.Log("No cloud save found. Uploading local progress.");
+                string localJson = JsonUtility.ToJson(LocalBackupManager.LoadProgress());
+                if (!string.IsNullOrEmpty(localJson))
+                {
+                    await SaveProgressToCloud(localJson);  // Upload local progress if it exists
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error syncing with Firestore: " + ex.Message);
         }
     }
 
@@ -126,20 +165,23 @@ public static class FirestoreManager
     {
         if (_firestore == null || string.IsNullOrEmpty(_userId)) return;
 
-        string encryptedData = SecureDataManager.Encrypt(jsonData, _encryptionKey);
-        DocumentReference docRef = _firestore.Collection("game_progress").Document(_userId);
-        await docRef.SetAsync(new { data = encryptedData });
+        try
+        {
+            string encryptedData = SecureDataManager.Encrypt(jsonData, _encryptionKey);
+            DocumentReference docRef = _firestore.Collection("game_progress").Document(_userId);
+            await docRef.SetAsync(new { data = encryptedData });
 
-        Debug.Log("Game progress synced with Firestore.");
+            Debug.Log("Game progress synced with Firestore.");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error saving progress to Firestore: " + ex.Message);
+        }
     }
 
     /// <summary>
     /// Retrieves a specific field value from any document in any Firestore collection.
     /// </summary>
-    /// <param name="collectionId">The Firestore collection name.</param>
-    /// <param name="documentId">The Firestore document ID.</param>
-    /// <param name="fieldName">The name of the field to retrieve.</param>
-    /// <returns>The value of the field, or default(T) if the field does not exist.</returns>
     public static async Task<T> GetFieldValue<T>(string collectionId, string documentId, string fieldName)
     {
         if (_firestore == null)
@@ -148,16 +190,24 @@ public static class FirestoreManager
             return default;
         }
 
-        DocumentReference docRef = _firestore.Collection(collectionId).Document(documentId);
-        DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+        try
+        {
+            DocumentReference docRef = _firestore.Collection(collectionId).Document(documentId);
+            DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
 
-        if (snapshot.Exists && snapshot.ContainsField(fieldName))
-        {
-            return snapshot.GetValue<T>(fieldName);
+            if (snapshot.Exists && snapshot.ContainsField(fieldName))
+            {
+                return snapshot.GetValue<T>(fieldName);
+            }
+            else
+            {
+                Debug.LogWarning($"Field '{fieldName}' does not exist in document '{documentId}' in collection '{collectionId}'.");
+                return default;
+            }
         }
-        else
+        catch (Exception ex)
         {
-            Debug.LogWarning($"Field '{fieldName}' does not exist in document '{documentId}' in collection '{collectionId}'.");
+            Debug.LogError($"Error retrieving field '{fieldName}' from Firestore: {ex.Message}");
             return default;
         }
     }

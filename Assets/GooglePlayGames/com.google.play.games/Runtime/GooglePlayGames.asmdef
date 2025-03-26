@@ -1,5 +1,9 @@
 {
     "name": "Google.Play.Games",
+    "references": [
+        "UnityEngine",
+        "UnityEngine.CoreModule"
+    ],
     "includePlatforms": [
         "Android",
         "Editor"

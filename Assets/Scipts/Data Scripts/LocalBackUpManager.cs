@@ -46,6 +46,12 @@ public static class LocalBackupManager
     /// </summary>
     public static void SaveProgress(GameProgress progress)
     {
+        if (progress == null)
+        {
+            Debug.LogError("Progress data is null.");
+            return;
+        }
+
         string encryptionKey = FirestoreManager.GetEncryptionKey();
         if (string.IsNullOrEmpty(encryptionKey))
         {

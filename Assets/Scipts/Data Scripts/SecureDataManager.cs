@@ -17,11 +17,18 @@ public static class SecureDataManager
             return;
         }
 
-        string encryptedData = Encrypt(data, encryptionKey);
-        string hash = ComputeSHA256(encryptedData); // Compute SHA-256 hash
+        try
+        {
+            string encryptedData = Encrypt(data, encryptionKey);
+            string hash = ComputeSHA256(encryptedData); // Compute SHA-256 hash
 
-        string filePath = Application.persistentDataPath + "/" + filename;
-        File.WriteAllText(filePath, encryptedData + "\n" + hash);
+            string filePath = Path.Combine(Application.persistentDataPath, filename);
+            File.WriteAllText(filePath, encryptedData + "\n" + hash);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error saving encrypted data: " + ex.Message);
+        }
     }
 
     /// <summary>
@@ -35,24 +42,32 @@ public static class SecureDataManager
             return null;
         }
 
-        string filePath = Application.persistentDataPath + "/" + filename;
+        string filePath = Path.Combine(Application.persistentDataPath, filename);
         if (!File.Exists(filePath)) return null;
 
-        string[] lines = File.ReadAllLines(filePath);
-        if (lines.Length < 2) return null; // Invalid file format
-
-        string encryptedData = lines[0];
-        string storedHash = lines[1];
-
-        // Verify integrity
-        string computedHash = ComputeSHA256(encryptedData);
-        if (storedHash != computedHash)
+        try
         {
-            Debug.LogWarning("Data integrity check failed! The file might be corrupted.");
+            string[] lines = File.ReadAllLines(filePath);
+            if (lines.Length < 2) return null; // Invalid file format
+
+            string encryptedData = lines[0];
+            string storedHash = lines[1];
+
+            // Verify integrity
+            string computedHash = ComputeSHA256(encryptedData);
+            if (storedHash != computedHash)
+            {
+                Debug.LogWarning("Data integrity check failed! The file might be corrupted.");
+                return null;
+            }
+
+            return Decrypt(encryptedData, encryptionKey);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error loading encrypted data: " + ex.Message);
             return null;
         }
-
-        return Decrypt(encryptedData, encryptionKey);
     }
 
     /// <summary>
@@ -64,15 +79,22 @@ public static class SecureDataManager
         using (Aes aes = Aes.Create())
         {
             aes.Key = keyBytes;
-            aes.IV = new byte[16]; // Using a zero IV (consider a random IV per session for more security)
+            aes.GenerateIV(); // Generate a random IV for each encryption
 
             using (var encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
             using (var memoryStream = new MemoryStream())
-            using (var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
             {
-                byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
-                cryptoStream.Write(plainBytes, 0, plainBytes.Length);
-                cryptoStream.FlushFinalBlock();
+                // Write the IV first
+                memoryStream.Write(aes.IV, 0, aes.IV.Length);
+
+                // Encrypt the data
+                using (var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
+                {
+                    byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
+                    cryptoStream.Write(plainBytes, 0, plainBytes.Length);
+                    cryptoStream.FlushFinalBlock();
+                }
+
                 return Convert.ToBase64String(memoryStream.ToArray());
             }
         }
@@ -84,13 +106,19 @@ public static class SecureDataManager
     public static string Decrypt(string encryptedText, string encryptionKey)
     {
         byte[] keyBytes = Encoding.UTF8.GetBytes(encryptionKey);
+        byte[] encryptedBytes = Convert.FromBase64String(encryptedText);
+
         using (Aes aes = Aes.Create())
         {
             aes.Key = keyBytes;
-            aes.IV = new byte[16];
+
+            // Extract the IV from the beginning of the encrypted data
+            byte[] iv = new byte[16];
+            Array.Copy(encryptedBytes, 0, iv, 0, iv.Length);
+            aes.IV = iv;
 
             using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
-            using (var memoryStream = new MemoryStream(Convert.FromBase64String(encryptedText)))
+            using (var memoryStream = new MemoryStream(encryptedBytes, iv.Length, encryptedBytes.Length - iv.Length))
             using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
             using (var streamReader = new StreamReader(cryptoStream))
             {
