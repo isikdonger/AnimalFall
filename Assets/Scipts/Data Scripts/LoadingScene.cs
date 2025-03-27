@@ -1,3 +1,4 @@
+using GooglePlayGames;
 using System;
 using System.Threading.Tasks;
 using TMPro;
@@ -29,7 +30,7 @@ public class LoadingScene : MonoBehaviour
         catch (Exception ex)
         {
             Debug.LogError($"Initialization failed: {ex.Message}");
-            //Application.Quit();
+            Application.Quit();
             // Show error to player and provide retry option
         }
     }

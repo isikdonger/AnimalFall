@@ -47,7 +47,7 @@ public static class FirestoreManager
 
         // Request auth code using callback
         PlayGamesPlatform.Instance.RequestServerSideAccess(
-            /* forceRefreshToken= */ false,
+            false,
             async authCode =>
             {
                 if (string.IsNullOrEmpty(authCode))
@@ -82,6 +82,43 @@ public static class FirestoreManager
 
         return tcs.Task;
     }
+
+    /*public static async Task<bool> AuthenticateFirebase()
+    {
+        if (_auth == null)
+        {
+            Debug.LogError("Firebase Auth not initialized!");
+            return false;
+        }
+
+        try
+        {
+            var signInTask = _auth.SignInWithEmailAndPasswordAsync("isikdonger04@gmail.com", "ISIKdonger$04");
+            var timeoutTask = Task.Delay(5000); // 5 second timeout
+
+            if (await Task.WhenAny(signInTask, timeoutTask) == timeoutTask)
+            {
+                Debug.LogError("Login timed out");
+                return false;
+            }
+
+            _userId = _auth.CurrentUser.UserId;
+            _encryptionKey = GenerateEncryptionKey(_userId);
+
+            Debug.Log($"Dev login successful! User ID: {_userId}");
+            return true;
+        }
+        catch (FirebaseException fbEx)
+        {
+            Debug.LogError($"Firebase error: {fbEx.Message}");
+            return false;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Login failed: {ex.Message}");
+            return false;
+        }
+    }*/
 
     /// <summary>
     /// Generates an encryption key using PBKDF2 from the user ID.

@@ -34,30 +34,61 @@ public static class GooglePlayServicesManager
 
         try
         {
-            // Start sign-in process
-            var signInTask = SignIn();
-
-            // Wait for sign-in to complete
-            bool success = await signInTask;
+            PlayGamesPlatform.Activate();
+            PlayGamesPlatform.Instance.Authenticate(status =>
+            {
+                if (status == SignInStatus.Success)
+                {
+                    Debug.Log("Google Play Games sign-in successful.");
+                    initializationTaskSource.TrySetResult(true);
+                }
+                else
+                {
+                    Debug.LogError("Google Play Games sign-in failed.");
+                    initializationTaskSource.TrySetException(new Exception("Google Play Games sign-in failed."));
+                }
+            });
+            // Await authentication result
+            bool success = await initializationTaskSource.Task;
 
             isInitialized = success;
-            initializationTaskSource.TrySetResult(success);
             return success;
         }
         catch (Exception ex)
         {
-            Debug.LogError($"Google Play initialization failed: {ex}");
-            initializationTaskSource.TrySetException(ex);
+            Debug.LogError($"Google Play initialization failed: {ex.Message}");
+            throw; // Rethrow exception to be caught in the caller
+        }
+    }
+
+    /*public static async Task<bool> Initialize()
+    {
+        if (isInitialized)
+        {
+            return true;
+        }
+
+        try
+        {
+            // Sign in and wait for result
+            bool success = await SignIn();
+
+            isInitialized = success;
+            return success;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Google Play Games initialization failed: {ex}");
             isInitialized = false;
             return false;
         }
-    }
+    }*/
 
     public static async Task<bool> SignIn()
     {
         var tcs = new TaskCompletionSource<bool>();
 
-        Social.localUser.Authenticate(success => 
+        Social.localUser.Authenticate(success =>
         {
             if (success)
             {
@@ -73,6 +104,7 @@ public static class GooglePlayServicesManager
 
         return await tcs.Task;
     }
+
 
     /// <summary>
     /// Report a score to the leaderboard.
