@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: UI Strings Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: UI Strings
+  m_TableCollectionNameGuidString: 154b4610361f5ac4ebb9a8d61fc59643
+  m_Entries:
+  - m_Id: 221973810249728
+    m_Key: Language Names
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8660602727432192
+    m_Key: Loading...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22219063296
+    m_Key: Tap to Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034816
+    m_Key: Leadboard Rank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034817
+    m_Key: Total Games
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034818
+    m_Key: Total Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034819
+    m_Key: Total Coins Collected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034820
+    m_Key: Coins Spent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034821
+    m_Key: Achiements Completed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034822
+    m_Key: Characters
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034823
+    m_Key: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034824
+    m_Key: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034825
+    m_Key: Paused
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034826
+    m_Key: Back to Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034827
+    m_Key: Back to Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954186338304
+    m_Key: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034824
+    m_Key: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087040
+    m_Key: Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087041
+    m_Key: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087042
+    m_Key: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954186338304
+    m_Key: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087043
+    m_Key: Support
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087044
+    m_Key: On
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087045
+    m_Key: Off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087046
+    m_Key: View Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087047
+    m_Key: Contact Us
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087048
+    m_Key: Project manager & executive producer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087049
+    m_Key: Art & Design
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087050
+    m_Key: Game Engineer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087051
+    m_Key: SFX & Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087052
+    m_Key: Game Designer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087053
+    m_Key: Business Lead
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087054
+    m_Key: "And Special Thanks to Y\u0131lmaz Bostan"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 752814403616768
+    m_Key: 'Score: {0}'
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4042693349703942237
+  references:
+    version: 2
+    RefIds:
+    - rid: 4042693349703942237
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1741471352181

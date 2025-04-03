@@ -1,0 +1,8 @@
+C:/Programming Projects/AnimalFall/.utmp/Debug/5g5v7s22/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Programming Projects/AnimalFall/.utmp/Debug/5g5v7s22/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/Programming Projects/AnimalFall/.utmp/Debug/5g5v7s22/arm64-v8a/GameActivity/CMakeFiles/game.dir
+C:/Programming Projects/AnimalFall/.utmp/Debug/5g5v7s22/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+C:/Programming Projects/AnimalFall/.utmp/Debug/5g5v7s22/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
+C:/Programming Projects/AnimalFall/.utmp/Debug/5g5v7s22/arm64-v8a/FramePacing/CMakeFiles/swappywrapper.dir
+C:/Programming Projects/AnimalFall/.utmp/Debug/5g5v7s22/arm64-v8a/FramePacing/CMakeFiles/edit_cache.dir
+C:/Programming Projects/AnimalFall/.utmp/Debug/5g5v7s22/arm64-v8a/FramePacing/CMakeFiles/rebuild_cache.dir
