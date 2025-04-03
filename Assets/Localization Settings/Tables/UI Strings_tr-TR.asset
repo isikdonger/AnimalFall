@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UI Strings_tr-TR
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: tr-TR
+  m_SharedData: {fileID: 11400000, guid: 154b4610361f5ac4ebb9a8d61fc59643, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 4042693398148415493
+  m_TableData:
+  - m_Id: 22219063296
+    m_Localized: "Ba\u015Flamak I\xE7in Dokunun"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034816
+    m_Localized: "Skor Tablosu S\u0131ralamas\u0131"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034817
+    m_Localized: Toplam Oyunlar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034818
+    m_Localized: Toplam Puan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034819
+    m_Localized: Toplanan Toplam Para
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034820
+    m_Localized: Harcanan Paralar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034821
+    m_Localized: "Tamamlanan Ba\u015Far\u0131lar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034822
+    m_Localized: Karakterler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034823
+    m_Localized: Geri
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034824
+    m_Localized: Ayarlar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034825
+    m_Localized: "Duraklat\u0131ld\u0131"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034826
+    m_Localized: "Oyuna Geri D\xF6n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034827
+    m_Localized: "Men\xFCye Geri D\xF6n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954186338304
+    m_Localized: Kredi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087040
+    m_Localized: Ses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087041
+    m_Localized: "M\xFCzik"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087042
+    m_Localized: Dil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087043
+    m_Localized: Destek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087044
+    m_Localized: "A\xE7\u0131k"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087045
+    m_Localized: "Kapal\u0131"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087046
+    m_Localized: "Kredileri G\xF6r\xFCnt\xFCle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087047
+    m_Localized: "Bize Ula\u015F\u0131n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087048
+    m_Localized: "Proje Y\xF6neticisi Ve Y\xF6netici Yap\u0131mc\u0131"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087049
+    m_Localized: "Sanat Ve Tasar\u0131m"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087050
+    m_Localized: "Oyun M\xFChendisi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087051
+    m_Localized: "Efekt Ve M\xFCzik"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087052
+    m_Localized: "Oyun Tasar\u0131mc\u0131s\u0131"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087053
+    m_Localized: "\u0130\u015F Lideri"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087054
+    m_Localized: "Ve Y\u0131lmaz Bostan'A \xD6zel Te\u015Fekk\xFCrler"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 221973810249728
+    m_Localized: "T\xFCrk\xE7e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 752814403616768
+    m_Localized: 'Puan: {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 4042693398148415493
+  - m_Id: 8660602727432192
+    m_Localized: "Y\xFCkleniyor..."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4042693398148415493
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 752814403616768

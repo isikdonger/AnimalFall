@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UI Strings_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 154b4610361f5ac4ebb9a8d61fc59643, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 4042693398148415491
+  m_TableData:
+  - m_Id: 22219063296
+    m_Localized: Appuyez Pour Commencer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034816
+    m_Localized: Rang Du Classement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034817
+    m_Localized: Total Des Jeux
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034818
+    m_Localized: Note Totale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034819
+    m_Localized: "Total Des Pi\xE8ces Collect\xE9es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034820
+    m_Localized: "Pi\xE8ces D\xE9pens\xE9es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034821
+    m_Localized: "R\xE9alisations Accomplies"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034822
+    m_Localized: Personnages
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034823
+    m_Localized: Dos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034824
+    m_Localized: "Param\xE8tres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034825
+    m_Localized: En Pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034826
+    m_Localized: Retour Au Jeu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22240034827
+    m_Localized: Retour Au Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954186338304
+    m_Localized: "Cr\xE9dits"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087040
+    m_Localized: Son
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087041
+    m_Localized: Musique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087042
+    m_Localized: Langue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087043
+    m_Localized: Soutien
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087044
+    m_Localized: Sur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087045
+    m_Localized: "D\xE9sactiv\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087046
+    m_Localized: "Voir Les Cr\xE9dits"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087047
+    m_Localized: Contactez-Nous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087048
+    m_Localized: "Chef De Projet Et Producteur Ex\xE9cutif"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087049
+    m_Localized: Art Et Conception
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087050
+    m_Localized: "Ing\xE9nieur De Jeu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087051
+    m_Localized: Effets Sonores Et Musique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087052
+    m_Localized: Concepteur De Jeux
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087053
+    m_Localized: Responsable D'Affaires
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087054
+    m_Localized: "Et Un Merci Sp\xE9cial \xC0 Y\u0131lmaz Bostan"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 221973810249728
+    m_Localized: "Fran\xE7ais"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 752814403616768
+    m_Localized: "Note\_:\_{0}"
+    m_Metadata:
+      m_Items:
+      - rid: 4042693398148415491
+  - m_Id: 8660602727432192
+    m_Localized: Chargement...
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4042693398148415491
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 752814403616768

@@ -1,0 +1,4 @@
+repository "AnimalFall_1@StaringLight@cloud"
+  path "/"
+    br "/main"
+    co "/main"

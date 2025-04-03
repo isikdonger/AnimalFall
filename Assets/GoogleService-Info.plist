@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBAHMD5uwHFybSvNgr_v5xrQXxjNY-ngh0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>580825207428</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.The-Light-Entertainment.AnimalFall</string>
+	<key>PROJECT_ID</key>
+	<string>animalfall-664db</string>
+	<key>STORAGE_BUCKET</key>
+	<string>animalfall-664db.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:580825207428:ios:a4ee26ba3dd4d8722b28d1</string>
+</dict>
+</plist>
