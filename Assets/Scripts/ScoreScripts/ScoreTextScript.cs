@@ -10,7 +10,7 @@ using UnityEngine.Localization.Settings;
 public class ScoreTextScript : MonoBehaviour
 {
     public static int scoreValue = 0;  // Keep score static
-    public Text scoreText;
+    public TMP_Text scoreText;
     public LocalizedString localizedScoreString; // Keep this as an instance variable
 
     private void Start()

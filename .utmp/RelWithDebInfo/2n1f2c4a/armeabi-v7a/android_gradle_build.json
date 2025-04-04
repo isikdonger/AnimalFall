@@ -1,8 +1,8 @@
 {
   "buildFiles": [
-    "C:\\Programming Projects\\AnimalFall\\Library\\Bee\\Android\\Prj\\Mono2x\\Gradle\\unityLibrary\\src\\main\\cpp\\CMakeLists.txt",
-    "C:\\Programming Projects\\AnimalFall\\Library\\Bee\\Android\\Prj\\Mono2x\\Gradle\\unityLibrary\\src\\main\\cpp\\FramePacing\\CMakeLists.txt",
-    "C:\\Programming Projects\\AnimalFall\\Library\\Bee\\Android\\Prj\\Mono2x\\Gradle\\unityLibrary\\src\\main\\cpp\\GameActivity\\CMakeLists.txt"
+    "C:\\Programming Projects\\AnimalFall\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\src\\main\\cpp\\CMakeLists.txt",
+    "C:\\Programming Projects\\AnimalFall\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\src\\main\\cpp\\FramePacing\\CMakeLists.txt",
+    "C:\\Programming Projects\\AnimalFall\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\src\\main\\cpp\\GameActivity\\CMakeLists.txt"
   ],
   "cleanCommandsComponents": [
     [
@@ -23,14 +23,14 @@
       "toolchain": "toolchain",
       "abi": "armeabi-v7a",
       "artifactName": "game",
-      "output": "C:\\Programming Projects\\AnimalFall\\Library\\Bee\\Android\\Prj\\Mono2x\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\RelWithDebInfo\\2n1f2c4a\\obj\\armeabi-v7a\\libgame.so",
+      "output": "C:\\Programming Projects\\AnimalFall\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\RelWithDebInfo\\2n1f2c4a\\obj\\armeabi-v7a\\libgame.so",
       "runtimeFiles": []
     },
     "swappywrapper::@7e25bd1f32ce224db4e9": {
       "toolchain": "toolchain",
       "abi": "armeabi-v7a",
       "artifactName": "swappywrapper",
-      "output": "C:\\Programming Projects\\AnimalFall\\Library\\Bee\\Android\\Prj\\Mono2x\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\RelWithDebInfo\\2n1f2c4a\\obj\\armeabi-v7a\\libswappywrapper.so",
+      "output": "C:\\Programming Projects\\AnimalFall\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\RelWithDebInfo\\2n1f2c4a\\obj\\armeabi-v7a\\libswappywrapper.so",
       "runtimeFiles": []
     }
   },

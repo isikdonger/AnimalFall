@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using GooglePlayGames;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,7 +29,7 @@ public class AccountMenuScript : MonoBehaviour
 
     public void Open_CloseAccountMenu()
     {
-        if (Social.localUser.authenticated)
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
             if (AccountMenu.activeSelf == false)
             {

@@ -1,19 +1,11 @@
 ﻿using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
-using UnityEngine.SocialPlatforms;
-using UnityEngine.SocialPlatforms.Impl;
 using System.Threading.Tasks;
 using System;
-using Firebase;
-using Firebase.Firestore;
-using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using System.Linq;
-using UnityEditor;
-using NUnit.Framework;
+using UnityEngine.SocialPlatforms;
 
 public static class GooglePlayServicesManager
 {
@@ -61,60 +53,15 @@ public static class GooglePlayServicesManager
         }
     }
 
-    /*public static async Task<bool> Initialize()
-    {
-        if (isInitialized)
-        {
-            return true;
-        }
-
-        try
-        {
-            // Sign in and wait for result
-            bool success = await SignIn();
-
-            isInitialized = success;
-            return success;
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"Google Play Games initialization failed: {ex}");
-            isInitialized = false;
-            return false;
-        }
-    }
-
-    public static async Task<bool> SignIn()
-    {
-        var tcs = new TaskCompletionSource<bool>();
-
-        Social.localUser.Authenticate(success =>
-        {
-            if (success)
-            {
-                Debug.Log("Google Play Games sign-in successful.");
-                tcs.TrySetResult(true);
-            }
-            else
-            {
-                Debug.LogError("Google Play Games sign-in failed.");
-                tcs.TrySetResult(false);
-            }
-        });
-
-        return await tcs.Task;
-    }*/
-
-
     /// <summary>
     /// Report a score to the leaderboard.
     /// </summary>
     public static async void ReportScore(long score)
     {
-        if (Social.localUser.authenticated)
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
             string leaderboardID = await FirestoreManager.GetFieldValue<string>("PlayServiceID", "PlayServiceID", "Leaderboard");
-            Social.ReportScore(score, leaderboardID, (bool success) =>
+            PlayGamesPlatform.Instance.ReportScore(score, leaderboardID, (bool success) =>
             {
                 Debug.Log(success ? "Score reported successfully!" : "Failed to report score.");
             });
@@ -126,7 +73,7 @@ public static class GooglePlayServicesManager
     /// </summary>
     public static void ShowLeaderboard()
     {
-        if (Social.localUser.authenticated)
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
             PlayGamesPlatform.Instance.ShowLeaderboardUI();
             GameObject.Find("Tap to Start").GetComponent<Text>().text = "Showing leaderboard...";
@@ -149,7 +96,7 @@ public static class GooglePlayServicesManager
     /// <returns>A Task that will return the player's rank, or -1 if the operation fails.</returns>
     public static async Task<int> GetLeaderboardRankAsync()
     {
-        if (!Social.localUser.authenticated)
+        if (!PlayGamesPlatform.Instance.IsAuthenticated())
         {
             Debug.LogWarning("User is not authenticated.");
             return -1; // -1 to indicate failure due to authentication issue
@@ -197,7 +144,7 @@ public static class GooglePlayServicesManager
     /// </summary>
     public static void ShowAchievements()
     {
-        if (Social.localUser.authenticated)
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
             PlayGamesPlatform.Instance.ShowAchievementsUI();
             Debug.Log("Showing achievements...");
@@ -214,7 +161,7 @@ public static class GooglePlayServicesManager
     /// </summary>
     public static IEnumerator UnlockAchievementCoroutine(string achievementName)
     {
-        if (Social.localUser.authenticated)
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
             // Retrieve the achievement ID asynchronously
             Task<string> task = FirestoreManager.GetFieldValue<string>("PlayServiceID", "PlayServiceID", achievementName);
@@ -229,7 +176,7 @@ public static class GooglePlayServicesManager
             string achievementID = task.Result;
 
             // Report the achievement progress
-            Social.ReportProgress(achievementID, 100.0f, (bool success) =>
+            PlayGamesPlatform.Instance.ReportProgress(achievementID, 100.0f, (bool success) =>
             {
                 Debug.Log(success ? "Achievement unlocked!" : "Failed to unlock achievement.");
             });
@@ -257,7 +204,7 @@ public static class GooglePlayServicesManager
                 string achievementID = task.Result;
 
                 // Check if the achievement is unlocked
-                Social.LoadAchievements(achievements =>
+                PlayGamesPlatform.Instance.LoadAchievements(achievements =>
                 {
                     if (achievements == null)
                     {
@@ -287,7 +234,7 @@ public static class GooglePlayServicesManager
     /// </summary>
     public static void IncrementObjectives()
     {
-        if (Social.localUser.authenticated)
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
            
         }

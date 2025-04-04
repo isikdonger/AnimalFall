@@ -10,52 +10,89 @@ using UnityEngine.UI;
 
 public class LoadingScene : MonoBehaviour
 {
-    //[SerializeField] private GameObject loadingText;
+    [SerializeField] Camera Camera;
+    [SerializeField] GameObject loadingText;
+    int WIDTH = 1080, HEIGHT = 2400;
 
     private void Awake()
     {
-        //loadingText.GetComponent<LocalizeStringEvent>().RefreshString();
+        // Camera resolution
+        int resWidth, resHeight, multiplier, scaleHeigth, scaleWidth;
+        resWidth = Camera.pixelWidth;
+        resHeight = Camera.pixelHeight;
+        multiplier = resHeight > 2400 ? 1 : -1;
+        scaleHeigth = (resHeight - HEIGHT) / 300 * 25 * multiplier;
+        scaleWidth = (resWidth - WIDTH) / 300 * 25 * multiplier;
+
+        int heightDimension = 150 + scaleHeigth, widthDimension = 550 + scaleWidth;
+        RectTransform loadingTextRT = loadingText.GetComponent<RectTransform>();
+        loadingTextRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, widthDimension);
+        loadingTextRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, heightDimension);
+        loadingTextRT.anchoredPosition = new Vector2(0, -(heightDimension / 2 + 100));
+
+        // Localize text
+        loadingText.GetComponent<LocalizeStringEvent>().RefreshString();
     }
 
     private async void Start()
     {
-        /*AsyncOperation uiLoadOp = SceneManager.LoadSceneAsync("AnimalFall UI", LoadSceneMode.Additive);
-        uiLoadOp.allowSceneActivation = false; // Prevent immediate activation
+        AsyncOperation uiLoadOp = SceneManager.LoadSceneAsync("AnimalFall UI", LoadSceneMode.Additive);
+        uiLoadOp.allowSceneActivation = false;
 
-        // Wait until the UI scene is fully loaded (but not activated)
-        while (!uiLoadOp.isDone)
+        // Wait until scene is ready for activation
+        while (uiLoadOp.progress < 0.9f)
         {
-            if (uiLoadOp.progress >= 0.9f) break; // Almost loaded
             await Task.Yield();
-        }*/
+        }
 
         try
         {
-            // Initialize Firebase
+            #if !UNITY_EDITOR
+            // Production initialization sequence
             await FirestoreManager.Initialize();
-
-            // Initialize and authenticate with Google Play Services
             bool playGamesSuccess = await GooglePlayServicesManager.Initialize();
-
+        
             if (playGamesSuccess)
             {
                 await FirestoreManager.AuthenticateFirebase();
                 await FirestoreManager.SyncWithCloud();
             }
+            #else
+            // Editor testing - add artificial delay to simulate initialization
+            await Task.Delay(1000); // 1 second mock loading
+            #endif
 
-            SceneManager.LoadScene("AnimalFall UI");
+            // Activate UI scene
+            uiLoadOp.allowSceneActivation = true;
+            while (!uiLoadOp.isDone)
+            {
+                await Task.Yield();
+            }
 
-            //Hide the loading screen here if you have one
-            //await SceneManager.UnloadSceneAsync("Loading Scene");
+            // Scene transition
+            Scene uiScene = SceneManager.GetSceneByName("AnimalFall UI");
+            if (!uiScene.isLoaded)
+            {
+                Debug.LogError("UI scene failed to load!");
+                return;
+            }
 
-            // Only load scene after everything is done
-            //uiLoadOp.allowSceneActivation = true;
+            SceneManager.SetActiveScene(uiScene);
+
+            // Unload loading scene
+            Scene loadingScene = SceneManager.GetSceneByName("Loading Scene");
+            if (loadingScene.isLoaded)
+            {
+                await SceneManager.UnloadSceneAsync(loadingScene);
+                await Resources.UnloadUnusedAssets(); // Cleanup
+            }
         }
         catch (Exception ex)
         {
             Debug.LogError($"Initialization failed: {ex.Message}");
+            // For now, just quit
             Application.Quit();
-            // Show error to player and provide retry option
+            // Retry logic
         }
     }
 }
