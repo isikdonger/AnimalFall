@@ -50,6 +50,19 @@ android {
 **DEFAULT_CONFIG_SETUP**
     }
 
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt', 'proguard-user.txt'
+            
+            // Optional: Shrink resources (recommended)
+            shrinkResources true
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+
     lint {
         abortOnError false
     }
