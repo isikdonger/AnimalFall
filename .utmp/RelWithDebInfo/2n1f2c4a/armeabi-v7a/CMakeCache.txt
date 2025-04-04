@@ -130,7 +130,7 @@ CMAKE_FIND_ROOT_PATH:UNINITIALIZED=C:\Programming Projects\AnimalFall\.utmp\RelW
 CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/Unity
 
 //No help, variable specified on the command line.
-CMAKE_LIBRARY_OUTPUT_DIRECTORY:UNINITIALIZED=C:\Programming Projects\AnimalFall\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\2n1f2c4a\obj\armeabi-v7a
+CMAKE_LIBRARY_OUTPUT_DIRECTORY:UNINITIALIZED=C:\Programming Projects\AnimalFall\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\2n1f2c4a\obj\armeabi-v7a
 
 //Path to a program.
 CMAKE_LINKER:FILEPATH=C:/Program Files/Unity/Hub/Editor/6000.0.39f1/Editor/Data/PlaybackEngines/AndroidPlayer/NDK/toolchains/llvm/prebuilt/windows-x86_64/bin/ld.lld.exe
@@ -182,7 +182,7 @@ CMAKE_RANLIB:FILEPATH=C:/Program Files/Unity/Hub/Editor/6000.0.39f1/Editor/Data/
 CMAKE_READELF:FILEPATH=C:/Program Files/Unity/Hub/Editor/6000.0.39f1/Editor/Data/PlaybackEngines/AndroidPlayer/NDK/toolchains/llvm/prebuilt/windows-x86_64/bin/llvm-readelf.exe
 
 //No help, variable specified on the command line.
-CMAKE_RUNTIME_OUTPUT_DIRECTORY:UNINITIALIZED=C:\Programming Projects\AnimalFall\Library\Bee\Android\Prj\Mono2x\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\2n1f2c4a\obj\armeabi-v7a
+CMAKE_RUNTIME_OUTPUT_DIRECTORY:UNINITIALIZED=C:\Programming Projects\AnimalFall\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\2n1f2c4a\obj\armeabi-v7a
 
 //Flags used by the linker during the creation of dll's.
 CMAKE_SHARED_LINKER_FLAGS:STRING=
@@ -239,8 +239,8 @@ CMAKE_SYSTEM_NAME:UNINITIALIZED=Android
 //No help, variable specified on the command line.
 CMAKE_SYSTEM_VERSION:UNINITIALIZED=23
 
-//No help, variable specified on the command line.
-CMAKE_TOOLCHAIN_FILE:UNINITIALIZED=C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\PlaybackEngines\AndroidPlayer\NDK\build\cmake\android.toolchain.cmake
+//The CMake toolchain file
+CMAKE_TOOLCHAIN_FILE:FILEPATH=C:/Program Files/Unity/Hub/Editor/6000.0.39f1/Editor/Data/PlaybackEngines/AndroidPlayer/NDK/build/cmake/android.toolchain.cmake
 
 //If this value is on, makefiles will be generated without the
 // .SILENT directive, and all commands will be echoed to the console
@@ -255,7 +255,7 @@ Unity_BINARY_DIR:STATIC=C:/Programming Projects/AnimalFall/.utmp/RelWithDebInfo/
 Unity_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
-Unity_SOURCE_DIR:STATIC=C:/Programming Projects/AnimalFall/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/src/main/cpp
+Unity_SOURCE_DIR:STATIC=C:/Programming Projects/AnimalFall/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp
 
 //The directory containing a CMake configuration file for game-activity.
 game-activity_DIR:PATH=C:/Programming Projects/AnimalFall/.utmp/RelWithDebInfo/2n1f2c4a/prefab/armeabi-v7a/prefab/lib/arm-linux-androideabi/cmake/game-activity
@@ -270,7 +270,7 @@ game_IS_TOP_LEVEL:STATIC=OFF
 game_LIB_DEPENDS:STATIC=general;android;general;game-activity::game-activity_static;general;log;general;c++;
 
 //Value Computed by CMake
-game_SOURCE_DIR:STATIC=C:/Programming Projects/AnimalFall/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/src/main/cpp/GameActivity
+game_SOURCE_DIR:STATIC=C:/Programming Projects/AnimalFall/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity
 
 //The directory containing a CMake configuration file for games-frame-pacing.
 games-frame-pacing_DIR:PATH=C:/Programming Projects/AnimalFall/.utmp/RelWithDebInfo/2n1f2c4a/prefab/armeabi-v7a/prefab/lib/arm-linux-androideabi/cmake/games-frame-pacing
@@ -285,7 +285,7 @@ swappywrapper_IS_TOP_LEVEL:STATIC=OFF
 swappywrapper_LIB_DEPENDS:STATIC=general;android;general;games-frame-pacing::swappy_static;general;log;general;c++;
 
 //Value Computed by CMake
-swappywrapper_SOURCE_DIR:STATIC=C:/Programming Projects/AnimalFall/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/src/main/cpp/FramePacing
+swappywrapper_SOURCE_DIR:STATIC=C:/Programming Projects/AnimalFall/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/FramePacing
 
 
 ########################
@@ -368,7 +368,7 @@ CMAKE_GENERATOR_PLATFORM:INTERNAL=
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
 //Source directory with the top level CMakeLists.txt file for this
 // project
-CMAKE_HOME_DIRECTORY:INTERNAL=C:/Programming Projects/AnimalFall/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/src/main/cpp
+CMAKE_HOME_DIRECTORY:INTERNAL=C:/Programming Projects/AnimalFall/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp
 //Install .so files without execute permission.
 CMAKE_INSTALL_SO_NO_EXE:INTERNAL=0
 //ADVANCED property for variable: CMAKE_LINKER

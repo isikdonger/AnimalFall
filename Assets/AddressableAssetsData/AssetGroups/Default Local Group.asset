@@ -14,7 +14,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
   m_GUID: 2946d3b6326601344aa7fb210c2b797c
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 306ca09a4f7996c49aa6e5c78e0a7f6e
+    m_Address: Assets/Sprites/UI/Medal.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39717e37b86290d43885b3c75e803906
+    m_Address: Assets/Sprites/UI/pause button.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4de1cfb25e84e774ab51feaaba97693e
+    m_Address: Assets/Sprites/UI/Italy.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 622ea19c0df35ab4cabd8f769e509df7
+    m_Address: Assets/Sprites/UI/Spain.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72869a479f2ef0e458ea79a784f7a773
+    m_Address: Assets/Sprites/UI/Turkey.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77a56bd5fefa6304584aa4849f534011
+    m_Address: Assets/Sprites/UI/China.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 868514fe7901bcc46b544c2573c63040
+    m_Address: Assets/Sprites/UI/United Kingdom.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 99234664e42b58c49831203534b867ac
+    m_Address: Assets/Sprites/UI/top spike.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a88d96e22ba10ec4d9224022499ad7b3
+    m_Address: Assets/Sprites/UI/Germany.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: afb75c1c79a2ca540bd70b1df48e0baa
+    m_Address: Assets/Sprites/UI/Gear.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dabc9fa5510d53c40b331fe4e8ab95ab
+    m_Address: Assets/Sprites/UI/France.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3fa4bb04c32552f4db2414a676618947, type: 2}
   m_SchemaSet:

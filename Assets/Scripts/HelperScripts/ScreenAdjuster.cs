@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 
 public class ScreenAdjuster : MonoBehaviour
 {
@@ -27,9 +28,9 @@ public class ScreenAdjuster : MonoBehaviour
         RectTransform scoreTextRT = scoreText.GetComponent<RectTransform>(), pauseButtonRT = pauseButton.GetComponent<RectTransform>(), 
             coinTextRT = coinText.GetComponent<RectTransform>(), coinImageRT = coinImage.GetComponent<RectTransform>();
         int dimension = 200 + scale;
-        scoreTextRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, dimension);
+        scoreTextRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, dimension + 200);
         scoreTextRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dimension);
-        scoreTextRT.anchoredPosition = new Vector2(-dimension / 2 - 10, -dimension / 2);
+        scoreTextRT.anchoredPosition = new Vector2(-(dimension + 200) / 2 - 10, -dimension / 2);
         pauseButtonRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, dimension - 50);
         pauseButtonRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dimension - 50);
         pauseButtonRT.anchoredPosition = new Vector2(0, -dimension / 2);

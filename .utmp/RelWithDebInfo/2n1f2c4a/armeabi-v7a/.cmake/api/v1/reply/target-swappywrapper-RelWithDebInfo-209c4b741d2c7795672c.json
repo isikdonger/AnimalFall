@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "C:/Programming Projects/AnimalFall/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2n1f2c4a/obj/armeabi-v7a/libswappywrapper.so"
+			"path" : "C:/Programming Projects/AnimalFall/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2n1f2c4a/obj/armeabi-v7a/libswappywrapper.so"
 		}
 	],
 	"backtrace" : 1,
@@ -73,7 +73,7 @@
 			[
 				{
 					"backtrace" : 4,
-					"path" : "C:/Programming Projects/AnimalFall/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/src/main/cpp/FramePacing"
+					"path" : "C:/Programming Projects/AnimalFall/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/FramePacing"
 				},
 				{
 					"backtrace" : 2,

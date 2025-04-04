@@ -1,4 +1,4 @@
-# Install script for directory: C:/Programming Projects/AnimalFall/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/src/main/cpp/GameActivity
+# Install script for directory: C:/Programming Projects/AnimalFall/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
