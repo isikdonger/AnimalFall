@@ -1,0 +1,13 @@
+# ========== Unity ==========
+-keep class com.unity3d.** { *; }
+-keep class UnityEngine.** { *; }
+
+# ========== GPGS ==========
+-keep class com.google.games.** { *; }
+-keep class com.google.android.gms.** { *; }
+-keep class * implements com.google.android.gms.common.internal.IGmsServiceBroker
+-keep class * implements com.google.android.gms.common.internal.ICancelToken
+
+# ========== Firebase (if used) ==========
+-keep class com.google.firebase.** { *; }
+-keepnames class com.google.firebase.** { *; }
