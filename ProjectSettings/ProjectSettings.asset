@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: The Light Entertainment
+  companyName: Ishigo Games
   productName: AnimalFall
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -165,7 +165,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.4
   androidMinAspectRatio: 1
   applicationIdentifier:
-    Android: com.TheLightEntertainment.AnimalFall
+    Android: com.IshigoGames.AnimalFall
     Standalone: com.DefaultCompany.2D-URP
     iPhone: com.The-Light-Entertainment.AnimalFall
   buildNumber:
@@ -268,8 +268,8 @@ PlayerSettings:
   AndroidTargetArchitectures: 3
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{dedicated}: keystore/user.keystore'
-  AndroidKeyaliasName: animalfall
+  AndroidKeystoreName: '{dedicated}: debug.keystore'
+  AndroidKeyaliasName: androiddebugkey
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidEnableArm64MTE: 0
   AndroidBuildApkPerCpuArchitecture: 0

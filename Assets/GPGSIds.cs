@@ -34,13 +34,13 @@ public static class GPGSIds
         public const string achievement_cook = "CgkI1ZL9iP0bEAIQEA"; // <GPGSID>
         public const string achievement_you_have_all_the_power_in_the_world = "CgkI1ZL9iP0bEAIQEg"; // <GPGSID>
         public const string achievement_hundred = "CgkI1ZL9iP0bEAIQDg"; // <GPGSID>
+        public const string leaderboard_score = "CgkI1ZL9iP0bEAIQAg"; // <GPGSID>
         public const string achievement_hey_big_spender = "CgkI1ZL9iP0bEAIQCA"; // <GPGSID>
         public const string achievement_field_of_hopes_and_dreams = "CgkI1ZL9iP0bEAIQCQ"; // <GPGSID>
         public const string achievement_king_of_the_week = "CgkI1ZL9iP0bEAIQCg"; // <GPGSID>
         public const string achievement_dream_on = "CgkI1ZL9iP0bEAIQEQ"; // <GPGSID>
         public const string achievement_poland_cannot_into_space = "CgkI1ZL9iP0bEAIQBw"; // <GPGSID>
         public const string achievement_eight = "CgkI1ZL9iP0bEAIQCw"; // <GPGSID>
-        public const string leaderboard_score_leaderboard = "CgkI1ZL9iP0bEAIQAg"; // <GPGSID>
 
 }
 
