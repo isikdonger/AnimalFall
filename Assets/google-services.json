@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:580825207428:android:f3a93ade57c1e12f2b28d1",
+        "mobilesdk_app_id": "1:580825207428:android:143d9a13f7fd39852b28d1",
         "android_client_info": {
-          "package_name": "com.TheLightEntertainment.AnimalFall"
+          "package_name": "com.IshigoGames.AnimalFall"
         }
       },
       "oauth_client": [],

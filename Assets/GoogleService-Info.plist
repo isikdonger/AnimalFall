@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.The-Light-Entertainment.AnimalFall</string>
+	<string>com.IshigoGames.AnimalFall</string>
 	<key>PROJECT_ID</key>
 	<string>animalfall-664db</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:580825207428:ios:a4ee26ba3dd4d8722b28d1</string>
+	<string>1:580825207428:ios:c8fcf61d20ccfd6a2b28d1</string>
 </dict>
 </plist>
