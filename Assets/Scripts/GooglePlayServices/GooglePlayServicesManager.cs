@@ -7,6 +7,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SocialPlatforms;
 
+#if !UNITY_EDITOR && UNITY_ANDROID
 public static class GooglePlayServicesManager
 {
     private static bool isInitialized = false;
@@ -240,3 +241,4 @@ public static class GooglePlayServicesManager
         }
     }
 }
+#endif

@@ -29,7 +29,16 @@ public class AccountMenuScript : MonoBehaviour
 
     public void Open_CloseAccountMenu()
     {
+        bool signedIn;
+#if !UNITY_EDITOR && UNITY_ANDROID
         if (PlayGamesPlatform.Instance.IsAuthenticated())
+        {
+            signedIn = true;
+        }
+#else
+        signedIn = false;
+#endif
+        if (signedIn)
         {
             if (AccountMenu.activeSelf == false)
             {

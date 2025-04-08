@@ -48,6 +48,7 @@ public static class FirestoreManager
         var tcs = new TaskCompletionSource<FirebaseUser>();
 
         // Request auth code using callback
+#if !UNITY_EDITOR && UNITY_ANDROID
         PlayGamesPlatform.Instance.RequestServerSideAccess(
             false,
             async authCode =>
@@ -82,6 +83,7 @@ public static class FirestoreManager
                 }
             }
         );
+#endif
 
         return tcs.Task;
     }
@@ -170,6 +172,7 @@ public static class FirestoreManager
         return _encryptionKey;
     }
 
+#if !UNITY_EDITOR
     /// <summary>
     /// Synchronizes local progress with Firestore, handling first-time users and merge conflicts.
     /// Returns true if sync succeeded.
@@ -234,7 +237,9 @@ public static class FirestoreManager
             return false;
         }
     }
+#endif
 
+#if !UNITY_EDITOR
     /// <summary>
     /// Encrypts and saves progress to Firestore.
     /// </summary>
@@ -260,6 +265,7 @@ public static class FirestoreManager
             throw; // Re-throw for callers to handle
         }
     }
+#endif
 
     /// <summary>
     /// Retrieves a specific field value from any document in any Firestore collection.
