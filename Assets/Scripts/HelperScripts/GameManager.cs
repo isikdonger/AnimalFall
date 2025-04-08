@@ -21,7 +21,9 @@ public class GameManager : MonoBehaviour
 
     public void Death()
     {
+#if !UNITY_EDITOR
         LocalBackupManager.SetHighScore(ScoreTextScript.scoreValue);
+#endif
         LossCountAchievement();
         WinCountAchievement();
         PolandballAchievement();
@@ -61,6 +63,7 @@ public class GameManager : MonoBehaviour
 
     public void LossCountAchievement()
     {
+#if !UNITY_EDITOR && UNITY_ANDROID
         GooglePlayServicesManager.IsAchievementUnlocked("TEN!?", isUnlocked =>
         {
             if (!isUnlocked)
@@ -88,10 +91,12 @@ public class GameManager : MonoBehaviour
                 }
             }
         });
+#endif
     }
 
     public void WinCountAchievement()
     {
+#if !UNITY_EDITOR && UNITY_ANDROID
         GooglePlayServicesManager.IsAchievementUnlocked("Cook", isUnlocked =>
         {
             if (!isUnlocked)
@@ -115,10 +120,12 @@ public class GameManager : MonoBehaviour
                 }
             }
         });
+#endif
     }
 
     public void PolandballAchievement()
     {
+#if !UNITY_EDITOR && UNITY_ANDROID
         GooglePlayServicesManager.IsAchievementUnlocked("Poland Cannot Into Space", isUnlocked =>
         {
             if (!isUnlocked)
@@ -129,10 +136,12 @@ public class GameManager : MonoBehaviour
                 }
             }
         });
+#endif
     }
 
     public void HundredAchievement()
     {
+#if !UNITY_EDITOR && UNITY_ANDROID
         GooglePlayServicesManager.IsAchievementUnlocked("HUNDRED", isUnlocked =>
         {
             if (!isUnlocked)
@@ -143,10 +152,12 @@ public class GameManager : MonoBehaviour
                 }
             }
         });
+#endif
     }
 
     public void ComeOnAchievement()
     {
+#if !UNITY_EDITOR && UNITY_ANDROID
         GooglePlayServicesManager.IsAchievementUnlocked("Come On", isUnlocked =>
         {
             if (!isUnlocked)
@@ -157,5 +168,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         });
+#endif
     }
 }

@@ -53,6 +53,7 @@ public class CustomizePanelScript : MonoBehaviour
     {
         int index = Button.transform.GetSiblingIndex();
         CustomizeButton.transform.GetChild(0).GetComponent<Image>().sprite = characterSprites[index];
+#if !UNITY_EDITOR && UNITY_ANDROID
         GooglePlayServicesManager.IsAchievementUnlocked("This is getting out of hand", isUnlocked =>
         {
             if (!isUnlocked)
@@ -64,6 +65,7 @@ public class CustomizePanelScript : MonoBehaviour
                 }
             }
         });
+#endif
         PlayerPrefs.SetInt("characterIndex", index);
         CustomizePanel.SetActive(false);
         StartBtn.SetActive(true);

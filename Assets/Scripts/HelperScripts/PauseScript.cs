@@ -52,7 +52,9 @@ public class PauseScript : MonoBehaviour
     {
         PauseMenu.SetActive(false);
         ScoreTextScript.scoreValue = 0;
+#if !UNITY_EDITOR
         await FirestoreManager.SyncWithCloud();
+#endif
         SceneManager.LoadScene("AnimalFall UI", LoadSceneMode.Single);
     }
     public void SoundOn()

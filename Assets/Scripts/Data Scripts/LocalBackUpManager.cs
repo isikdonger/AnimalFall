@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if !UNITY_EDITOR
+
 [Serializable]
 public class GameProgress
 {
@@ -208,3 +210,4 @@ public static class LocalBackupManager
     /// </summary>
     public static int GetWinCount() => LoadProgress().winCount;
 }
+#endif
