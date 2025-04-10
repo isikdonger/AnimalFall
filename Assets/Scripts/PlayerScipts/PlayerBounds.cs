@@ -52,19 +52,15 @@ public class PlayerBounds : MonoBehaviour
             GameManager.instance.Death();
             if (CustomizePanelScript.characterNames[PlayerPrefs.GetInt("characterIndex")].Equals("moon"))
             {
-#if !UNITY_EDITOR && UNITY_ANDROID
-                GooglePlayServicesManager.IsAchievementUnlocked("That's Rough Buddy", isUnlocked =>
+                LocalBackupManager.IncrementSpikeDeathCount();
+                if (LocalBackupManager.GetBreakCount() == 5)
                 {
-                    if (!isUnlocked)
-                    {
-                        LocalBackupManager.IncrementSpikeDeathCount();
-                        if (LocalBackupManager.GetBreakCount() == 5)
-                        {
-                            GooglePlayServicesManager.UnlockAchievementCoroutine("That's Rough Buddy");
-                        }
-                    }
-                });
+#if UNITY_ANDROID
+                    GooglePlayServicesManager.UnlockAchievementCoroutine("That's Rough Buddy");
+#elif UNITY_IOS
+                    GameCenterManager.UnlockAchievement("That's Rough Buddy");
 #endif
+                }
             }
         }
         else if (target.tag ==  "KillCoin")

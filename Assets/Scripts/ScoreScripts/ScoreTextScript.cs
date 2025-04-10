@@ -21,7 +21,7 @@ public class ScoreTextScript : MonoBehaviour
     public void AddScore()
     {
         scoreValue++;
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if UNITY_ANDROID
         GooglePlayServicesManager.ReportScore(scoreValue);
 #endif
         UpdateScoreText();

@@ -53,19 +53,15 @@ public class CustomizePanelScript : MonoBehaviour
     {
         int index = Button.transform.GetSiblingIndex();
         CustomizeButton.transform.GetChild(0).GetComponent<Image>().sprite = characterSprites[index];
-#if !UNITY_EDITOR && UNITY_ANDROID
-        GooglePlayServicesManager.IsAchievementUnlocked("This is getting out of hand", isUnlocked =>
+        LocalBackupManager.AddUsedCharacter(characterNames[index]);
+        if (LocalBackupManager.GetCharacterCount() == 3)
         {
-            if (!isUnlocked)
-            {
-                LocalBackupManager.AddUsedCharacter(characterNames[index]);
-                if (LocalBackupManager.GetCharacterCount() == 3)
-                {
-                    GooglePlayServicesManager.UnlockAchievementCoroutine("This is Getting Out of Hand");
-                }
-            }
-        });
+#if UNITY_ANDROID
+            GooglePlayServicesManager.UnlockAchievementCoroutine("This is Getting Out of Hand");
+#elif UNITY_IOS
+            GameCenterManager.UnlockAchievement("This is Getting Out of Hand");
 #endif
+        }
         PlayerPrefs.SetInt("characterIndex", index);
         CustomizePanel.SetActive(false);
         StartBtn.SetActive(true);

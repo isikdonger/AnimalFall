@@ -6,8 +6,10 @@ using System;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SocialPlatforms;
+using System.Reflection;
+using System.Text;
 
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if UNITY_ANDROID
 public static class GooglePlayServicesManager
 {
     private static bool isInitialized = false;
@@ -61,7 +63,7 @@ public static class GooglePlayServicesManager
     {
         if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
-            string leaderboardID = await FirestoreManager.GetFieldValue<string>("PlayServiceID", "PlayServiceID", "Leaderboard");
+            string leaderboardID = GPGSIds.leaderboard_score;
             PlayGamesPlatform.Instance.ReportScore(score, leaderboardID, (bool success) =>
             {
                 Debug.Log(success ? "Score reported successfully!" : "Failed to report score.");
@@ -104,12 +106,11 @@ public static class GooglePlayServicesManager
         }
 
         // Retrieve the leaderboard ID asynchronously
-        Task<string> leaderboardIDTask = FirestoreManager.GetFieldValue<string>("PlayServiceID", "PlayServiceID", "Leaderboard");
-        string leaderboardID = await leaderboardIDTask;
+        string leaderboardID = GPGSIds.leaderboard_score;
 
-        if (leaderboardIDTask.IsFaulted)
+        if (string.IsNullOrEmpty(leaderboardID))
         {
-            Debug.LogError("Failed to retrieve leaderboard ID: " + leaderboardIDTask.Exception);
+            Debug.LogError("Failed to retrieve leaderboard ID: ");
             return -1;
         }
 
@@ -140,6 +141,45 @@ public static class GooglePlayServicesManager
         return await tcs.Task; // Wait for the result and return it
     }
 
+    public static string GetAchievementID(string achievementName)
+    {
+        FieldInfo[] fileds = typeof(GPGSIds).GetFields(BindingFlags.Public | BindingFlags.Static);
+
+        foreach (FieldInfo field in fileds)
+        {
+            if (field.Name == achievementName)
+            {
+                return field.GetValue(null).ToString();
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Unlock an achievement using a coroutine.
+    /// </summary>
+    public static IEnumerator UnlockAchievementCoroutine(string achievementName)
+    {
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
+        {
+            // Retrieve the achievement ID
+
+            string achievementID = GetAchievementID("achievement_" + achievementName.ToLower().Replace(" ", "_"));
+
+            if (string.IsNullOrEmpty(achievementID))
+            {
+                yield break;
+            }
+
+            // Report the achievement progress
+            PlayGamesPlatform.Instance.ReportProgress(achievementID, 100.0f, (bool success) =>
+            {
+                Debug.Log(success ? "Achievement unlocked!" : "Failed to unlock achievement.");
+            });
+        }
+    }
+
     /// <summary>
     /// Show the achievements UI.
     /// </summary>
@@ -155,79 +195,6 @@ public static class GooglePlayServicesManager
             Debug.LogWarning("User is not authenticated! Cannot show achievements.");
             GameObject.Find("Tap to Start").GetComponent<Text>().text = "Sign in to view achievements";
         }
-    }
-
-    /// <summary>
-    /// Unlock an achievement using a coroutine.
-    /// </summary>
-    public static IEnumerator UnlockAchievementCoroutine(string achievementName)
-    {
-        if (PlayGamesPlatform.Instance.IsAuthenticated())
-        {
-            // Retrieve the achievement ID asynchronously
-            Task<string> task = FirestoreManager.GetFieldValue<string>("PlayServiceID", "PlayServiceID", achievementName);
-            yield return new WaitUntil(() => task.IsCompleted);  // Wait for the task to complete
-
-            if (task.IsFaulted)
-            {
-                Debug.LogError("Failed to retrieve achievement ID: " + task.Exception);
-                yield break;
-            }
-
-            string achievementID = task.Result;
-
-            // Report the achievement progress
-            PlayGamesPlatform.Instance.ReportProgress(achievementID, 100.0f, (bool success) =>
-            {
-                Debug.Log(success ? "Achievement unlocked!" : "Failed to unlock achievement.");
-            });
-        }
-    }
-
-    /// <summary>
-    /// Checks if an achievement is unlocked and calls the callback with the result.
-    /// </summary>
-    /// <param name="achievementName">The name of the achievement.</param>
-    /// <param name="callback">The callback to call with the result (true if unlocked, false otherwise).</param>
-    public static void IsAchievementUnlocked(string achievementName, Action<bool> callback)
-    {
-        // Retrieve the achievement ID from Firestore
-        FirestoreManager.GetFieldValue<string>("PlayServiceID", "PlayServiceID", achievementName)
-            .ContinueWith(task =>
-            {
-                if (task.IsFaulted || string.IsNullOrEmpty(task.Result))
-                {
-                    Debug.LogError($"Failed to retrieve achievement ID for '{achievementName}'.");
-                    callback?.Invoke(false);
-                    return;
-                }
-
-                string achievementID = task.Result;
-
-                // Check if the achievement is unlocked
-                PlayGamesPlatform.Instance.LoadAchievements(achievements =>
-                {
-                    if (achievements == null)
-                    {
-                        Debug.LogError("Failed to load achievements.");
-                        callback?.Invoke(false);
-                        return;
-                    }
-
-                    foreach (IAchievement achievement in achievements)
-                    {
-                        if (achievement.id == achievementID && achievement.completed)
-                        {
-                            Debug.Log($"Achievement '{achievementName}' is already unlocked.");
-                            callback?.Invoke(true);
-                            return;
-                        }
-                    }
-
-                    // Achievement is not unlocked
-                    callback?.Invoke(false);
-                });
-            });
     }
 
     /// <summary>
