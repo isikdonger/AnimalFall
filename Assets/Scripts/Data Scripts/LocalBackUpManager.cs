@@ -107,12 +107,42 @@ public static class LocalBackupManager
     }
 
     /// <summary>
-    /// Adds coins to the local progress.
+    /// Increments the total score in user data.
     /// </summary>
-    public static void CoinSpent(int amount)
+    public static void IncrementTotalScore(int score)
+    {
+        UserData data = LoadUserData();
+        data.totalGames += score;
+        SaveUserData(data);
+    }
+
+    /// <summary>
+    /// Increments the total coins gained in user data.
+    /// </summary>
+    public static void IncrementTotalCoins(int coinsGained)
+    {
+        UserData data = LoadUserData();
+        data.totalCoins += coinsGained;
+        SaveUserData(data);
+    }
+
+    /// <summary>
+    /// Adds spent coins to coin spent in user data.
+    /// </summary>
+    public static void IncrementCoinSpent(int amount)
     {
         UserData data = LoadUserData();
         data.coinSpent += amount;
+        SaveUserData(data);
+    }
+
+    /// <summary>
+    /// Increments the total achievements completed in user data.
+    /// </summary>
+    public static void IncrementCompletedAchievements()
+    {
+        UserData data = LoadUserData();
+        data.totalCoins++;
         SaveUserData(data);
     }
 
@@ -211,6 +241,31 @@ public static class LocalBackupManager
     }
 
     /// <summary>
+    /// Gets the total games from user data.
+    /// </summary>
+    public static int GetTotalGames() => LoadUserData().totalGames;
+
+    /// <summary>
+    /// Gets the total score from user data.
+    /// </summary>
+    public static int GetTotalScore() => LoadUserData().totalScore;
+
+    /// <summary>
+    /// Gets the total coins gained from user data.
+    /// </summary>
+    public static int GetTotalCoins() => LoadUserData().totalCoins;
+
+    /// <summary>
+    /// Gets the coins spent from user data.
+    /// </summary>
+    public static int GetSpentCoins() => LoadUserData().coinSpent;
+
+    /// <summary>
+    /// Gets the count of completed achievements from user data.
+    /// </summary>
+    public static int GetCompletedAchievements() => LoadUserData().achievementsCompleted;
+
+    /// <summary>
     /// Gets the high score from local progress.
     /// </summary>
     public static int GetHighScore() => LoadProgress().highScore;
@@ -234,11 +289,6 @@ public static class LocalBackupManager
     /// Gets the spike death count from local progress.
     /// </summary>
     public static int GetSpikeDeathCount() => LoadProgress().spikeDeathCount;
-
-    /// <summary>
-    /// Gets the coins spent from local progress.
-    /// </summary>
-    //public static int GetSpentCoins() => LoadProgress().coinSpent;
 
     /// <summary>
     /// Gets the loss count from local progress.

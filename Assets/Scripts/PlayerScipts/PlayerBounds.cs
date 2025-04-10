@@ -58,7 +58,7 @@ public class PlayerBounds : MonoBehaviour
 #if UNITY_ANDROID
                     GooglePlayServicesManager.UnlockAchievementCoroutine("That's Rough Buddy");
 #elif UNITY_IOS
-                    GameCenterManager.UnlockAchievement("That's Rough Buddy");
+                    GameCenterManager.UnlockAchievementCoroutine("That's Rough Buddy");
 #endif
                 }
             }

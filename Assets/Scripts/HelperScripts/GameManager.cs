@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     {
 #if !UNITY_EDITOR
         LocalBackupManager.SetHighScore(ScoreTextScript.scoreValue);
+        LocalBackupManager.IncrementTotalGames();
+        LocalBackupManager.IncrementTotalScore(ScoreTextScript.scoreValue);
+        LocalBackupManager.IncrementTotalCoins(CoinTextScript.coinAmount);
         LossCountAchievement();
         WinCountAchievement();
         PolandballAchievement();
@@ -69,7 +72,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_ANDROID
                 GooglePlayServicesManager.UnlockAchievementCoroutine("EIGTH!?");
 #elif UNITY_IOS
-                GameCenterManager.UnlockAchievement("EIGTH!?");
+                GameCenterManager.UnlockAchievementCoroutine("EIGTH!?");
 #endif
             }
             else if (currentCount == 9)
@@ -77,7 +80,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_ANDROID
                 GooglePlayServicesManager.UnlockAchievementCoroutine("NINE!?");
 #elif UNITY_IOS
-                GameCenterManager.UnlockAchievement("NINE!?");
+                GameCenterManager.UnlockAchievementCoroutine("NINE!?");
 #endif
             }
             else if (currentCount == 10)
@@ -85,7 +88,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_ANDROID
                 GooglePlayServicesManager.UnlockAchievementCoroutine("TEN!?");
 #elif UNITY_IOS
-                GameCenterManager.UnlockAchievement("TEN!?");
+                GameCenterManager.UnlockAchievementCoroutine("TEN!?");
 #endif
             }
         }
@@ -105,7 +108,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_ANDROID
                 GooglePlayServicesManager.UnlockAchievementCoroutine("Cook");
 #elif UNITY_IOS
-                GameCenterManager.UnlockAchievement("Cook");
+                GameCenterManager.UnlockAchievementCoroutine("Cook");
 #endif
             }
             else
@@ -127,7 +130,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_ANDROID
             GooglePlayServicesManager.UnlockAchievementCoroutine("Poland Cannot Into Space");
 #elif UNITY_IOS
-            GameCenterManager.UnlockAchievement("Poland Cannot Into Space");
+            GameCenterManager.UnlockAchievementCoroutine("Poland Cannot Into Space");
 #endif
         }
     }
@@ -139,7 +142,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_ANDROID
             GooglePlayServicesManager.UnlockAchievementCoroutine("HUNDRED");
 #elif UNITY_IOS
-            GameCenterManager.UnlockAchievement("HUNDRED");
+            GameCenterManager.UnlockAchievementCoroutine("HUNDRED");
 #endif
         }
     }
@@ -151,7 +154,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_ANDROID
             GooglePlayServicesManager.UnlockAchievementCoroutine("Come On");
 #elif UNITY_IOS
-            GameCenterManager.UnlockAchievement("Come On");
+            GameCenterManager.UnlockAchievementCoroutine("Come On");
 #endif
         }
     }

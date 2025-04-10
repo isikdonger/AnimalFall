@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
     {
         var touches = new List<Touch>(Input.touchCount);
 
-        for(int i=0;i<touches.Count; i++)
+        for (int i=0;i<touches.Count; i++)
         {
             touches.Add(Input.GetTouch(i));
         }

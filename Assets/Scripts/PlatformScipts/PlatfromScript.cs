@@ -127,7 +127,7 @@ public class PlatfromScript : MonoBehaviour
 #if UNITY_ANDROID
                     GooglePlayServicesManager.UnlockAchievementCoroutine("Narwhal Blast");
 #elif UNITY_IOS
-                    GameCenterManager.UnlockAchievement("Narwhal Blast");
+                    GameCenterManager.UnlockAchievementCoroutine("Narwhal Blast");
 #endif
                 }
             }
