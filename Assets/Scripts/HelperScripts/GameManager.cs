@@ -42,10 +42,7 @@ public class GameManager : MonoBehaviour
         PlatfromSpawner.platform_Spawn_Timer = 7.5f;
         PlatfromSpawner.current_Platform_Spawn_Timer = 0f;
         PlatfromSpawner.isPaused = false;
-        PlayerMovement.MoveSpeed = 0.1f;
-        PlayerMovement.newMoveSpeed = 0.1f;
-        PlayerMovement.gravityScale = 0.1f;
-        PlayerMovement.speedmultiplyer = 0f;
+        PlayerMovement.InitializeGame();
         ScoreTextScript.scoreValue = 0;
         Die.animator.ResetTrigger("Freeze");
         Die.animator.ResetTrigger("Unfreeze");

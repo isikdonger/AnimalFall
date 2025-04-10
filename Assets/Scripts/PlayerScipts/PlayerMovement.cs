@@ -4,80 +4,91 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D myBody;
-    public static float MoveSpeed = 0.1f;
-    public static float newMoveSpeed = 0.1f;
-    public static float gravityScale = 0.1f;
-    public static float speedmultiplyer = 0f;
+    private Rigidbody2D rb;
+    public static float speedmultiplyer;
+    private static float baseGravity;
+    private static float baseSpeed;
+    private static int ticksSinceStart;
+
     private float ScreenWidth;
+
     void Awake()
     {
-        myBody = GetComponent<Rigidbody2D>();
-        gravityScale = myBody.gravityScale;
+        rb = GetComponent<Rigidbody2D>();
+        baseGravity = rb.gravityScale;
         ScreenWidth = Screen.width;
     }
-    void Update()
+
+    public static void InitializeGame()
     {
-        newMoveSpeed += 0.00001f;
-        gravityScale += 0.0000005f;
+        speedmultiplyer = 1f;
+        baseGravity = 0.5f;
+        baseSpeed = 1f;
+        ticksSinceStart = 0;
     }
+
     void FixedUpdate()
     {
-        SpeedMultiply();
+        ticksSinceStart++;
+
+        rb.gravityScale = baseGravity + ticksSinceStart * 0.00001f;
+
+        float terminalVelocity = 3 * Mathf.Sqrt(rb.gravityScale);
+        rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -terminalVelocity, terminalVelocity);
+
         AndroidMove();
         PcMove();
     }
-    void SpeedMultiply()
+
+    public void Move(List<Touch> touches)
     {
-        int i = 0;
-        if (i < Input.touchCount)
+        float moveSpeed = baseSpeed * Mathf.Clamp(speedmultiplyer + 0.0000015f * ticksSinceStart, 1, 20);
+
+        for (int i = 0; i < touches.Count; i++)
         {
-            if (speedmultiplyer < 20f)
+            if (touches[i].position.x > ScreenWidth / 2)
             {
-                speedmultiplyer += 0.15f;
+                rb.linearVelocity = new Vector2(moveSpeed, rb.linearVelocity.y);
             }
-            else
+            if (touches[i].position.x < ScreenWidth / 2)
             {
-                speedmultiplyer = 20f;
+                rb.linearVelocity = new Vector2(-moveSpeed, rb.linearVelocity.y);
             }
-            ++i;
-        }
-        else
-        {
-            speedmultiplyer = 0f;
         }
     }
+
     public void AndroidMove()
     {
-        MoveSpeed = newMoveSpeed * speedmultiplyer;
-        int i = 0;
-        while (i < Input.touchCount)
+        var touches = new List<Touch>(Input.touchCount);
+
+        for(int i=0;i<touches.Count; i++)
         {
-            if (Input.GetTouch(i).position.x > ScreenWidth / 2)
-            {
-                myBody.linearVelocity = new Vector2(MoveSpeed, myBody.linearVelocity.y);
-            }
-            if (Input.GetTouch(i).position.x < ScreenWidth / 2)
-            {
-                myBody.linearVelocity = new Vector2(-MoveSpeed, myBody.linearVelocity.y);
-            }
-            ++i;
+            touches.Add(Input.GetTouch(i));
         }
+
+        Move(touches);
     }
+
     void PcMove()
     {
-        MoveSpeed = newMoveSpeed * 10;
+        List<Touch> touches = new List<Touch>();
         if (Input.GetAxisRaw("Horizontal") > 0f)
         {
-            myBody.linearVelocity = new Vector2(MoveSpeed, myBody.linearVelocity.y);
+            Touch t = new Touch();
+            t.position = new Vector3(1000, 0);
+            touches.Add(t);
         }
         if (Input.GetAxisRaw("Horizontal") < 0f)
         {
-            myBody.linearVelocity = new Vector2(-MoveSpeed, myBody.linearVelocity.y);
+            Touch t = new Touch();
+            t.position = new Vector3(-1000, 0);
+            touches.Add(t);
         }
+        Move(touches);
     }
+
     public void PlatformMove(float x)
     {
-        myBody.linearVelocity = new Vector2(x, myBody.linearVelocity.y);
+        rb.linearVelocity = new Vector2(x, rb.linearVelocity.y);
     }
 }
