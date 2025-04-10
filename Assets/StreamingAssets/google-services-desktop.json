@@ -7,22 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:580825207428:ios:c8fcf61d20ccfd6a2b28d1",
+        "mobilesdk_app_id": "1:580825207428:android:143d9a13f7fd39852b28d1",
         "android_client_info": {
           "package_name": "com.IshigoGames.AnimalFall"
         }
       },
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBAHMD5uwHFybSvNgr_v5xrQXxjNY-ngh0"
+          "current_key": "AIzaSyBId_wWUEEEokypSGvHsQhgw3KLYAyUKWo"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 0
-        },
         "appinvite_service": {
-          "status": 1
+          "other_platform_oauth_client": []
         }
       }
     }
