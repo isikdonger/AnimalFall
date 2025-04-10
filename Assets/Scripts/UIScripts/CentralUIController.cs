@@ -10,7 +10,6 @@ public class CentralUIController : MonoBehaviour
     public GameObject MainMenu;
     public GameObject StartBtn;
     public Text StartText;
-    public Text AccountName;
     public GameObject AccountMenu;
     public GameObject ObjectivesMenu;
     public GameObject CustomizePanel;

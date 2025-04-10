@@ -59,7 +59,7 @@ public class CustomizePanelScript : MonoBehaviour
 #if UNITY_ANDROID
             GooglePlayServicesManager.UnlockAchievementCoroutine("This is Getting Out of Hand");
 #elif UNITY_IOS
-            GameCenterManager.UnlockAchievement("This is Getting Out of Hand");
+            GameCenterManager.UnlockAchievementCoroutine("This is Getting Out of Hand");
 #endif
         }
         PlayerPrefs.SetInt("characterIndex", index);

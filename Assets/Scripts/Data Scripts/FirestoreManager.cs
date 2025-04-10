@@ -210,6 +210,50 @@ public static class FirestoreManager
 
         try
         {
+            DocumentReference docRef = _firestore.Collection("userData").Document(_userId);
+            DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+
+            // Load local user data (always exists, even if default)
+            UserData localUserData = LocalBackupManager.LoadUserData() ?? new UserData();
+
+            // CASE 1: First-time user (no cloud save)
+            if (!snapshot.Exists)
+            {
+                Debug.Log("First-time user detected. Uploading initial user data.");
+                await SaveUserDataToCloud(JsonUtility.ToJson(localUserData));
+                return true;
+            }
+
+            // CASE 2: Existing user (merge cloud + local)
+            string encryptedData = snapshot.GetValue<string>("data");
+            string jsonData = SecureDataManager.Decrypt(encryptedData, _encryptionKey);
+            UserData cloudUserData = JsonUtility.FromJson<UserData>(jsonData);
+
+            // Merge strategy (customize per game needs)
+            UserData mergedUserData = new UserData()
+            {
+                // Take maximum values
+                totalGames = Mathf.Max(localUserData.totalGames, cloudUserData.totalGames),
+                totalScore = Mathf.Max(localUserData.totalScore, cloudUserData.totalScore),
+                totalCoins = Mathf.Max(localUserData.totalCoins, cloudUserData.totalCoins),
+                coinSpent = Mathf.Max(localUserData.coinSpent, cloudUserData.coinSpent),
+                achievementsCompleted = Mathf.Max(localUserData.achievementsCompleted, cloudUserData.achievementsCompleted)
+            };
+
+            // Save merged data everywhere
+            LocalBackupManager.SaveUserData(mergedUserData);
+            await SaveUserDataToCloud(JsonUtility.ToJson(mergedUserData));
+
+            Debug.Log("User data sync completed successfully.");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Sync failed: {ex.Message}\n{ex.StackTrace}");
+            return false;
+        }
+
+        try
+        {
             DocumentReference docRef = _firestore.Collection("gameProgress").Document(_userId);
             DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
 
@@ -238,7 +282,6 @@ public static class FirestoreManager
                 // Counters (take maximum to prevent inflation)
                 breakCount = Mathf.Max(localProgress.breakCount, cloudProgress.breakCount),
                 spikeDeathCount = Mathf.Max(localProgress.spikeDeathCount, cloudProgress.spikeDeathCount),
-                //coinSpent = Mathf.Max(localProgress.coinSpent, cloudProgress.coinSpent),
                 winCount = Mathf.Max(localProgress.winCount, cloudProgress.winCount),
                 lossCount = Mathf.Max(localProgress.lossCount, cloudProgress.lossCount),
 
@@ -251,18 +294,47 @@ public static class FirestoreManager
             await SaveProgressToCloud(JsonUtility.ToJson(mergedProgress));
 
             Debug.Log("Cloud sync completed successfully.");
-            return true;
         }
         catch (Exception ex)
         {
             Debug.LogError($"Sync failed: {ex.Message}\n{ex.StackTrace}");
             return false;
         }
+
+        return true;
     }
 
 #if UNITY_ANDROID || UNITY_IOS
     /// <summary>
     /// Encrypts and saves progress to Firestore.
+    /// </summary>
+    private static async Task SaveUserDataToCloud(string jsonData)
+    {
+        if (_firestore == null || string.IsNullOrEmpty(_userId))
+            throw new ArgumentNullException("Firestore not initialized");
+
+        try
+        {
+            string encryptedData = SecureDataManager.Encrypt(jsonData, _encryptionKey);
+            await _firestore.Collection("userData")
+                .Document(_userId)
+                .SetAsync(new
+                {
+                    data = encryptedData,
+                    lastUpdated = FieldValue.ServerTimestamp // Audit field
+                }, SetOptions.MergeFields("data", "lastUpdated")); // Preserves other fields if they exist
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Cloud save failed: {ex.Message}");
+            throw; // Re-throw for callers to handle
+        }
+    }
+#endif
+
+#if UNITY_ANDROID || UNITY_IOS
+    /// <summary>
+    /// Encrypts and saves user data to Firestore.
     /// </summary>
     private static async Task SaveProgressToCloud(string jsonData)
     {

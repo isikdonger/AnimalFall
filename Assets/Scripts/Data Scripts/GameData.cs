@@ -14,10 +14,10 @@ public class GameProgress
     public int winCount;
 }
 
+[Serializable]
 public class UserData
 {
     public int totalGames;
-    public int totalWins;
     public int totalScore;
     public int totalCoins;
     public int coinSpent;

@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "com.apple.unityplugin.core": "file:C:/Users/user/Downloads/com.apple.unityplugin.core-1.0.5.tgz",
-    "com.apple.unityplugin.gamecontroller": "file:C:/Users/user/Downloads/com.apple.unityplugin.gamecontroller-1.0.2.tgz",
-    "com.apple.unityplugin.gamekit": "file:C:/Users/user/Downloads/com.apple.unityplugin.gamekit-1.0.4.tgz",
+    "com.apple.unityplugin.core": "file:IOS Plugins/com.apple.unityplugin.core-1.0.5.tgz",
+    "com.apple.unityplugin.gamecontroller": "file:IOS Plugins/com.apple.unityplugin.gamecontroller-1.0.2.tgz",
+    "com.apple.unityplugin.gamekit": "file:IOS Plugins/com.apple.unityplugin.gamekit-1.0.4.tgz",
     "com.unity.collab-proxy": "2.7.1",
     "com.unity.feature.2d": "2.0.1",
     "com.unity.ide.rider": "3.0.31",

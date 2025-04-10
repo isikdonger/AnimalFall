@@ -18,11 +18,11 @@ public class ScreenAdjuster : MonoBehaviour
     void Start()
     {
         // Camera resolution
-        int resWidth, resHeight, multiplier, scale;
+        int resWidth, resHeight, scale;
         resWidth = Camera.pixelWidth;
         resHeight = Camera.pixelHeight;
-        multiplier = resHeight > 2400 ? 1 : -1;
-        scale = (resHeight - HEIGHT) / 300 * 25 * multiplier;
+        Debug.Log(resHeight + " " + resWidth);
+        scale = (resHeight - HEIGHT) / 300 * 25;
 
         // Top Panel Adjustment
         RectTransform scoreTextRT = scoreText.GetComponent<RectTransform>(), pauseButtonRT = pauseButton.GetComponent<RectTransform>(), 

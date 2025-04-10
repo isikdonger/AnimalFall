@@ -2876,6 +2876,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1436432143}
+        m_TargetAssemblyTypeName: GameCenterUI, Assembly-CSharp
+        m_MethodName: DisplayLeaderboard
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &356121051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9330,13 +9342,25 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1436432138}
-        m_TargetAssemblyTypeName: AchievmentsMenuScript, Assembly-CSharp
-        m_MethodName: Open_CloseAchievmentsMenu
+      - m_Target: {fileID: 1436432143}
+        m_TargetAssemblyTypeName: GameCenterUI, Assembly-CSharp
+        m_MethodName: DisplayAchievements
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1436432130}
+        m_TargetAssemblyTypeName: GameCenterUI, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -14581,6 +14605,7 @@ GameObject:
   - component: {fileID: 1436432132}
   - component: {fileID: 1436432140}
   - component: {fileID: 1436432141}
+  - component: {fileID: 1436432143}
   m_Layer: 0
   m_Name: ScriptController
   m_TagString: Untagged
@@ -14716,6 +14741,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d5bfd5bcdb99e34e91a72904e6fc8b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AcccountName: {fileID: 208664453}
+  LeaderboardRank: {fileID: 1307996258}
+  TotalGames: {fileID: 22258966}
+  TotalScore: {fileID: 1019663770}
+  TotalCoins: {fileID: 1766344036}
+  CoinsSpent: {fileID: 1930125458}
+  AchievementsCompleted: {fileID: 1299418739}
+  HighScore: {fileID: 1578340400}
 --- !u!114 &1436432140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14740,8 +14773,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a50ec679855e0d4faadd65e45aca670, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highscoreText: {fileID: 1578340400}
-  leaderboardRank: {fileID: 1307996258}
 --- !u!114 &1436432142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14757,7 +14788,6 @@ MonoBehaviour:
   MainMenu: {fileID: 757211348}
   StartBtn: {fileID: 2004545646}
   StartText: {fileID: 2017453922}
-  AccountName: {fileID: 208664453}
   AccountMenu: {fileID: 159246747}
   ObjectivesMenu: {fileID: 1732230826}
   CustomizePanel: {fileID: 751320415}
@@ -14767,6 +14797,18 @@ MonoBehaviour:
   CustomizeBtn: {fileID: 673465770}
   SettingBtn: {fileID: 82469824}
   AchievmentsBtn: {fileID: 993116652}
+--- !u!114 &1436432143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436432130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d89a3c72c0706ea429033660387c11b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1439609223
 GameObject:
   m_ObjectHideFlags: 0

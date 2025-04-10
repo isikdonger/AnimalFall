@@ -164,7 +164,6 @@ public static class GooglePlayServicesManager
         if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
             // Retrieve the achievement ID
-
             string achievementID = GetAchievementID("achievement_" + achievementName.ToLower().Replace(" ", "_"));
 
             if (string.IsNullOrEmpty(achievementID))
@@ -176,6 +175,11 @@ public static class GooglePlayServicesManager
             PlayGamesPlatform.Instance.ReportProgress(achievementID, 100.0f, (bool success) =>
             {
                 Debug.Log(success ? "Achievement unlocked!" : "Failed to unlock achievement.");
+
+                if (success)
+                {
+                    LocalBackupManager.IncrementCompletedAchievements();
+                }
             });
         }
     }
