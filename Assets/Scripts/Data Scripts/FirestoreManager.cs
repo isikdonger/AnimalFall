@@ -25,7 +25,7 @@ public static class FirestoreManager
     /// <summary>
     /// Initializes Firebase & Google Play authentication.
     /// </summary>
-    public static async Task Initialize()
+    public static async Task<bool> Initialize()
     {
         DependencyStatus status = await FirebaseApp.CheckAndFixDependenciesAsync();
         if (status == DependencyStatus.Available)
@@ -33,32 +33,34 @@ public static class FirestoreManager
             _firestore = FirebaseFirestore.DefaultInstance;
             _auth = FirebaseAuth.DefaultInstance;
             Debug.Log("Firebase initialized successfully.");
+            return true;
         }
         else
         {
             Debug.LogError("Firebase dependencies not available: " + status);
+            return false;
         }
     }
 
     /// <summary>
     /// Authenticate with Firebase using Google Play Games.
     /// </summary>
-    public static Task<FirebaseUser> AuthenticateFirebase()
+    public static async Task<FirebaseUser> AuthenticateFirebase()
     {
         var tcs = new TaskCompletionSource<FirebaseUser>();
 
-        // Request auth code using callback
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if UNITY_ANDROID
+        // Play Games Sign-In
         PlayGamesPlatform.Instance.RequestServerSideAccess(
             false,
             async authCode =>
             {
-                    if (string.IsNullOrEmpty(authCode))
-                    {
-                        Debug.LogError("Failed to retrieve auth code.");
-                        tcs.SetException(new Exception("Failed to get auth code."));
-                        return;
-                    }
+                if (string.IsNullOrEmpty(authCode))
+                {
+                    Debug.LogError("Failed to retrieve auth code.");
+                    tcs.SetException(new Exception("Failed to get auth code."));
+                    return;
+                }
 
                 Debug.Log("Auth Code Received: " + authCode);
 
@@ -83,9 +85,30 @@ public static class FirestoreManager
                 }
             }
         );
+#elif UNITY_IOS
+        // Game Center Sign-In
+        try
+        {
+            // Get Credential from Game Center
+            Credential credential = await GameCenterAuthProvider.GetCredentialAsync();
+
+            // Sign in to Firebase asynchronously
+            FirebaseUser newUser = await _auth.SignInWithCredentialAsync(credential);
+            Debug.Log($"Firebase Sign-In Successful! User: {newUser.DisplayName}");
+
+            _userId = newUser.UserId; // Google Play User ID
+            _encryptionKey = await GenerateEncryptionKey(_userId);
+
+            tcs.SetResult(newUser);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Firebase Sign-In Failed: {e.Message}");
+            tcs.SetException(e);
+        }
 #endif
 
-        return tcs.Task;
+        return await tcs.Task;
     }
 
     /*public static async Task<bool> AuthenticateFirebase()
@@ -172,7 +195,6 @@ public static class FirestoreManager
         return _encryptionKey;
     }
 
-#if !UNITY_EDITOR
     /// <summary>
     /// Synchronizes local progress with Firestore, handling first-time users and merge conflicts.
     /// Returns true if sync succeeded.
@@ -216,7 +238,7 @@ public static class FirestoreManager
                 // Counters (take maximum to prevent inflation)
                 breakCount = Mathf.Max(localProgress.breakCount, cloudProgress.breakCount),
                 spikeDeathCount = Mathf.Max(localProgress.spikeDeathCount, cloudProgress.spikeDeathCount),
-                coinSpent = Mathf.Max(localProgress.coinSpent, cloudProgress.coinSpent),
+                //coinSpent = Mathf.Max(localProgress.coinSpent, cloudProgress.coinSpent),
                 winCount = Mathf.Max(localProgress.winCount, cloudProgress.winCount),
                 lossCount = Mathf.Max(localProgress.lossCount, cloudProgress.lossCount),
 
@@ -237,9 +259,8 @@ public static class FirestoreManager
             return false;
         }
     }
-#endif
 
-#if !UNITY_EDITOR
+#if UNITY_ANDROID || UNITY_IOS
     /// <summary>
     /// Encrypts and saves progress to Firestore.
     /// </summary>

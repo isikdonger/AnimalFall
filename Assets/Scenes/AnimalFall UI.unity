@@ -14757,6 +14757,7 @@ MonoBehaviour:
   MainMenu: {fileID: 757211348}
   StartBtn: {fileID: 2004545646}
   StartText: {fileID: 2017453922}
+  AccountName: {fileID: 208664453}
   AccountMenu: {fileID: 159246747}
   ObjectivesMenu: {fileID: 1732230826}
   CustomizePanel: {fileID: 751320415}

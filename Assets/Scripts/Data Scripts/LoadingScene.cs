@@ -47,28 +47,28 @@ public class LoadingScene : MonoBehaviour
 
         try
         {
-#if !UNITY_EDITOR
+            if (!Application.isEditor)
+            {
 #if UNITY_ANDROID
-                // Production initialization sequence
-                await FirestoreManager.Initialize();
+                // Android initialization sequence
                 bool playGamesSuccess = await GooglePlayServicesManager.Initialize();
-        
-                if (playGamesSuccess)
+                bool firebaseSuccess = await FirestoreManager.Initialize();
+                if (firebaseSuccess && playGamesSuccess)
                 {
                     await FirestoreManager.AuthenticateFirebase();
                     await FirestoreManager.SyncWithCloud();
                 }
 #elif UNITY_IOS
-            // iOS initialization sequence
-            await FirestoreManager.Initialize();
-                await FirestoreManager.AuthenticateFirebase();
-                await FirestoreManager.SyncWithCloud();
-#else
-            // Editor testing - add artificial delay to simulate initialization
-            await Task.Delay(1000); // 1 second mock loading
+                // iOS initialization sequence
+                bool gameCenterSuccess = await GameCenterManager.Initialize();
+                bool firebaseSuccess = await FirestoreManager.Initialize();
+                if (firebaseSuccess && gameCenterSuccess)
+                {
+                    await FirestoreManager.AuthenticateFirebase();
+                    await FirestoreManager.SyncWithCloud();
+                }
 #endif
-#endif
-
+            }
             // Activate UI scene
             uiLoadOp.allowSceneActivation = true;
             while (!uiLoadOp.isDone)

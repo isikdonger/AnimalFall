@@ -4,7 +4,6 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
-#if !UNITY_EDITOR
 public static class SecureDataManager
 {
     /// <summary>
@@ -139,4 +138,3 @@ public static class SecureDataManager
         }
     }
 }
-#endif

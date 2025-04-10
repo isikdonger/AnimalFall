@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+#if UNITY_ANDROID
 public class GooglePlayServicesUI : MonoBehaviour
 {
     [SerializeField] Text highscoreText;
@@ -17,21 +18,16 @@ public class GooglePlayServicesUI : MonoBehaviour
 
     public void DisplayLeaderboard()
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
         GooglePlayServicesManager.ShowLeaderboard();
-#endif
     }
 
     public void DisplayHighScore()
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
         highscoreText.text = LocalBackupManager.GetHighScore().ToString();
-#endif
     }
 
     async void DisplayLeaderboardRank()
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
         try
         {
             int rank = await GooglePlayServicesManager.GetLeaderboardRankAsync();
@@ -42,13 +38,11 @@ public class GooglePlayServicesUI : MonoBehaviour
             Debug.LogError($"Error retrieving leaderboard rank: {ex.Message}");
             leaderboardRank.text = "N/A"; // Display "N/A" or some error message
         }
-#endif
     }
 
     public void DisplayAchievements()
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
         GooglePlayServicesManager.ShowAchievements();
-#endif
     }
 }
+#endif

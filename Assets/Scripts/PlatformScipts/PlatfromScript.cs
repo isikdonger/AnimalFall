@@ -121,19 +121,15 @@ public class PlatfromScript : MonoBehaviour
             Destroy(gameObject);
             if (CustomizePanelScript.characterNames[PlayerPrefs.GetInt("characterIndex")].Equals("narwhal"))
             {
-#if !UNITY_EDITOR && UNITY_ANDROID
-                GooglePlayServicesManager.IsAchievementUnlocked("Narwhal Blast", isUnlocked =>
+                LocalBackupManager.IncrementBreakCount();
+                if (LocalBackupManager.GetBreakCount() == 10)
                 {
-                    if (!isUnlocked)
-                    {
-                        LocalBackupManager.IncrementBreakCount();
-                        if (LocalBackupManager.GetBreakCount() == 10)
-                        {
-                            GooglePlayServicesManager.UnlockAchievementCoroutine("Narwhal Blast");
-                        }
-                    }
-                });
+#if UNITY_ANDROID
+                    GooglePlayServicesManager.UnlockAchievementCoroutine("Narwhal Blast");
+#elif UNITY_IOS
+                    GameCenterManager.UnlockAchievement("Narwhal Blast");
 #endif
+                }
             }
         }
     }

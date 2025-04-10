@@ -3,24 +3,31 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-#if !UNITY_EDITOR
-
-[Serializable]
-public class GameProgress
-{
-    public int highScore;
-    public List<string> usedCharacters = new List<string>();
-    public int characterCount;
-    public int breakCount;
-    public int spikeDeathCount;
-    public int coinSpent;
-    public int lossCount;
-    public int winCount;
-}
-
 public static class LocalBackupManager
 {
     private const string ProgressFile = "gameProgress.dat";
+    private const string UserDataFile = "userData.dat";
+
+    /// <summary>
+    /// Loads the player's profile data from local storage.
+    /// </summary>
+    public static UserData LoadUserData()
+    {
+        byte[] encryptionKey = FirestoreManager.GetEncryptionKey();
+        if (encryptionKey == null || encryptionKey.Length != 32)
+        {
+            Debug.LogError("Encryption key not available.");
+            return new UserData();
+        }
+
+        string jsonData = SecureDataManager.LoadEncryptedData(UserDataFile, encryptionKey);
+        if (!string.IsNullOrEmpty(jsonData))
+        {
+            Debug.Log("Loaded progress from local storage.");
+            return JsonUtility.FromJson<UserData>(jsonData);
+        }
+        return new UserData();
+    }
 
     /// <summary>
     /// Loads the player's progress from local storage.
@@ -44,6 +51,29 @@ public static class LocalBackupManager
     }
 
     /// <summary>
+    /// Saves the player's profile data to local storage.
+    /// </summary>
+    public static void SaveUserData(UserData data)
+    {
+        if (data == null)
+        {
+            Debug.LogError("Progress data is null.");
+            return;
+        }
+
+        byte[] encryptionKey = FirestoreManager.GetEncryptionKey();
+        if (encryptionKey == null || encryptionKey.Length != 32)
+        {
+            Debug.LogError("Encryption key not available.");
+            return;
+        }
+
+        string jsonData = JsonUtility.ToJson(data);
+        SecureDataManager.SaveEncryptedData(UserDataFile, jsonData, encryptionKey);
+        Debug.Log("Game progress saved locally.");
+    }
+
+    /// <summary>
     /// Saves the player's progress to local storage.
     /// </summary>
     public static void SaveProgress(GameProgress progress)
@@ -64,6 +94,26 @@ public static class LocalBackupManager
         string jsonData = JsonUtility.ToJson(progress);
         SecureDataManager.SaveEncryptedData(ProgressFile, jsonData, encryptionKey);
         Debug.Log("Game progress saved locally.");
+    }
+
+    /// <summary>
+    /// Increments the total games in user data.
+    /// </summary>
+    public static void IncrementTotalGames()
+    {
+        UserData data = LoadUserData();
+        data.totalGames++;
+        SaveUserData(data);
+    }
+
+    /// <summary>
+    /// Adds coins to the local progress.
+    /// </summary>
+    public static void CoinSpent(int amount)
+    {
+        UserData data = LoadUserData();
+        data.coinSpent += amount;
+        SaveUserData(data);
     }
 
     /// <summary>
@@ -117,16 +167,6 @@ public static class LocalBackupManager
     {
         GameProgress progress = LoadProgress();
         progress.spikeDeathCount++;
-        SaveProgress(progress);
-    }
-
-    /// <summary>
-    /// Adds coins to the local progress.
-    /// </summary>
-    public static void AddCoins(int amount)
-    {
-        GameProgress progress = LoadProgress();
-        progress.coinSpent += amount;
         SaveProgress(progress);
     }
 
@@ -198,7 +238,7 @@ public static class LocalBackupManager
     /// <summary>
     /// Gets the coins spent from local progress.
     /// </summary>
-    public static int GetSpentCoins() => LoadProgress().coinSpent;
+    //public static int GetSpentCoins() => LoadProgress().coinSpent;
 
     /// <summary>
     /// Gets the loss count from local progress.
@@ -210,4 +250,3 @@ public static class LocalBackupManager
     /// </summary>
     public static int GetWinCount() => LoadProgress().winCount;
 }
-#endif

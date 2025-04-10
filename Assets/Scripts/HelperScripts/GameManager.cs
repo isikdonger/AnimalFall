@@ -23,12 +23,12 @@ public class GameManager : MonoBehaviour
     {
 #if !UNITY_EDITOR
         LocalBackupManager.SetHighScore(ScoreTextScript.scoreValue);
-#endif
         LossCountAchievement();
         WinCountAchievement();
         PolandballAchievement();
         HundredAchievement();
         ComeOnAchievement();
+#endif
         RestartGame();
     }
 
@@ -63,111 +63,99 @@ public class GameManager : MonoBehaviour
 
     public void LossCountAchievement()
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
-        GooglePlayServicesManager.IsAchievementUnlocked("TEN!?", isUnlocked =>
+        LocalBackupManager.IncrementLossCount();
+        if (ScoreTextScript.scoreValue < 10)
         {
-            if (!isUnlocked)
+            int currentCount = LocalBackupManager.GetLossCount();
+            if (currentCount == 8)
             {
-                LocalBackupManager.IncrementLossCount();
-                if (ScoreTextScript.scoreValue < 10)
-                {
-                    int currentCount = LocalBackupManager.GetLossCount();
-                    if (currentCount == 8)
-                    {
-                        GooglePlayServicesManager.UnlockAchievementCoroutine("EIGTH!?");
-                    }
-                    else if (currentCount == 9)
-                    {
-                        GooglePlayServicesManager.UnlockAchievementCoroutine("NINE!?");
-                    }
-                    else if (currentCount == 10)
-                    {
-                        GooglePlayServicesManager.UnlockAchievementCoroutine("TEN!?");
-                    }
-                }
-                else
-                {
-                    LocalBackupManager.ResetLossCount();
-                }
-            }
-        });
+#if UNITY_ANDROID
+                GooglePlayServicesManager.UnlockAchievementCoroutine("EIGTH!?");
+#elif UNITY_IOS
+                GameCenterManager.UnlockAchievement("EIGTH!?");
 #endif
+            }
+            else if (currentCount == 9)
+            {
+#if UNITY_ANDROID
+                GooglePlayServicesManager.UnlockAchievementCoroutine("NINE!?");
+#elif UNITY_IOS
+                GameCenterManager.UnlockAchievement("NINE!?");
+#endif
+            }
+            else if (currentCount == 10)
+            {
+#if UNITY_ANDROID
+                GooglePlayServicesManager.UnlockAchievementCoroutine("TEN!?");
+#elif UNITY_IOS
+                GameCenterManager.UnlockAchievement("TEN!?");
+#endif
+            }
+        }
+        else
+        {
+            LocalBackupManager.ResetLossCount();
+        }
     }
 
     public void WinCountAchievement()
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
-        GooglePlayServicesManager.IsAchievementUnlocked("Cook", isUnlocked =>
+        if (ScoreTextScript.scoreValue >= 10)
         {
-            if (!isUnlocked)
+            int winCount = LocalBackupManager.GetWinCount();
+            if (winCount == 10)
             {
-                if (ScoreTextScript.scoreValue >= 10)
-                {
-                    int winCount = LocalBackupManager.GetWinCount();
-                    if (winCount == 10)
-                    {
-                        GooglePlayServicesManager.UnlockAchievementCoroutine("Cook");
-                    }
-                    else
-                    {
-                        LocalBackupManager.IncrementWinCount();
-                    }
-                }
-                else
-                {
-                     
-                    LocalBackupManager.ResetWinCount();
-                }
-            }
-        });
+#if UNITY_ANDROID
+                GooglePlayServicesManager.UnlockAchievementCoroutine("Cook");
+#elif UNITY_IOS
+                GameCenterManager.UnlockAchievement("Cook");
 #endif
-    }
+            }
+            else
+            {
+                LocalBackupManager.IncrementWinCount();
+            }
+        }
+        else
+        {
+
+            LocalBackupManager.ResetWinCount();
+        }
+     }
 
     public void PolandballAchievement()
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
-        GooglePlayServicesManager.IsAchievementUnlocked("Poland Cannot Into Space", isUnlocked =>
+        if (ScoreTextScript.scoreValue == 1000)
         {
-            if (!isUnlocked)
-            {
-                if (ScoreTextScript.scoreValue == 1000)
-                {
-                    GooglePlayServicesManager.UnlockAchievementCoroutine("Poland Cannot Into Space");
-                }
-            }
-        });
+#if UNITY_ANDROID
+            GooglePlayServicesManager.UnlockAchievementCoroutine("Poland Cannot Into Space");
+#elif UNITY_IOS
+            GameCenterManager.UnlockAchievement("Poland Cannot Into Space");
 #endif
+        }
     }
 
     public void HundredAchievement()
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
-        GooglePlayServicesManager.IsAchievementUnlocked("HUNDRED", isUnlocked =>
+        if (LocalBackupManager.GetHighScore() == 100)
         {
-            if (!isUnlocked)
-            {
-                if (LocalBackupManager.GetHighScore() == 100)
-                {
-                    GooglePlayServicesManager.UnlockAchievementCoroutine("HUNDRED");
-                }
-            }
-        });
+#if UNITY_ANDROID
+            GooglePlayServicesManager.UnlockAchievementCoroutine("HUNDRED");
+#elif UNITY_IOS
+            GameCenterManager.UnlockAchievement("HUNDRED");
 #endif
+        }
     }
 
     public void ComeOnAchievement()
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
-        GooglePlayServicesManager.IsAchievementUnlocked("Come On", isUnlocked =>
+        if (ScoreTextScript.scoreValue == 0)
         {
-            if (!isUnlocked)
-            {
-                if (ScoreTextScript.scoreValue == 0)
-                {
-                    GooglePlayServicesManager.UnlockAchievementCoroutine("Come On");
-                }
-            }
-        });
+#if UNITY_ANDROID
+            GooglePlayServicesManager.UnlockAchievementCoroutine("Come On");
+#elif UNITY_IOS
+            GameCenterManager.UnlockAchievement("Come On");
 #endif
+        }
     }
 }
