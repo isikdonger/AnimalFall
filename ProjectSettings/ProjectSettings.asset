@@ -780,7 +780,8 @@ PlayerSettings:
   webGLWebAssemblyBigInt: 0
   webGLCloseOnQuit: 0
   webWasm2023: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Android: DISABLE_APPLE_CORE
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

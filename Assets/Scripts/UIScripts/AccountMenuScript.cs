@@ -1,8 +1,9 @@
-﻿using GooglePlayGames;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+
+#if UNITY_ANDROID
+using GooglePlayGames;
+#endif
 
 public class AccountMenuScript : MonoBehaviour
 {

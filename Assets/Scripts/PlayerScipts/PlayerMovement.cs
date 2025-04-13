@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -29,15 +30,25 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        ticksSinceStart++;
+        // Increase gravity scale over time
+        rb.gravityScale = baseGravity + Mathf.Pow(ticksSinceStart * 0.0001f, 1.2f);
 
-        rb.gravityScale = baseGravity + ticksSinceStart * 0.00001f;
+        // Calculate terminal velocity (now quadratic for more exponential feel)
+        float terminalVelocity = 5 * rb.gravityScale;
 
-        float terminalVelocity = 3 * Mathf.Sqrt(rb.gravityScale);
-        rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -terminalVelocity, terminalVelocity);
+        // Apply more exponential acceleration when falling
+        if (rb.linearVelocityY < 0)
+        {
+            // This multiplier will make the fall feel more exponential
+            float fallMultiplier = 1.025f;
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+        }
 
-        AndroidMove();
+        // Still clamp to terminal velocity
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -terminalVelocity, float.MaxValue));
+
         PcMove();
+        MobileMove();
     }
 
     public void Move(List<Touch> touches)
@@ -57,11 +68,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void AndroidMove()
+    public void MobileMove()
     {
-        var touches = new List<Touch>(Input.touchCount);
+        int touchCount = Input.touchCount;
+        var touches = new List<Touch>(touchCount);
 
-        for (int i=0;i<touches.Count; i++)
+        for (int i=0;i<touchCount; i++)
         {
             touches.Add(Input.GetTouch(i));
         }

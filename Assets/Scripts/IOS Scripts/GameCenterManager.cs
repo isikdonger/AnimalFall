@@ -1,15 +1,12 @@
+#if UNITY_IOS
 using UnityEngine;
 using Apple.GameKit;
 using System;
 using System.Threading.Tasks;
 using Apple.GameKit.Leaderboards;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.SocialPlatforms.GameCenter;
 using System.Collections;
-using GooglePlayGames.BasicApi;
 using Apple.Core.Runtime;
 
-#if UNITY_IOS
 public static class GameCenterManager
 {
     public static async Task<bool> Initialize()
