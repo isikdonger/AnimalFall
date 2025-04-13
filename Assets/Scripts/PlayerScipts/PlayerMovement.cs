@@ -5,6 +5,10 @@ using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static readonly float MAX_GRAVITY = 1.5f;
+    public static readonly float HOLD_SPEED_MULTIPLIER = 1;
+    public static readonly float MAX_SPEED = 4 - HOLD_SPEED_MULTIPLIER * Mathf.PI / 2;
+
     private Rigidbody2D rb;
     public static float speedmultiplyer;
     private static float baseGravity;
@@ -36,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Increase gravity scale over time
         rb.gravityScale = baseGravity + Mathf.Pow(ticksSinceStart * 0.0001f, 1.2f);
+        rb.gravityScale = rb.gravityScale > MAX_GRAVITY ? MAX_GRAVITY : baseGravity;
 
         // Calculate terminal velocity (now quadratic for more exponential feel)
         float terminalVelocity = 5 * rb.gravityScale;
@@ -51,16 +56,19 @@ public class PlayerMovement : MonoBehaviour
         // Still clamp to terminal velocity
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -terminalVelocity, float.MaxValue));
 
-        #if UNITY_STANDALONE || UNITY_WEBGL || UNITY_EDITOR
-                PcMove();
-        #elif UNITY_IOS || UNITY_ANDROID
-                MobileMove();
-        #endif
+        
+        if(!PcMove())
+        {
+            MobileMove();
+        }
+        
     }
 
     public void Move(List<Touch> touches)
     {
         float moveSpeed = baseSpeed * Mathf.Clamp(speedmultiplyer + 0.0000015f * ticksSinceStart, 1, 20);
+
+        moveSpeed = moveSpeed > MAX_SPEED ? MAX_SPEED : moveSpeed;
 
         int leftCounter = 0;
         int rightCounter = 0;
@@ -79,14 +87,14 @@ public class PlayerMovement : MonoBehaviour
 
         if(rightCounter>leftCounter)
         {
-            moveSpeed += Mathf.Atan(rightHoldingTime * 0.01f);
+            moveSpeed += HOLD_SPEED_MULTIPLIER * Mathf.Atan(rightHoldingTime * 0.01f);
             rb.linearVelocity = new Vector2(moveSpeed, rb.linearVelocity.y);
             rightHoldingTime++;
             leftHoldingTime = 0;
         }
         else if(leftCounter>rightCounter)
         {
-            moveSpeed += Mathf.Atan(leftHoldingTime * 0.01f);
+            moveSpeed += HOLD_SPEED_MULTIPLIER * Mathf.Atan(leftHoldingTime * 0.01f);
             rb.linearVelocity = new Vector2(-moveSpeed, rb.linearVelocity.y);
             leftHoldingTime++;
             rightHoldingTime = 0;
@@ -111,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
         Move(touches);
     }
 
-    void PcMove()
+    public bool PcMove()
     {
         List<Touch> touches = new List<Touch>();
         if (Input.GetAxisRaw("Horizontal") > 0f)
@@ -127,6 +135,7 @@ public class PlayerMovement : MonoBehaviour
             touches.Add(t);
         }
         Move(touches);
+        return touches.Count > 0;
     }
 
     public void PlatformMove(float x)
