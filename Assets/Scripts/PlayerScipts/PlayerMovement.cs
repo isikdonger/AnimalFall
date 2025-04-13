@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private static float baseGravity;
     private static float baseSpeed;
     private static int ticksSinceStart;
+    private static int rightHoldingTime;
+    private static int leftHoldingTime;
 
     private float ScreenWidth;
 
@@ -26,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
         baseGravity = 0.5f;
         baseSpeed = 1f;
         ticksSinceStart = 0;
+        rightHoldingTime = 0;
+        leftHoldingTime = 0;
     }
 
     void FixedUpdate()
@@ -47,24 +51,50 @@ public class PlayerMovement : MonoBehaviour
         // Still clamp to terminal velocity
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -terminalVelocity, float.MaxValue));
 
-        PcMove();
-        MobileMove();
+        #if UNITY_STANDALONE || UNITY_WEBGL || UNITY_EDITOR
+                PcMove();
+        #elif UNITY_IOS || UNITY_ANDROID
+                MobileMove();
+        #endif
     }
 
     public void Move(List<Touch> touches)
     {
         float moveSpeed = baseSpeed * Mathf.Clamp(speedmultiplyer + 0.0000015f * ticksSinceStart, 1, 20);
 
+        int leftCounter = 0;
+        int rightCounter = 0;
+
         for (int i = 0; i < touches.Count; i++)
         {
             if (touches[i].position.x > ScreenWidth / 2)
             {
-                rb.linearVelocity = new Vector2(moveSpeed, rb.linearVelocity.y);
+                rightCounter++;
             }
             if (touches[i].position.x < ScreenWidth / 2)
             {
-                rb.linearVelocity = new Vector2(-moveSpeed, rb.linearVelocity.y);
+                leftCounter++;
             }
+        }
+
+        if(rightCounter>leftCounter)
+        {
+            moveSpeed += Mathf.Atan(rightHoldingTime * 0.01f);
+            rb.linearVelocity = new Vector2(moveSpeed, rb.linearVelocity.y);
+            rightHoldingTime++;
+            leftHoldingTime = 0;
+        }
+        else if(leftCounter>rightCounter)
+        {
+            moveSpeed += Mathf.Atan(leftHoldingTime * 0.01f);
+            rb.linearVelocity = new Vector2(-moveSpeed, rb.linearVelocity.y);
+            leftHoldingTime++;
+            rightHoldingTime = 0;
+        }
+        else
+        {
+            rightHoldingTime = 0;
+            leftHoldingTime = 0;
         }
     }
 
