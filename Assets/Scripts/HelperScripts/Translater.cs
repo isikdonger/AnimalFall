@@ -1,10 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
-using UnityEngine.Localization;
-using Firebase.Auth;
 
 public class Translater : MonoBehaviour
 {

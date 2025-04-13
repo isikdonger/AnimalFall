@@ -1,15 +1,13 @@
-﻿using UnityEngine;
+﻿#if UNITY_ANDROID
+using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using System.Threading.Tasks;
 using System;
 using System.Collections;
 using UnityEngine.UI;
-using UnityEngine.SocialPlatforms;
 using System.Reflection;
-using System.Text;
 
-#if UNITY_ANDROID
 public static class GooglePlayServicesManager
 {
     private static bool isInitialized = false;
@@ -59,7 +57,7 @@ public static class GooglePlayServicesManager
     /// <summary>
     /// Report a score to the leaderboard.
     /// </summary>
-    public static async void ReportScore(long score)
+    public static void ReportScore(long score)
     {
         if (PlayGamesPlatform.Instance.IsAuthenticated())
         {

@@ -10,11 +10,11 @@ public class PlatfromSpawner : MonoBehaviour
     public GameObject freezePlatform;
     public GameObject beamPlatform;
     public GameObject[] movingPlatforms;
-    public static bool isPaused = false;
-    public static float platform_Spawn_Timer = 7.5f;
-    public static float current_Platform_Spawn_Timer = 0f;
+    public static float platform_Spawn_Timer;
+    public static float current_Platform_Spawn_Timer;
     private float cameraHeight, cameraWidth;
     private float min_X, max_X;
+    public static bool isPaused;
 
     private void Start()
     {
@@ -23,6 +23,13 @@ public class PlatfromSpawner : MonoBehaviour
         cameraWidth = cameraHeight * Camera.main.aspect;
         min_X = Camera.main.transform.position.x - cameraWidth / 2 + prefabBound.size.x / 2;
         max_X = Camera.main.transform.position.x + cameraWidth / 2 - prefabBound.size.x / 2;
+    }
+
+    public static void InitiliazeGame()
+    {
+        platform_Spawn_Timer = 7.5f;
+        current_Platform_Spawn_Timer = 0f;
+        isPaused = false;
     }
 
     private void FixedUpdate()

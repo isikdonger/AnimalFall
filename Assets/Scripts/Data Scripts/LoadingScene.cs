@@ -1,12 +1,8 @@
-using GooglePlayGames;
 using System;
 using System.Threading.Tasks;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
-using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class LoadingScene : MonoBehaviour
 {

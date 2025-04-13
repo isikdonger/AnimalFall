@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +7,11 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Firestore;
 using Firebase.RemoteConfig;
-using GooglePlayGames;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+
+#if UNITY_ANDROID
+using GooglePlayGames;
+#endif
 
 public static class FirestoreManager
 {

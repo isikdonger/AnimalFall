@@ -3,7 +3,7 @@
 public class PlatfromScript : MonoBehaviour
 {
     private GameObject BreakablePltatform;
-    public static float move_Speed = 1.25f;
+    public static float move_Speed;
     public bool is_Breakable, is_Platform, is_Freeze, movingPlatfromLeft, movingPlatfromRight, is_Beam;
     private Animator animBreak, animFreeze;
     void Awake()
@@ -14,6 +14,10 @@ public class PlatfromScript : MonoBehaviour
             BreakablePltatform = GameObject.FindGameObjectWithTag("BreakablePlatform");
             animBreak = BreakablePltatform.GetComponent<Animator>();
         }
+    }
+    public static void InitiliazeGame()
+    {
+        move_Speed = 1.25f;
     }
     void Update()
     {

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Rendering;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -38,14 +35,11 @@ public class GameManager : MonoBehaviour
     public void InitiliazeGame()
     {
         Time.timeScale = 1;
-        BGScroll.scroll_Speed = 1f;
-        CoinSpawner.coin_Spawn_Time = 3f;
-        CoinSpawner.current_Coin_Spawn_Timer = 0f;
-        PlatfromScript.move_Speed = 1.25f;
-        PlatfromSpawner.platform_Spawn_Timer = 7.5f;
-        PlatfromSpawner.current_Platform_Spawn_Timer = 0f;
-        PlatfromSpawner.isPaused = false;
         PlayerMovement.InitializeGame();
+        PlatfromSpawner.InitiliazeGame();
+        PlatfromScript.InitiliazeGame();
+        CoinSpawner.InitializeGame();
+        ScoreTextScript.InitiliazeGame();
         ScoreTextScript.scoreValue = 0;
         Die.animator.ResetTrigger("Freeze");
         Die.animator.ResetTrigger("Unfreeze");

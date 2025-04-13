@@ -8,6 +8,11 @@ public class CoinSpawner : MonoBehaviour
     public static float current_Coin_Spawn_Timer = 0f;
     private float min_X = -1.68f, max_X = 1.68f, min_Y = -3.65f, max_Y = 2.65f;
     private GameObject oldbCoin, oldsCoin, oldgCoin, oldkCoin;
+    public static void InitializeGame()
+    {
+        coin_Spawn_Time = 3f;
+        current_Coin_Spawn_Timer = 0f;
+    }
     void FixedUpdate()
     {
         if (ScoreTextScript.scoreValue > 8)

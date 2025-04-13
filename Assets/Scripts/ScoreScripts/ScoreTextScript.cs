@@ -9,13 +9,18 @@ using UnityEngine.Localization.Settings;
 
 public class ScoreTextScript : MonoBehaviour
 {
-    public static int scoreValue = 0;  // Keep score static
+    public static int scoreValue;  // Keep score static
     public TMP_Text scoreText;
     public LocalizedString localizedScoreString; // Keep this as an instance variable
 
     private void Start()
     {
         UpdateScoreText(); // Initialize text on start
+    }
+
+    public static void InitiliazeGame()
+    {
+        scoreValue = 0; // Reset score to 0
     }
 
     public void AddScore()
