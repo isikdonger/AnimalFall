@@ -1,56 +1,88 @@
 using UnityEngine;
 using UnityEngine.Localization.Settings;
-using UnityEngine.UI;
+using System.Collections;
 
 public class CentralUIController : MonoBehaviour
 {
     public static CentralUIController Instance { get; private set; }
 
     [Header("UI References")]
-    public GameObject MainMenu;
-    public GameObject StartBtn;
-    public Text StartText;
-    public GameObject AccountMenu;
-    public GameObject ObjectivesMenu;
-    public GameObject CustomizePanel;
-    public GameObject SettingsPanel;
-    public GameObject CreditsMenu;
-    public GameObject AchievmentsMenu;
-    public GameObject CustomizeBtn;
-    public GameObject SettingBtn;
-    public GameObject AchievmentsBtn;
+    public GameObject customizeBtn;
+    public CanvasGroup customizePanel;
+    public CanvasGroup tapToStartScreen;
+    public CanvasGroup[] subMenus;
+
+    private CanvasGroup _currentMenu;
+    private Coroutine _activeTransition;
 
     private void Awake()
     {
-        // Singleton setup (MUST BE FIRST)
         if (Instance == null)
         {
             Instance = this;
+            // No initialization needed - everything is pre-configured
+            LocalizationSettings.InitializationOperation.Completed += _ =>
+            {
+                tapToStartScreen.gameObject.SetActive(true);
+            };
         }
         else
         {
-            Destroy(gameObject); // Ensures only one instance exists
-            return;
+            Destroy(gameObject);
         }
-
-        // Hide UI until localization is applied
-        MainMenu.SetActive(false);
-
-        // Force preload localization (if using Unity's Localization Package)
-        LocalizationSettings.InitializationOperation.Completed += (op) =>
-        {
-            // Now show the UI
-            MainMenu.SetActive(true);
-        };
     }
 
-    private void Start()
+    public void ToggleMenu(CanvasGroup targetMenu)
     {
-        AccountMenu.SetActive(false);
-        ObjectivesMenu.SetActive(false);
-        CustomizePanel.SetActive(false);
-        SettingsPanel.SetActive(false);
-        CreditsMenu.SetActive(false);
-        AchievmentsMenu.SetActive(false);
+        if (_activeTransition != null)
+            StopCoroutine(_activeTransition);
+
+        _activeTransition = StartCoroutine(ToggleMenuRoutine(targetMenu));
+    }
+
+    private IEnumerator ToggleMenuRoutine(CanvasGroup target)
+    {
+        // Close current menu if different
+        if (_currentMenu != null && _currentMenu != target)
+        {
+            yield return _currentMenu.FadeOut(this);
+            _currentMenu = null;
+        }
+
+        // Toggle target menu
+        if (_currentMenu == target)
+        {
+            yield return target.FadeOut(this);
+            _currentMenu = null;
+            yield return tapToStartScreen.FadeIn(this);
+        }
+        else
+        {
+            yield return tapToStartScreen.FadeOut(this);
+            yield return target.FadeIn(this);
+            _currentMenu = target;
+        }
+
+        _activeTransition = null;
+    }
+
+    // Specific method for character customization flow
+    public void ReturnToMainFromCustomize()
+    {
+        if (_activeTransition != null)
+            StopCoroutine(_activeTransition);
+
+        _activeTransition = StartCoroutine(ReturnToMainRoutine());
+    }
+
+    private IEnumerator ReturnToMainRoutine()
+    {
+        if (_currentMenu != null)
+        {
+            yield return _currentMenu.FadeOut(this);
+            _currentMenu = null;
+        }
+        yield return tapToStartScreen.FadeIn(this);
+        _activeTransition = null;
     }
 }

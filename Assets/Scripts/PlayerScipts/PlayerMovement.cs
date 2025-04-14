@@ -145,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (currentPlatform != null)
         {
-            rb.linearVelocityX += currentPlatform.PushAmount();
+            rb.linearVelocityX += 0.5f * currentPlatform.PushAmount();
         }
 
     }
@@ -203,10 +203,5 @@ public class PlayerMovement : MonoBehaviour
         {
             inputDevice = InputDevice.Keyboard;
         }
-    }
-
-    public void PlatformMove(float x)
-    {
-        rb.linearVelocity = new Vector2(x, rb.linearVelocity.y);
     }
 }
