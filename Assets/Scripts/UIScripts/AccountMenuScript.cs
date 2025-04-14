@@ -7,14 +7,6 @@ using GooglePlayGames;
 
 public class AccountMenuScript : MonoBehaviour
 {
-    private GameObject StartBtn;
-    private GameObject AccountMenu;
-    private Text StartText;
-    private GameObject ObjectivesMenu;
-    private GameObject CustomizePanel;
-    private GameObject SettingsPanel;
-    private GameObject CreditsMenu;
-    private GameObject AchievmentsMenu;
     [SerializeField] private Text AcccountName;
     [SerializeField] private Text LeaderboardRank;
     [SerializeField] private Text TotalGames;
@@ -26,15 +18,6 @@ public class AccountMenuScript : MonoBehaviour
 
     private void Start()
     {
-        StartBtn = CentralUIController.Instance.StartBtn;
-        AccountMenu = CentralUIController.Instance.AccountMenu;
-        StartText = CentralUIController.Instance.StartText;
-        ObjectivesMenu = CentralUIController.Instance.ObjectivesMenu;
-        CustomizePanel = CentralUIController.Instance.CustomizePanel;
-        SettingsPanel = CentralUIController.Instance.SettingsPanel;
-        CreditsMenu = CentralUIController.Instance.CreditsMenu;
-        AchievmentsMenu = CentralUIController.Instance.AchievmentsMenu;
-
         bool signedIn;
 #if UNITY_ANDROID
         signedIn = PlayGamesPlatform.Instance.IsAuthenticated();
@@ -110,39 +93,5 @@ public class AccountMenuScript : MonoBehaviour
     public void SetHighScore()
     {
         HighScore.text = LocalBackupManager.GetHighScore().ToString();
-    }
-
-    public void Open_CloseAccountMenu()
-    {
-        bool signedIn;
-#if UNITY_ANDROID
-        signedIn = PlayGamesPlatform.Instance.IsAuthenticated();
-#elif UNITY_IOS
-        signedIn = Apple.GameKit.GKLocalPlayer.Local.IsAuthenticated;
-#else
-        signedIn = false;
-#endif
-        if (signedIn)
-        {
-            if (AccountMenu.activeSelf == false)
-            {
-                StartBtn.SetActive(false);
-                AccountMenu.SetActive(true);
-                CustomizePanel.SetActive(false);
-                SettingsPanel.SetActive(false);
-                AchievmentsMenu.SetActive(false);
-                CreditsMenu.SetActive(false);
-                ObjectivesMenu.SetActive(false);
-            }
-            else
-            {
-                AccountMenu.SetActive(false);
-                StartBtn.SetActive(true);
-            }
-        }
-        else
-        {
-            StartText.text = "Sign in to view achievements";
-        }
     }
 }
