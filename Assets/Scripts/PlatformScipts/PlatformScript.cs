@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlatfromScript : MonoBehaviour
+public class PlatformScript : MonoBehaviour
 {
     private GameObject BreakablePltatform;
     public static float move_Speed;
@@ -73,49 +73,42 @@ public class PlatfromScript : MonoBehaviour
             animFreeze.speed = -1;
         }
     }
-    void OnCollisionStay2D(Collision2D target)
+
+    public float PushAmount()
     {
-        if (target.gameObject.tag == "Player")
+        if (movingPlatfromRight)
         {
-            if (movingPlatfromRight)
+            if (ScoreTextScript.scoreValue <= 10)
             {
-                if (ScoreTextScript.scoreValue <= 10)
-                {
-                    target.gameObject.GetComponent<PlayerMovement>().PlatformMove(0.5f);
-                }
-                else if (ScoreTextScript.scoreValue <= 20)
-                {
-                    target.gameObject.GetComponent<PlayerMovement>().PlatformMove(0.7f);
-                }
-                else if (ScoreTextScript.scoreValue <= 30)
-                {
-                    target.gameObject.GetComponent<PlayerMovement>().PlatformMove(1f);
-                }
-                else if (ScoreTextScript.scoreValue > 30)
-                {
-                    target.gameObject.GetComponent<PlayerMovement>().PlatformMove(1.5f);
-                }
+                return (0.5f);
             }
-            if (movingPlatfromLeft)
+            else if (ScoreTextScript.scoreValue <= 20)
             {
-                if (ScoreTextScript.scoreValue <= 10)
-                {
-                    target.gameObject.GetComponent<PlayerMovement>().PlatformMove(-0.5f);
-                }
-                else if (ScoreTextScript.scoreValue <= 20)
-                {
-                    target.gameObject.GetComponent<PlayerMovement>().PlatformMove(-0.7f);
-                }
-                else if (ScoreTextScript.scoreValue <= 30)
-                {
-                    target.gameObject.GetComponent<PlayerMovement>().PlatformMove(-1f);
-                }
-                else if (ScoreTextScript.scoreValue > 30)
-                {
-                    target.gameObject.GetComponent<PlayerMovement>().PlatformMove(-1.5f);
-                }
+                return (0.7f);
             }
+            else if (ScoreTextScript.scoreValue <= 30)
+            {
+                return (1f);
+            }
+            return (1.5f);
         }
+        if (movingPlatfromLeft)
+        {
+            if (ScoreTextScript.scoreValue <= 10)
+            {
+                return (-0.5f);
+            }
+            else if (ScoreTextScript.scoreValue <= 20)
+            {
+                return (-0.7f);
+            }
+            else if (ScoreTextScript.scoreValue <= 30)
+            {
+                return (-1f);
+            }
+            return (-1.5f);
+        }
+        return 0;
     }
 
     public void Break()

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -7,17 +8,25 @@ public class PlayerMovement : MonoBehaviour
 {
     public static readonly float MAX_GRAVITY = 1.5f;
     public static readonly float HOLD_SPEED_MULTIPLIER = 1;
-    public static readonly float MAX_SPEED = 4 - HOLD_SPEED_MULTIPLIER * Mathf.PI / 2;
+    public static readonly float MAX_SPEED_WITHOUT_HOLD = 4;
+    public static readonly Func<float, float> HOLDING_SPEED_CURVE = SigmoidFactory(3, 0.01f, 0.25f);
 
     private Rigidbody2D rb;
-    public static float speedmultiplyer;
+    public static float speedmultiplier;
     private static float baseGravity;
     private static float baseSpeed;
     private static int ticksSinceStart;
     private static int rightHoldingTime;
     private static int leftHoldingTime;
+    private static InputDevice inputDevice;
+    private static PlatformScript currentPlatform;
 
     private float ScreenWidth;
+
+    private enum InputDevice
+    {
+        DontKnow, Screen, Keyboard
+    }
 
     void Awake()
     {
@@ -28,22 +37,26 @@ public class PlayerMovement : MonoBehaviour
 
     public static void InitializeGame()
     {
-        speedmultiplyer = 1f;
+        speedmultiplier = 1f;
         baseGravity = 0.5f;
         baseSpeed = 1f;
         ticksSinceStart = 0;
         rightHoldingTime = 0;
         leftHoldingTime = 0;
+        inputDevice = InputDevice.DontKnow;
+        currentPlatform = null;
     }
 
     void FixedUpdate()
     {
+        ticksSinceStart++;
+
         // Increase gravity scale over time
         rb.gravityScale = baseGravity + Mathf.Pow(ticksSinceStart * 0.0001f, 1.2f);
-        rb.gravityScale = rb.gravityScale > MAX_GRAVITY ? MAX_GRAVITY : baseGravity;
+        rb.gravityScale = Mathf.Min(rb.gravityScale, MAX_GRAVITY);
 
-        // Calculate terminal velocity (now quadratic for more exponential feel)
-        float terminalVelocity = 5 * rb.gravityScale;
+        // Calculate terminal velocity (accurate physics, i'm not a ctis student)
+        float terminalVelocity = 5 * Mathf.Sqrt(rb.gravityScale);
 
         // Apply more exponential acceleration when falling
         if (rb.linearVelocityY < 0)
@@ -57,18 +70,41 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -terminalVelocity, float.MaxValue));
 
         
-        if(!PcMove())
+        if(inputDevice!=InputDevice.Keyboard)
         {
             MobileMove();
         }
+        if(inputDevice!=InputDevice.Screen) 
+        {
+            PcMove();
+        }
         
+
+    }
+
+    public static Func<float, float> SigmoidFactory(float upperBound, float initialValue, float timeToReachHalfOfUpperBound)
+    {
+
+        if(upperBound<=initialValue)
+        {
+            throw new ArgumentException("Upper bound can't be lower than initial value");
+        }
+        if (initialValue<=0 || timeToReachHalfOfUpperBound <= 0)
+        {
+            throw new ArgumentException("This function does not allow non-positive arguments");
+        }
+
+        float c = upperBound;
+        float a = c / initialValue - 1;
+        float b = Mathf.Log(a) / timeToReachHalfOfUpperBound;
+        return (x) => c / (1 + a * Mathf.Exp(-b * x));
     }
 
     public void Move(List<Touch> touches)
     {
-        float moveSpeed = baseSpeed * Mathf.Clamp(speedmultiplyer + 0.0000015f * ticksSinceStart, 1, 20);
+        float moveSpeed = baseSpeed * Mathf.Clamp(speedmultiplier + 0.0000015f * ticksSinceStart, 1, 20);
 
-        moveSpeed = moveSpeed > MAX_SPEED ? MAX_SPEED : moveSpeed;
+        moveSpeed = moveSpeed > MAX_SPEED_WITHOUT_HOLD ? MAX_SPEED_WITHOUT_HOLD : moveSpeed;
 
         int leftCounter = 0;
         int rightCounter = 0;
@@ -85,16 +121,18 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if(rightCounter>leftCounter)
+        
+
+        if (rightCounter>leftCounter)
         {
-            moveSpeed += HOLD_SPEED_MULTIPLIER * Mathf.Atan(rightHoldingTime * 0.01f);
+            moveSpeed += HOLDING_SPEED_CURVE.Invoke(rightHoldingTime*0.01f);
             rb.linearVelocity = new Vector2(moveSpeed, rb.linearVelocity.y);
             rightHoldingTime++;
             leftHoldingTime = 0;
         }
         else if(leftCounter>rightCounter)
         {
-            moveSpeed += HOLD_SPEED_MULTIPLIER * Mathf.Atan(leftHoldingTime * 0.01f);
+            moveSpeed += HOLDING_SPEED_CURVE.Invoke(leftHoldingTime * 0.01f);
             rb.linearVelocity = new Vector2(-moveSpeed, rb.linearVelocity.y);
             leftHoldingTime++;
             rightHoldingTime = 0;
@@ -104,6 +142,22 @@ public class PlayerMovement : MonoBehaviour
             rightHoldingTime = 0;
             leftHoldingTime = 0;
         }
+
+        if (currentPlatform != null)
+        {
+            rb.linearVelocityX += currentPlatform.PushAmount();
+        }
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        currentPlatform = collision.gameObject.TryGetComponent(out PlatformScript ps) ? ps : null;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        currentPlatform = null;
     }
 
     public void MobileMove()
@@ -117,25 +171,38 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Move(touches);
+
+        if (touches.Count > 0)
+        {
+            inputDevice = InputDevice.Screen;
+        }
     }
 
-    public bool PcMove()
+    public void PcMove()
     {
         List<Touch> touches = new List<Touch>();
         if (Input.GetAxisRaw("Horizontal") > 0f)
         {
-            Touch t = new Touch();
-            t.position = new Vector3(1000, 0);
+            Touch t = new()
+            {
+                position = new Vector3(ScreenWidth / 2 + 20, 0)
+            };
             touches.Add(t);
         }
         if (Input.GetAxisRaw("Horizontal") < 0f)
         {
-            Touch t = new Touch();
-            t.position = new Vector3(-1000, 0);
+            Touch t = new()
+            {
+                position = new Vector3(ScreenWidth / 2 - 20, 0)
+            };
             touches.Add(t);
         }
         Move(touches);
-        return touches.Count > 0;
+
+        if(touches.Count > 0)
+        {
+            inputDevice = InputDevice.Keyboard;
+        }
     }
 
     public void PlatformMove(float x)
