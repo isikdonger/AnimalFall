@@ -6,7 +6,7 @@ public class PlatformSpawn : MonoBehaviour
 {
     public GameObject standartplatform;
 
-    private void Start()
+    private void Awake()
     {
         SpawnPlatform();
     }

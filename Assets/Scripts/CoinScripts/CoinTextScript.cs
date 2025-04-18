@@ -1,37 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CoinTextScript : MonoBehaviour
 {
-    public static int coinAmount = 0;
-    Text coin;
-    void Start()
+    public static long coinAmount;
+    private static Text coinText;
+
+    private void Start()
     {
-        coin = GetComponent<Text>();
+        coinText = GetComponent<Text>();
+        coinAmount = 0;
+        AlignCoinText();
     }
-    void Update()
+
+    public static void AddCoins(int amount)
+    {
+        coinAmount += amount;
+        AlignCoinText();
+    }
+
+    private static void AlignCoinText()
     {
         if (coinAmount < 1000)
-        {
-            coin.text = coinAmount.ToString();
-        }
-        if (coinAmount >= 1000 && coinAmount < 2000)
-        {
-            coin.text = "1k";
-        }
-        if (coinAmount >= 2000 && coinAmount < 3000)
-        {
-            coin.text = "2k";
-        }
-        if (coinAmount >= 3000 && coinAmount < 4000)
-        {
-            coin.text = "3k";
-        }
-        if (coinAmount >= 4000 && coinAmount < 5000)
-        {
-            coin.text = "4k";
-        }
+            coinText.text = coinAmount.ToString();
+        else if (coinAmount < 1000000)
+            coinText.text = (coinAmount / 1000) + "K";
+        else if (coinAmount < 1000000000)
+            coinText.text = (coinAmount / 1000000) + "M";
+        else if (coinAmount < 1000000000000)
+            coinText.text = (coinAmount / 1000000000) + "B";
+        else if (coinAmount < 1000000000000000)
+            coinText.text = (coinAmount / 1000000000000) + "T";
+        else if (coinAmount < 1000000000000000000)
+            coinText.text = (coinAmount / 1000000000000000) + "Q";
+        else
+            coinText.text = "F U";
     }
 }

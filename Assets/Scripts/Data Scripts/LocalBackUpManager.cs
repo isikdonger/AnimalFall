@@ -110,7 +110,7 @@ public static class LocalBackupManager
     public static void IncrementTotalScore(int score)
     {
         UserData data = LoadUserData();
-        data.totalGames += score;
+        data.totalScore += score;
         SaveUserData(data);
     }
 

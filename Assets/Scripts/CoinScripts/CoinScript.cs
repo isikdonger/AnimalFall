@@ -12,19 +12,19 @@ public class CoinScript : MonoBehaviour
             if (bronzeCoin)
             {
                 //SoundManager.instance.CoinPickClip();
-                CoinTextScript.coinAmount += 1;
+                CoinTextScript.AddCoins(1);
                 Destroy(gameObject);
             }
             if (silverCoin)
             {
                 //SoundManager.instance.CoinPickClip();
-                CoinTextScript.coinAmount += 2;
+                CoinTextScript.AddCoins(2);
                 Destroy(gameObject);
             }
             if (goldCoin)
             {
                 //SoundManager.instance.CoinPickClip();
-                CoinTextScript.coinAmount += 3;
+                CoinTextScript.AddCoins(3);
                 Destroy(gameObject);
             }
             if (killCoin)

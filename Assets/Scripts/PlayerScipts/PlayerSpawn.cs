@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerSpawn : MonoBehaviour
 {
     public GameObject playerPrefab;
-    public GameObject playerParent;
+    public GameObject freezeController;
     public Sprite[] characterSprites;
 
     private void Awake()
@@ -17,6 +17,8 @@ public class PlayerSpawn : MonoBehaviour
     public void SpawnPlayer()
     {
         playerPrefab.GetComponent<SpriteRenderer>().sprite = characterSprites[PlayerPrefs.GetInt("characterIndex")];
-        Instantiate(playerPrefab, playerParent.transform);
+        GameObject playerInstance = Instantiate(playerPrefab, new Vector3(0, 2, 0), Quaternion.identity);
+        GameObject childInstance = Instantiate(freezeController, playerInstance.transform);
+        childInstance.transform.SetParent(playerInstance.transform);
     }
 }

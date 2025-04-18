@@ -31,9 +31,9 @@ public class ScreenAdjuster : MonoBehaviour
         pauseButtonRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, dimension - 50);
         pauseButtonRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dimension - 50);
         pauseButtonRT.anchoredPosition = new Vector2(0, -dimension / 2);
-        coinTextRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, dimension + 100);
+        coinTextRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, dimension + 200);
         coinTextRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dimension);
-        coinTextRT.anchoredPosition = new Vector2((dimension + 100) / 2 + 10, -dimension / 2);
+        coinTextRT.anchoredPosition = new Vector2((dimension + 200) / 2 + 10, -dimension / 2);
         coinText.transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition = new Vector2(175 + scale, 0);
         coinImageRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, dimension - 50);
         coinImageRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dimension - 50);

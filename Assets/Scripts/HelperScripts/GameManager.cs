@@ -41,8 +41,7 @@ public class GameManager : MonoBehaviour
         CoinSpawner.InitializeGame();
         ScoreTextScript.InitiliazeGame();
         ScoreTextScript.scoreValue = 0;
-        Die.animator.ResetTrigger("Freeze");
-        Die.animator.ResetTrigger("Unfreeze");
+        CoinTextScript.coinAmount = 0;
     }
 
     public void RestartGame()
