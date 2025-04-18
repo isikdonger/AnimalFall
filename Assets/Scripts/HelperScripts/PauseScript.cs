@@ -25,7 +25,7 @@ public class PauseScript : MonoBehaviour
             }
             PauseMenu.SetActive(true);
             Time.timeScale = 0;
-            PlatfromSpawner.isPaused = true;
+            PlatformSpawner.isPaused = true;
         }
         else
         {
@@ -35,7 +35,7 @@ public class PauseScript : MonoBehaviour
             }
             PauseMenu.SetActive(false);
             Time.timeScale = 1;
-            PlatfromSpawner.isPaused = false;
+            PlatformSpawner.isPaused = false;
         }
     }
     public void BacktoGame()
@@ -46,12 +46,13 @@ public class PauseScript : MonoBehaviour
         }
         PauseMenu.SetActive(false);
         Time.timeScale = 1;
-        PlatfromSpawner.isPaused = false;
+        PlatformSpawner.isPaused = false;
     }
     public async void BacktoMenu()
     {
         PauseMenu.SetActive(false);
         ScoreTextScript.scoreValue = 0;
+        Time.timeScale = 1;
 #if !UNITY_EDITOR
         await FirestoreManager.SyncWithCloud();
 #endif

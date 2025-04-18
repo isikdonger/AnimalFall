@@ -34,15 +34,4 @@ public static class CanvasGroupExtensions
     {
         return runner.StartCoroutine(Fade(group, 0f, duration, true));
     }
-
-    // For purely visual fades (no input changes)
-    public static Coroutine VisualFadeIn(this CanvasGroup group, MonoBehaviour runner, float duration = 0.3f)
-    {
-        return runner.StartCoroutine(Fade(group, 1f, duration, false));
-    }
-
-    public static Coroutine VisualFadeOut(this CanvasGroup group, MonoBehaviour runner, float duration = 0.3f)
-    {
-        return runner.StartCoroutine(Fade(group, 0f, duration, false));
-    }
 }

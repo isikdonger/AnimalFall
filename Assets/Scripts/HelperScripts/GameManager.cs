@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         PlayerMovement.InitializeGame();
-        PlatfromSpawner.InitiliazeGame();
+        PlatformSpawner.InitiliazeGame();
         PlatformScript.InitiliazeGame();
         CoinSpawner.InitializeGame();
         ScoreTextScript.InitiliazeGame();

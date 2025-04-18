@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatfromSpawner : MonoBehaviour
+public class PlatformSpawner : MonoBehaviour
 {
     public ScoreTextScript scoreTextScript;
     public GameObject platformPrefab;

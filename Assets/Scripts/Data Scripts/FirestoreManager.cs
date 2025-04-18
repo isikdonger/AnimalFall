@@ -71,7 +71,7 @@ public static class FirestoreManager
                     FirebaseUser newUser = await _auth.SignInWithCredentialAsync(credential);
                     Debug.Log($"Firebase Sign-In Successful! User: {newUser.DisplayName}");
 
-                    _userId = newUser.UserId; // Google Play User ID
+                    _userId = newUser.UserId; // Firebase User ID
                     _encryptionKey = await GenerateEncryptionKey(_userId);
 
                     tcs.SetResult(newUser);
@@ -94,7 +94,7 @@ public static class FirestoreManager
             FirebaseUser newUser = await _auth.SignInWithCredentialAsync(credential);
             Debug.Log($"Firebase Sign-In Successful! User: {newUser.DisplayName}");
 
-            _userId = newUser.UserId; // Google Play User ID
+            _userId = newUser.UserId; // Firebase User ID
             _encryptionKey = await GenerateEncryptionKey(_userId);
 
             tcs.SetResult(newUser);

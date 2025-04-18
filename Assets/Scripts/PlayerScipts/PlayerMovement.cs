@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public static readonly float MAX_GRAVITY = 1.5f;
     public static readonly float HOLD_SPEED_MULTIPLIER = 1;
     public static readonly float MAX_SPEED_WITHOUT_HOLD = 4;
-    public static readonly Func<float, float> HOLDING_SPEED_CURVE = SigmoidFactory(3, 0.01f, 0.25f);
+    public static readonly Func<float, float> HOLDING_SPEED_CURVE = SigmoidFactory(2.5f, 0.01f, 0.3f);
 
     private Rigidbody2D rb;
     public static float speedmultiplier;
@@ -38,8 +38,8 @@ public class PlayerMovement : MonoBehaviour
     public static void InitializeGame()
     {
         speedmultiplier = 1f;
-        baseGravity = 0.5f;
-        baseSpeed = 1f;
+        baseGravity = 0.35f;
+        baseSpeed = 0.5f;
         ticksSinceStart = 0;
         rightHoldingTime = 0;
         leftHoldingTime = 0;
@@ -78,8 +78,6 @@ public class PlayerMovement : MonoBehaviour
         {
             PcMove();
         }
-        
-
     }
 
     public static Func<float, float> SigmoidFactory(float upperBound, float initialValue, float timeToReachHalfOfUpperBound)
@@ -121,8 +119,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        
-
         if (rightCounter>leftCounter)
         {
             moveSpeed += HOLDING_SPEED_CURVE.Invoke(rightHoldingTime*0.01f);
@@ -145,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (currentPlatform != null)
         {
-            rb.linearVelocityX += 0.5f * currentPlatform.PushAmount();
+            rb.linearVelocityX += 0.25f * currentPlatform.PushAmount();
         }
 
     }
