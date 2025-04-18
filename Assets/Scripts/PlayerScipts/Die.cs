@@ -12,21 +12,16 @@ public class Die : MonoBehaviour
     }
     private void Start()
     {
-        animator.ResetTrigger("Freeze");
-        animator.ResetTrigger("Unfreeze");
+        animator.ResetTrigger("Idle");
     }
-    public void Froze()
+    public void Freeze()
     {
+        Debug.Log("Freeze");
         GameManager.instance.Death();
         Destroy(GameObject.FindGameObjectWithTag("Player"));
     }
     public void Unfreeze()
     {
-        if(animator.speed == -1)
-        {
-            animator.speed = 0;
-            animator.SetTrigger("Unfreeze");
-            animator.ResetTrigger("Freeze");
-        }
+        animator.SetTrigger("Idle");
     }
 }

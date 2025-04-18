@@ -6,13 +6,16 @@ public class PlatformScript : MonoBehaviour
     public static float move_Speed;
     public bool is_Breakable, is_Platform, is_Freeze, movingPlatfromLeft, movingPlatfromRight, is_Beam;
     private Animator animBreak, animFreeze;
-    void Awake()
+    void Start()
     {
-        animFreeze = GameObject.Find("FreezeController").GetComponent<Animator>();
         if (is_Breakable)
         {
             BreakablePltatform = GameObject.FindGameObjectWithTag("BreakablePlatform");
             animBreak = BreakablePltatform.GetComponent<Animator>();
+        }
+        else if (is_Freeze)
+        {
+            animFreeze = GameObject.FindGameObjectWithTag("FreezeController").GetComponent<Animator>();
         }
     }
     public static void InitiliazeGame()
@@ -57,11 +60,14 @@ public class PlatformScript : MonoBehaviour
             {
                 if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
                 {
-                    animFreeze.SetTrigger("Freeze");
+                    animFreeze.Play("Freeze");
                 }
-                else
+                else if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("Unfreeze"))
                 {
-                    animFreeze.speed = 1;
+                    float unfreezeTime = animFreeze.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                    unfreezeTime = Mathf.Clamp01(unfreezeTime); // just to be safe
+                    float freezeStartTime = 1.0f - unfreezeTime;
+                    animFreeze.Play("Freeze", 0, freezeStartTime);
                 }
             }
         }
@@ -70,7 +76,13 @@ public class PlatformScript : MonoBehaviour
     {
         if (is_Freeze)
         {
-            animFreeze.speed = -1;
+            if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("Freeze"))
+            {
+                float freezeTime = animFreeze.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                freezeTime = Mathf.Clamp01(freezeTime); // just to be safe
+                float unfreezeStartTime = 1.0f - freezeTime;
+                animFreeze.Play("Unfreeze", 0, unfreezeStartTime);
+            }
         }
     }
 
