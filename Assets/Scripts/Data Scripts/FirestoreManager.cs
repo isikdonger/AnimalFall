@@ -231,10 +231,11 @@ public static class FirestoreManager
             UserData mergedUserData = new UserData()
             {
                 // Take maximum values
-                totalGames = Mathf.Max(localUserData.totalGames, cloudUserData.totalGames),
-                totalScore = Mathf.Max(localUserData.totalScore, cloudUserData.totalScore),
-                totalCoins = Mathf.Max(localUserData.totalCoins, cloudUserData.totalCoins),
-                coinSpent = Mathf.Max(localUserData.coinSpent, cloudUserData.coinSpent),
+                highScore = Math.Max(localUserData.highScore, cloudUserData.highScore),
+                totalGames = Math.Max(localUserData.totalGames, cloudUserData.totalGames),
+                totalScore = Math.Max(localUserData.totalScore, cloudUserData.totalScore),
+                totalCoins = Math.Max(localUserData.totalCoins, cloudUserData.totalCoins),
+                coinSpent = Math.Max(localUserData.coinSpent, cloudUserData.coinSpent),
                 achievementsCompleted = Mathf.Max(localUserData.achievementsCompleted, cloudUserData.achievementsCompleted)
             };
 
@@ -274,9 +275,6 @@ public static class FirestoreManager
             // Merge strategy (customize per game needs)
             GameProgress mergedProgress = new GameProgress()
             {
-                // Competitive stats (take maximum)
-                highScore = Mathf.Max(localProgress.highScore, cloudProgress.highScore),
-
                 // Counters (take maximum to prevent inflation)
                 breakCount = Mathf.Max(localProgress.breakCount, cloudProgress.breakCount),
                 spikeDeathCount = Mathf.Max(localProgress.spikeDeathCount, cloudProgress.spikeDeathCount),

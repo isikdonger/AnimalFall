@@ -2599,7 +2599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8ad6bbc8b0610459e9d6c049df3b47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  standartplatform: {fileID: 2864443840509318134, guid: 1698aa489f210344894744bd6e80d487, type: 3}
+  standartplatform: {fileID: 503846302175451564, guid: 3c8d19b6e9e650141a9e67db76fb3976, type: 3}
 --- !u!4 &1863083525
 Transform:
   m_ObjectHideFlags: 0
