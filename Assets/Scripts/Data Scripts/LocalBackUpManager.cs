@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -95,6 +96,16 @@ public static class LocalBackupManager
     }
 
     /// <summary>
+    /// Updates the high score in local progress.
+    /// </summary>
+    public static void SetHighScore(int newHighScore)
+    {
+        UserData data = LoadUserData();
+        data.highScore = Math.Max(data.highScore, newHighScore);
+        SaveUserData(data);
+    }
+
+    /// <summary>
     /// Increments the total games in user data.
     /// </summary>
     public static void IncrementTotalGames()
@@ -142,16 +153,6 @@ public static class LocalBackupManager
         UserData data = LoadUserData();
         data.totalCoins++;
         SaveUserData(data);
-    }
-
-    /// <summary>
-    /// Updates the high score in local progress.
-    /// </summary>
-    public static void SetHighScore(int newHighScore)
-    {
-        GameProgress progress = LoadProgress();
-        progress.highScore = Mathf.Max(progress.highScore, newHighScore);
-        SaveProgress(progress);
     }
 
     /// <summary>
@@ -239,34 +240,34 @@ public static class LocalBackupManager
     }
 
     /// <summary>
+    /// Gets the high score from local progress.
+    /// </summary>
+    public static long GetHighScore() => LoadUserData().highScore;
+
+    /// <summary>
     /// Gets the total games from user data.
     /// </summary>
-    public static int GetTotalGames() => LoadUserData().totalGames;
+    public static long GetTotalGames() => LoadUserData().totalGames;
 
     /// <summary>
     /// Gets the total score from user data.
     /// </summary>
-    public static int GetTotalScore() => LoadUserData().totalScore;
+    public static long GetTotalScore() => LoadUserData().totalScore;
 
     /// <summary>
     /// Gets the total coins gained from user data.
     /// </summary>
-    public static int GetTotalCoins() => LoadUserData().totalCoins;
+    public static long GetTotalCoins() => LoadUserData().totalCoins;
 
     /// <summary>
     /// Gets the coins spent from user data.
     /// </summary>
-    public static int GetSpentCoins() => LoadUserData().coinSpent;
+    public static long GetSpentCoins() => LoadUserData().coinSpent;
 
     /// <summary>
     /// Gets the count of completed achievements from user data.
     /// </summary>
     public static int GetCompletedAchievements() => LoadUserData().achievementsCompleted;
-
-    /// <summary>
-    /// Gets the high score from local progress.
-    /// </summary>
-    public static int GetHighScore() => LoadProgress().highScore;
 
     /// <summary>
     /// Gets the character count from local progress.
