@@ -50,7 +50,7 @@ public class PlayerBounds : MonoBehaviour
             //SoundManager.instance.DeathSound();
             Destroy(gameObject);
             GameManager.instance.Death();
-            if (CustomizePanelScript.characterNames[PlayerPrefs.GetInt("characterIndex")].Equals("moon"))
+            if (LocalBackupManager.GetAllCharacters()[PlayerPrefs.GetInt("characterIndex")].Equals("Moon"))
             {
                 LocalBackupManager.IncrementSpikeDeathCount();
                 if (LocalBackupManager.GetBreakCount() == 5)

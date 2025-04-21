@@ -1,28 +1,57 @@
-﻿using UnityEngine;
+﻿using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class CustomizePanelScript : MonoBehaviour
 {
     private CanvasGroup CustomizePanel;
-    private GameObject CustomizeButton;
-    [SerializeField] Sprite[] characterSprites;
-    public static readonly string[] characterNames = new string[] {"owl", "narwhal", "rabbit", "panda", "penguin", "zebra", "rhino", "gorilla"};
 
     private void Start()
     {
         CustomizePanel = CentralUIController.Instance.customizePanel;
-        CustomizeButton = CentralUIController.Instance.customizeBtn;
-        CustomizeButton.transform.GetChild(0).GetComponent<Image>().sprite = characterSprites[PlayerPrefs.GetInt("characterIndex")];
+        LockCharacters();
     }
 
-    public void ChangeCharacter(GameObject Button)
+    private void LockCharacters()
+    {
+        List<string> lockedCharacters = LocalBackupManager.GetAllCharacters().Except(LocalBackupManager.GetUnlockedCharacters()).ToList();
+
+        foreach (Transform child in CustomizePanel.transform)
+        {
+            string childName = child.name;
+            string characterName = childName.Remove(childName.Length - 3); // Remove the "Btn"
+            if (lockedCharacters.Contains(characterName))
+            {
+                child.GetChild(1).gameObject.SetActive(true);
+            }
+        }
+    }
+
+    public void OnCharacterClick(GameObject Button)
+    {
+        string buttonName = Button.name;
+        string characterName = buttonName.Remove(buttonName.Length - 3); // Remove the "Btn"
+        if (LocalBackupManager.GetUnlockedCharacters().Contains(characterName))
+        {
+            ChangeCharacter(Button);
+        }
+        else
+        {
+            CentralUIController.Instance.ToggleMenu(CentralUIController.Instance.storePanel);
+        }
+    }
+
+    private void ChangeCharacter(GameObject Button)
     {
         int index = Button.transform.GetSiblingIndex();
-        CustomizeButton.transform.GetChild(0).GetComponent<Image>().sprite = characterSprites[index];
-        LocalBackupManager.AddUsedCharacter(characterNames[index]);
+        LocalBackupManager.AddUsedCharacter(LocalBackupManager.GetAllCharacters()[index]);
         if (LocalBackupManager.GetCharacterCount() == 3)
         {
 #if UNITY_ANDROID
+            Debug.Log("Unity Android");
             GooglePlayServicesManager.UnlockAchievementCoroutine("This is Getting Out of Hand");
 #elif UNITY_IOS
             GameCenterManager.UnlockAchievementCoroutine("This is Getting Out of Hand");

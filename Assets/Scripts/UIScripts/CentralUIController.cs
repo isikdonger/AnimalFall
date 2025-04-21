@@ -7,9 +7,9 @@ public class CentralUIController : MonoBehaviour
     public static CentralUIController Instance { get; private set; }
 
     [Header("UI References")]
-    public GameObject customizeBtn;
     public CanvasGroup tapToStartScreen;
     public CanvasGroup customizePanel;
+    public CanvasGroup storePanel;
 
     private CanvasGroup _currentMenu;
     private Coroutine _activeTransition;
@@ -34,23 +34,16 @@ public class CentralUIController : MonoBehaviour
     public void ToggleMenu(CanvasGroup targetMenu)
     {
         if (_activeTransition != null)
-        {
-            Debug.Log("Stopping active transition");
             StopCoroutine(_activeTransition);
-            Debug.Log("Stopped active transition");
-        }
 
         _activeTransition = StartCoroutine(ToggleMenuRoutine(targetMenu));
     }
 
     private IEnumerator ToggleMenuRoutine(CanvasGroup target)
     {
-        Debug.Log(_currentMenu);
-        Debug.Log(target);
         // Close current menu if different
         if (_currentMenu != null && _currentMenu != target)
         {
-            Debug.Log("a");
             yield return _currentMenu.FadeOut(this);
             _currentMenu = null;
         }
@@ -58,14 +51,12 @@ public class CentralUIController : MonoBehaviour
         // Toggle target menu
         if (_currentMenu == target)
         {
-            Debug.Log("b");
             yield return target.FadeOut(this);
             _currentMenu = null;
             yield return tapToStartScreen.FadeIn(this);
         }
         else
         {
-            Debug.Log("c");
             yield return tapToStartScreen.FadeOut(this);
             yield return target.FadeIn(this);
             _currentMenu = target;

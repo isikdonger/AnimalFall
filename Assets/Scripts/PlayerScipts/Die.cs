@@ -16,7 +16,6 @@ public class Die : MonoBehaviour
     }
     public void Freeze()
     {
-        Debug.Log("Freeze");
         GameManager.instance.Death();
         Destroy(GameObject.FindGameObjectWithTag("Player"));
     }

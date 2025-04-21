@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     {
 #if !UNITY_EDITOR
         LocalBackupManager.SetHighScore(ScoreTextScript.scoreValue);
+        LocalBackupManager.AddCoins(CoinTextScript.coinAmount);
         LocalBackupManager.IncrementTotalGames();
         LocalBackupManager.IncrementTotalScore(ScoreTextScript.scoreValue);
         LocalBackupManager.IncrementTotalCoins(CoinTextScript.coinAmount);
