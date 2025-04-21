@@ -18,7 +18,6 @@ public class ScreenAdjuster : MonoBehaviour
         int resWidth, resHeight, scale;
         resWidth = Camera.pixelWidth;
         resHeight = Camera.pixelHeight;
-        Debug.Log(resHeight + " " + resWidth);
         scale = (resHeight - HEIGHT) / 300 * 25;
 
         // Top Panel Adjustment

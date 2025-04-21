@@ -6,48 +6,7 @@ public static class LocalBackupManager
 {
     private const string ProgressFile = "gameProgress.dat";
     private const string UserDataFile = "userData.dat";
-
-    /// <summary>
-    /// Loads the player's profile data from local storage.
-    /// </summary>
-    public static UserData LoadUserData()
-    {
-        byte[] encryptionKey = FirestoreManager.GetEncryptionKey();
-        if (encryptionKey == null || encryptionKey.Length != 32)
-        {
-            Debug.LogError("Encryption key not available.");
-            return new UserData();
-        }
-
-        string jsonData = SecureDataManager.LoadEncryptedData(UserDataFile, encryptionKey);
-        if (!string.IsNullOrEmpty(jsonData))
-        {
-            Debug.Log("Loaded progress from local storage.");
-            return JsonUtility.FromJson<UserData>(jsonData);
-        }
-        return new UserData();
-    }
-
-    /// <summary>
-    /// Loads the player's progress from local storage.
-    /// </summary>
-    public static GameProgress LoadProgress()
-    {
-        byte[] encryptionKey = FirestoreManager.GetEncryptionKey();
-        if (encryptionKey == null || encryptionKey.Length != 32)
-        {
-            Debug.LogError("Encryption key not available.");
-            return new GameProgress();
-        }
-
-        string jsonData = SecureDataManager.LoadEncryptedData(ProgressFile, encryptionKey);
-        if (!string.IsNullOrEmpty(jsonData))
-        {
-            Debug.Log("Loaded progress from local storage.");
-            return JsonUtility.FromJson<GameProgress>(jsonData);
-        }
-        return new GameProgress();
-    }
+    private const string StoreDataFile = "storeData.dat";
 
     /// <summary>
     /// Saves the player's profile data to local storage.
@@ -96,9 +55,95 @@ public static class LocalBackupManager
     }
 
     /// <summary>
+    /// Saves the store data to local storage.
+    /// </summary>
+    public static void SaveStoreData(StoreData data)
+    {
+        if (data == null)
+        {
+            Debug.LogError("Progress data is null.");
+            return;
+        }
+
+        byte[] encryptionKey = FirestoreManager.GetEncryptionKey();
+        if (encryptionKey == null || encryptionKey.Length != 32)
+        {
+            Debug.LogError("Encryption key not available.");
+            return;
+        }
+
+        string jsonData = JsonUtility.ToJson(data);
+        SecureDataManager.SaveEncryptedData(StoreDataFile, jsonData, encryptionKey);
+        Debug.Log("Game progress saved locally.");
+    }
+
+    /// <summary>
+    /// Loads the player's profile data from local storage.
+    /// </summary>
+    public static UserData LoadUserData()
+    {
+        byte[] encryptionKey = FirestoreManager.GetEncryptionKey();
+        if (encryptionKey == null || encryptionKey.Length != 32)
+        {
+            Debug.LogError("Encryption key not available.");
+            return new UserData();
+        }
+
+        string jsonData = SecureDataManager.LoadEncryptedData(UserDataFile, encryptionKey);
+        if (!string.IsNullOrEmpty(jsonData))
+        {
+            Debug.Log("Loaded progress from local storage.");
+            return JsonUtility.FromJson<UserData>(jsonData);
+        }
+        return new UserData();
+    }
+
+    /// <summary>
+    /// Loads the player's progress from local storage.
+    /// </summary>
+    public static GameProgress LoadProgress()
+    {
+        byte[] encryptionKey = FirestoreManager.GetEncryptionKey();
+        if (encryptionKey == null || encryptionKey.Length != 32)
+        {
+            Debug.LogError("Encryption key not available.");
+            return new GameProgress();
+        }
+
+        string jsonData = SecureDataManager.LoadEncryptedData(ProgressFile, encryptionKey);
+        if (!string.IsNullOrEmpty(jsonData))
+        {
+            Debug.Log("Loaded progress from local storage.");
+            return JsonUtility.FromJson<GameProgress>(jsonData);
+        }
+        return new GameProgress();
+    }
+
+    /// <summary>
+    /// Loads the store data from local storage.
+    /// </summary>
+    public static StoreData LoadStoreData()
+    {
+        byte[] encryptionKey = FirestoreManager.GetEncryptionKey();
+        if (encryptionKey == null || encryptionKey.Length != 32)
+        {
+            Debug.LogError("Encryption key not available.");
+            return new StoreData();
+        }
+
+        string jsonData = SecureDataManager.LoadEncryptedData(StoreDataFile, encryptionKey);
+        if (!string.IsNullOrEmpty(jsonData))
+        {
+            Debug.Log("Loaded progress from local storage.");
+            return JsonUtility.FromJson<StoreData>(jsonData);
+        }
+        return new StoreData();
+    }
+
+    /// <summary>
     /// Updates the high score in local progress.
     /// </summary>
-    public static void SetHighScore(int newHighScore)
+    public static void SetHighScore(long newHighScore)
     {
         UserData data = LoadUserData();
         data.highScore = Math.Max(data.highScore, newHighScore);
@@ -118,7 +163,7 @@ public static class LocalBackupManager
     /// <summary>
     /// Increments the total score in user data.
     /// </summary>
-    public static void IncrementTotalScore(int score)
+    public static void IncrementTotalScore(long score)
     {
         UserData data = LoadUserData();
         data.totalScore += score;
@@ -128,7 +173,7 @@ public static class LocalBackupManager
     /// <summary>
     /// Increments the total coins gained in user data.
     /// </summary>
-    public static void IncrementTotalCoins(int coinsGained)
+    public static void IncrementTotalCoins(long coinsGained)
     {
         UserData data = LoadUserData();
         data.totalCoins += coinsGained;
@@ -138,7 +183,7 @@ public static class LocalBackupManager
     /// <summary>
     /// Adds spent coins to coin spent in user data.
     /// </summary>
-    public static void IncrementCoinSpent(int amount)
+    public static void IncrementCoinSpent(long amount)
     {
         UserData data = LoadUserData();
         data.coinSpent += amount;
@@ -161,11 +206,13 @@ public static class LocalBackupManager
     public static void AddUsedCharacter(string character)
     {
         GameProgress progress = LoadProgress();
+        Debug.Log("Adding character: " + character);
         if (!progress.usedCharacters.Contains(character))  // Avoid duplicates
         {
             progress.usedCharacters.Add(character);
             IncrementCharacterCount();
             SaveProgress(progress);
+            Debug.Log("Character added: " + character);
         }
     }
 
@@ -175,8 +222,10 @@ public static class LocalBackupManager
     private static void IncrementCharacterCount()
     {
         GameProgress progress = LoadProgress();
+        Debug.Log("Incrementing character count: " + progress.characterCount);
         progress.characterCount++;
         SaveProgress(progress);
+        Debug.Log("Character count incremented: " + progress.characterCount);
     }
 
     /// <summary>
@@ -240,6 +289,39 @@ public static class LocalBackupManager
     }
 
     /// <summary>
+    /// Unlocks a character in the store data.
+    /// </summary>
+    public static void UnlockCharacter(string character)
+    {
+        StoreData data = LoadStoreData();
+        if (data.Characters.Contains(character) && !data.unlockedCharacters.Contains(character))
+        {
+            data.unlockedCharacters.Add(character);
+            SaveStoreData(data);
+        }
+    }
+
+    /// <summary>
+    /// Adds coins to the store data.
+    /// </summary>
+    public static void AddCoins(int amount)
+    {
+        StoreData data = LoadStoreData();
+        data.avaliableCoins += amount;
+        SaveStoreData(data);
+    }
+
+    /// <summary>
+    /// Subtracts coins to the store data.
+    /// </summary>
+    public static void SubtractCoins(int amount)
+    {
+        StoreData data = LoadStoreData();
+        data.avaliableCoins -= amount;
+        SaveStoreData(data);
+    }
+
+    /// <summary>
     /// Gets the high score from local progress.
     /// </summary>
     public static long GetHighScore() => LoadUserData().highScore;
@@ -298,4 +380,29 @@ public static class LocalBackupManager
     /// Gets the loss count from local progress.
     /// </summary>
     public static int GetWinCount() => LoadProgress().winCount;
+
+    /// <summary>
+    /// Gets all the characters from store data.
+    /// <summary>
+    public static List<string> GetAllCharacters() => LoadStoreData().Characters;
+
+    /// <summary>
+    /// Gets a characters price from store data.
+    /// <summary>
+    public static int GetCharacterPrice(int index) { return LoadStoreData().characterPrices[index]; }
+
+    /// <summary>
+    /// Gets a coin purchases price from store data.
+    /// <summary>
+    public static int GetCoinPrice(int index) { return LoadStoreData().coinPrices[index]; }
+
+    /// <summary>
+    /// Gets the unlocked characters from store data.
+    /// <summary>
+    public static List<string> GetUnlockedCharacters() => LoadStoreData().unlockedCharacters;
+
+    /// <summary>
+    /// Gets the avaliable coins from store data.
+    /// <summary>
+    public static int GetAvailableCoins() => LoadStoreData().avaliableCoins;
 }

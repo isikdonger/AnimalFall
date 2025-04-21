@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Text;
+using System;
 
 #if UNITY_ANDROID
 using GooglePlayGames;
@@ -27,7 +29,7 @@ public class AccountMenuScript : MonoBehaviour
         if (signedIn)
         {
             SetAccountName();
-            //SetLeaderboardRank();
+            SetLeaderboardRank();
             SetTotalGames();
             SetTotalScore();
             SetTotalCoins();
@@ -47,22 +49,22 @@ public class AccountMenuScript : MonoBehaviour
 #else
             accountName = "Guest";
 #endif
-        AcccountName.text = accountName;
+        AcccountName.text = accountName.ToUpper();
     }
 
-    /*async void SetLeaderboardRank()
+    async void SetLeaderboardRank()
     {
         try
         {
             int rank = await GooglePlayServicesManager.GetLeaderboardRankAsync();
-            leaderboardRank.text = rank.ToString();
+            LeaderboardRank.text = rank.ToString();
         }
         catch (Exception ex)
         {
             Debug.LogError($"Error retrieving leaderboard rank: {ex.Message}");
-            leaderboardRank.text = "N/A"; // Display "N/A" or some error message
+            LeaderboardRank.text = "N/A"; // Display "N/A" or some error message
         }
-    }*/
+    }
 
     public void SetTotalGames()
     {

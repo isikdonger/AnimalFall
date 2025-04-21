@@ -128,7 +128,7 @@ public class PlatformScript : MonoBehaviour
         if (is_Breakable)
         {
             Destroy(gameObject);
-            if (CustomizePanelScript.characterNames[PlayerPrefs.GetInt("characterIndex")].Equals("narwhal"))
+            if (LocalBackupManager.GetAllCharacters()[PlayerPrefs.GetInt("characterIndex")].Equals("Narwhal"))
             {
                 LocalBackupManager.IncrementBreakCount();
                 if (LocalBackupManager.GetBreakCount() == 10)

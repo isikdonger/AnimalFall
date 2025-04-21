@@ -159,10 +159,12 @@ public static class GooglePlayServicesManager
     /// </summary>
     public static IEnumerator UnlockAchievementCoroutine(string achievementName)
     {
+        Debug.Log("Unlocking achievement: " + achievementName);
         if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
             // Retrieve the achievement ID
             string achievementID = GetAchievementID("achievement_" + achievementName.ToLower().Replace(" ", "_"));
+            Debug.Log("Achievement ID: " + achievementID);
 
             if (string.IsNullOrEmpty(achievementID))
             {
@@ -176,6 +178,7 @@ public static class GooglePlayServicesManager
 
                 if (success)
                 {
+                    Debug.Log("Achievement Unlocked! Incrementing completed achievements...");
                     LocalBackupManager.IncrementCompletedAchievements();
                 }
             });
