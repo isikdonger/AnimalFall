@@ -55,6 +55,7 @@ public class PauseScript : MonoBehaviour
         Time.timeScale = 1;
 #if !UNITY_EDITOR
         await FirestoreManager.SyncWithCloud();
+        GameManager.Instance.ExitGame();
 #endif
         SceneManager.LoadScene("AnimalFall UI", LoadSceneMode.Single);
     }

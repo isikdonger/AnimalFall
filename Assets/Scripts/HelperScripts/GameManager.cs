@@ -1,14 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    public static GameManager Instance { get; private set; }
 
     void Awake()
     {
-        if (instance == null)
-            instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
@@ -19,24 +26,12 @@ public class GameManager : MonoBehaviour
     public void Death()
     {
 #if !UNITY_EDITOR
-        LocalBackupManager.IncrementTotalGames();
-        LocalBackupManager.SetHighScore(ScoreTextScript.scoreValue);
-        LocalBackupManager.IncrementTotalScore(ScoreTextScript.scoreValue);
-        LocalBackupManager.IncrementCoinsGained(CoinTextScript.coinAmount);
-        LocalBackupManager.AddCoins(CoinTextScript.coinAmount);
-        ScoreObjective();
-        CoinObjective();
-        TimeObjective();
-        LossCountAchievement();
-        WinCountAchievement();
-        PolandballAchievement();
-        HundredAchievement();
-        ComeOnAchievement();
+        ExitGame();
 #endif
         RestartGame();
     }
 
-    public void InitiliazeGame()
+    public static void InitiliazeGame()
     {
         Time.timeScale = 1;
         PlayerMovement.InitializeGame();
@@ -54,9 +49,26 @@ public class GameManager : MonoBehaviour
         InitiliazeGame();
     }
 
-    void RestartAfterTime()
+    static void RestartAfterTime()
     {
         SceneManager.LoadScene("AnimalFall", LoadSceneMode.Single);
+    }
+
+    public void ExitGame()
+    {
+        LocalBackupManager.IncrementTotalGames();
+        LocalBackupManager.SetHighScore(ScoreTextScript.scoreValue);
+        LocalBackupManager.IncrementTotalScore(ScoreTextScript.scoreValue);
+        LocalBackupManager.IncrementCoinsGained(CoinTextScript.coinAmount);
+        LocalBackupManager.AddCoins(CoinTextScript.coinAmount);
+        ScoreObjective();
+        CoinObjective();
+        TimeObjective();
+        LossCountAchievement();
+        WinCountAchievement();
+        PolandballAchievement();
+        HundredAchievement();
+        ComeOnAchievement();
     }
 
     public void ScoreObjective()

@@ -30,17 +30,17 @@ public class ObjectivesMenuScript : MonoBehaviour
 
     public void UpdateAllTexts()
     {
-        UpdateObjectiveText(LocalBackupManager.GetScoreObjectiveStep(),
+        UpdateObjectiveText(LocalBackupManager.GetScoreObjectiveStep(), LocalBackupManager.GetScoreGoal(),
                           scoreObjectiveText, scoreObjectiveCompletedUI, localizedScoreObjective);
-        UpdateObjectiveText(LocalBackupManager.GetCoinObjectiveStep(),
+        UpdateObjectiveText(LocalBackupManager.GetCoinObjectiveStep(), LocalBackupManager.GetCoinGoal(),
                           coinObjectiveText, coinObjectiveCompletedUI, localizedCoinObjective);
-        UpdateObjectiveText(LocalBackupManager.GetTimeObjectiveStep(),
+        UpdateObjectiveText(LocalBackupManager.GetTimeObjectiveStep(), LocalBackupManager.GetTimeGoal(),
                           timeObjectiveText, timeObjectiveCompletedUI, localizedTimeObjective);
 
         UpdateRewardTexts();
     }
 
-    private void UpdateObjectiveText(int currentStep, TMP_Text textElement, GameObject completedUI, LocalizedString localizedString)
+    private void UpdateObjectiveText(int currentStep, int currentObjective, TMP_Text textElement, GameObject completedUI, LocalizedString localizedString)
     {
         bool isCompleted = currentStep >= 10;
         textElement.gameObject.SetActive(!isCompleted);
@@ -48,7 +48,7 @@ public class ObjectivesMenuScript : MonoBehaviour
 
         if (!isCompleted)
         {
-            localizedString.Arguments = new object[] { currentStep };
+            localizedString.Arguments = new object[] { currentObjective };
             localizedString.StringChanged += (string value) => textElement.text = value;
             localizedString.RefreshString();
         }
