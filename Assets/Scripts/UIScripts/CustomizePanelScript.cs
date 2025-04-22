@@ -17,15 +17,16 @@ public class CustomizePanelScript : MonoBehaviour
 
     private void LockCharacters()
     {
-        List<string> lockedCharacters = LocalBackupManager.GetAllCharacters().Except(LocalBackupManager.GetUnlockedCharacters()).ToList();
+        List<string> unlockedCharacters = LocalBackupManager.GetUnlockedCharacters();
 
         foreach (Transform child in CustomizePanel.transform)
         {
             string childName = child.name;
             string characterName = childName.Remove(childName.Length - 3); // Remove the "Btn"
-            if (lockedCharacters.Contains(characterName))
+            Debug.Log("Child Name: " + childName);
+            if (unlockedCharacters.Contains(characterName))
             {
-                child.GetChild(1).gameObject.SetActive(true);
+                child.GetChild(1).gameObject.SetActive(false);
             }
         }
     }

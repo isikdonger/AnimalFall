@@ -39,7 +39,7 @@ public class PlayerBounds : MonoBehaviour
             {
                 out_of_Bounds = true;
                 //SoundManager.instance.DeathSound();
-                GameManager.instance.Death();
+                GameManager.Instance.Death();
             }
         }
     }
@@ -49,7 +49,7 @@ public class PlayerBounds : MonoBehaviour
         {
             //SoundManager.instance.DeathSound();
             Destroy(gameObject);
-            GameManager.instance.Death();
+            GameManager.Instance.Death();
             if (LocalBackupManager.GetAllCharacters()[PlayerPrefs.GetInt("characterIndex")].Equals("Moon"))
             {
                 LocalBackupManager.IncrementSpikeDeathCount();
@@ -67,7 +67,7 @@ public class PlayerBounds : MonoBehaviour
         {
             //SoundManager.instance.DeathSound();
             Destroy(gameObject);
-            GameManager.instance.Death();
+            GameManager.Instance.Death();
         }
     }
 }

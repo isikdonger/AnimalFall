@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using System.Text;
 using System;
+using TMPro;
+
 
 #if UNITY_ANDROID
 using GooglePlayGames;
@@ -9,14 +11,14 @@ using GooglePlayGames;
 
 public class AccountMenuScript : MonoBehaviour
 {
-    [SerializeField] private Text AcccountName;
+    [SerializeField] private TMP_Text AcccountName;
     [SerializeField] private Text LeaderboardRank;
     [SerializeField] private Text TotalGames;
     [SerializeField] private Text TotalScore;
     [SerializeField] private Text TotalCoins;
     [SerializeField] private Text CoinsSpent;
     [SerializeField] private Text AchievementsCompleted;
-    [SerializeField] private Text HighScore;
+    [SerializeField] private TMP_Text HighScore;
 
     private void Start()
     {

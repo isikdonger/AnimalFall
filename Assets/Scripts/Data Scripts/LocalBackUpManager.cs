@@ -478,7 +478,7 @@ public static class LocalBackupManager
     /// <summary>
     /// Gets the current goal of the time objective in objectives progress.
     /// </summary>
-    public static float GetTimeGoal() => LoadObjectivesProgress().timeGoals[LoadObjectivesProgress().timeObjectiveStep];
+    public static int GetTimeGoal() => LoadObjectivesProgress().timeGoals[LoadObjectivesProgress().timeObjectiveStep];
 
     /// <summary>
     /// Gets the step of the score objective in objectives progress.

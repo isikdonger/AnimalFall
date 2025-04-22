@@ -77,13 +77,11 @@ public static class GooglePlayServicesManager
         if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
             PlayGamesPlatform.Instance.ShowLeaderboardUI();
-            GameObject.Find("Tap to Start").GetComponent<Text>().text = "Showing leaderboard...";
             Debug.Log("Showing leaderboard...");
         }
         else
         {
             Debug.LogWarning("User is not authenticated! Cannot show leaderboard.");
-            GameObject.Find("Tap to Start").GetComponent<Text>().text = "Sign in to view leaderboard";
         }
     }
 
@@ -198,7 +196,6 @@ public static class GooglePlayServicesManager
         else
         {
             Debug.LogWarning("User is not authenticated! Cannot show achievements.");
-            GameObject.Find("Tap to Start").GetComponent<Text>().text = "Sign in to view achievements";
         }
     }
 
