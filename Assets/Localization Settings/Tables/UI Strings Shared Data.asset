@@ -147,6 +147,30 @@ MonoBehaviour:
     m_Key: "And Special Thanks to Y\u0131lmaz Bostan"
     m_Metadata:
       m_Items: []
+  - m_Id: 15796456654635008
+    m_Key: 'Reward:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798682890534912
+    m_Key: Objective Completed!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15796456709160960
+    m_Key: Get to {0} Total Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15796456709160961
+    m_Key: Get to {0} Total Coin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16216636522233856
+    m_Key: Get to {0} Total Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798682890534913
+    m_Key: '{0} Coins'
+    m_Metadata:
+      m_Items: []
   - m_Id: 752814403616768
     m_Key: 'Score: {0}'
     m_Metadata:
@@ -159,7 +183,6 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 4042693349703942237
-      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
-        asm: Unity.Localization}
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
         m_CustomEpoch: 1741471352181

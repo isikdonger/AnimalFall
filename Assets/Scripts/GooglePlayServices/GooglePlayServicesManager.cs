@@ -205,11 +205,21 @@ public static class GooglePlayServicesManager
     /// <summary>
     ///  Increment Objectives
     /// </summary>
-    public static void IncrementObjectives()
+    public static IEnumerator IncrementObjectiveCoroutine(string objectiveName)
     {
         if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
-           
+            string achievementID = GetAchievementID("achievement_" + objectiveName.ToLower().Replace(" ", "_"));
+            Debug.Log("Incrementing objective: " + achievementID);
+            if (string.IsNullOrEmpty(achievementID))
+            {
+                Debug.LogError("Failed to retrieve achievement ID.");
+                yield break;
+            }
+            PlayGamesPlatform.Instance.IncrementAchievement(achievementID, 1, (bool success) =>
+            {
+                Debug.Log(success ? "Objective incremented!" : "Failed to increment objective.");
+            });
         }
     }
 }

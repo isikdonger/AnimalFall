@@ -234,7 +234,7 @@ public static class FirestoreManager
                 highScore = Math.Max(localUserData.highScore, cloudUserData.highScore),
                 totalGames = Math.Max(localUserData.totalGames, cloudUserData.totalGames),
                 totalScore = Math.Max(localUserData.totalScore, cloudUserData.totalScore),
-                totalCoins = Math.Max(localUserData.totalCoins, cloudUserData.totalCoins),
+                coinsGained = Math.Max(localUserData.coinsGained, cloudUserData.coinsGained),
                 coinSpent = Math.Max(localUserData.coinSpent, cloudUserData.coinSpent),
                 achievementsCompleted = Mathf.Max(localUserData.achievementsCompleted, cloudUserData.achievementsCompleted)
             };

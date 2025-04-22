@@ -148,6 +148,30 @@ MonoBehaviour:
     m_Localized: Chargement...
     m_Metadata:
       m_Items: []
+  - m_Id: 15796456654635008
+    m_Localized: "R\xE9compense:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15796456709160960
+    m_Localized: "Obtenez\_{0}\_Score Total"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15796456709160961
+    m_Localized: "Obtenez {0}\_Pi\xE8ces Totales"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798682890534912
+    m_Localized: Objectif Atteint !
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798682890534913
+    m_Localized: "{0}\_Pi\xE8ces"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16216636522233856
+    m_Localized: "Arriver \xC0 {0}\_Dur\xE9e Totale"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

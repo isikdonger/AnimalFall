@@ -19,11 +19,14 @@ public class GameManager : MonoBehaviour
     public void Death()
     {
 #if !UNITY_EDITOR
-        LocalBackupManager.SetHighScore(ScoreTextScript.scoreValue);
-        LocalBackupManager.AddCoins(CoinTextScript.coinAmount);
         LocalBackupManager.IncrementTotalGames();
+        LocalBackupManager.SetHighScore(ScoreTextScript.scoreValue);
         LocalBackupManager.IncrementTotalScore(ScoreTextScript.scoreValue);
-        LocalBackupManager.IncrementTotalCoins(CoinTextScript.coinAmount);
+        LocalBackupManager.IncrementCoinsGained(CoinTextScript.coinAmount);
+        LocalBackupManager.AddCoins(CoinTextScript.coinAmount);
+        ScoreObjective();
+        CoinObjective();
+        TimeObjective();
         LossCountAchievement();
         WinCountAchievement();
         PolandballAchievement();
@@ -41,8 +44,8 @@ public class GameManager : MonoBehaviour
         PlatformScript.InitiliazeGame();
         CoinSpawner.InitializeGame();
         ScoreTextScript.InitiliazeGame();
-        ScoreTextScript.scoreValue = 0;
-        CoinTextScript.coinAmount = 0;
+        ScoreTextScript.InitiliazeGame();
+        CoinTextScript.InitiliazeGame();
     }
 
     public void RestartGame()
@@ -50,9 +53,46 @@ public class GameManager : MonoBehaviour
         Invoke("RestartAfterTime", 0.5f);
         InitiliazeGame();
     }
+
     void RestartAfterTime()
     {
         SceneManager.LoadScene("AnimalFall", LoadSceneMode.Single);
+    }
+
+    public void ScoreObjective()
+    {
+        if (LocalBackupManager.GetTotalScore() >= LocalBackupManager.GetScoreGoal())
+        {
+#if UNITY_ANDROID
+            GooglePlayServicesManager.IncrementObjectiveCoroutine("Score Goal");
+            LocalBackupManager.AddCoins(LocalBackupManager.GetScoreReward());
+            LocalBackupManager.IncrementScoreObjectiveStep();
+#endif
+        }
+    }
+
+    public void CoinObjective()
+    {
+        if (LocalBackupManager.GetCoinsGained() >= LocalBackupManager.GetCoinGoal())
+        {
+#if UNITY_ANDROID
+            GooglePlayServicesManager.IncrementObjectiveCoroutine("Coin Goal");
+            LocalBackupManager.AddCoins(LocalBackupManager.GetCoinReward());
+            LocalBackupManager.IncrementCoinObjectiveStep();
+#endif
+        }
+    }
+
+    public void TimeObjective()
+    {
+        if (LocalBackupManager.GetTotalTime() >= LocalBackupManager.GetTimeGoal())
+        {
+#if UNITY_ANDROID
+            GooglePlayServicesManager.IncrementObjectiveCoroutine("Time Goal");
+            LocalBackupManager.AddCoins(LocalBackupManager.GetTimeReward());
+            LocalBackupManager.IncrementTimeObjectiveStep();
+#endif
+        }
     }
 
     public void LossCountAchievement()
@@ -115,7 +155,7 @@ public class GameManager : MonoBehaviour
 
             LocalBackupManager.ResetWinCount();
         }
-     }
+    }
 
     public void PolandballAchievement()
     {

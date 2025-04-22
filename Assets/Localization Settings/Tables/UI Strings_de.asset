@@ -148,6 +148,30 @@ MonoBehaviour:
     m_Localized: Laden...
     m_Metadata:
       m_Items: []
+  - m_Id: 15796456654635008
+    m_Localized: 'Belohnen:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15796456709160960
+    m_Localized: Erreichen Sie Die Gesamtpunktzahl {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15796456709160961
+    m_Localized: "Erreiche Insgesamt {0} M\xFCnzen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798682890534912
+    m_Localized: Ziel Erreicht!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798682890534913
+    m_Localized: "{0} M\xFCnzen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16216636522233856
+    m_Localized: Erreichen Sie Die Gesamtzeit Von {0}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

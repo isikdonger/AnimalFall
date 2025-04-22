@@ -3,13 +3,17 @@ using UnityEngine.UI;
 
 public class CoinTextScript : MonoBehaviour
 {
-    public static long coinAmount;
+    public static int coinAmount;
     private static Text coinText;
 
     private void Start()
     {
         coinText = GetComponent<Text>();
-        coinAmount = 0;
+    }
+
+    public static void InitiliazeGame()
+    {
+        coinAmount = 0; // Reset coin amount to 0
         AlignCoinText();
     }
 
@@ -27,12 +31,6 @@ public class CoinTextScript : MonoBehaviour
             coinText.text = (coinAmount / 1000) + "K";
         else if (coinAmount < 1000000000)
             coinText.text = (coinAmount / 1000000) + "M";
-        else if (coinAmount < 1000000000000)
-            coinText.text = (coinAmount / 1000000000) + "B";
-        else if (coinAmount < 1000000000000000)
-            coinText.text = (coinAmount / 1000000000000) + "T";
-        else if (coinAmount < 1000000000000000000)
-            coinText.text = (coinAmount / 1000000000000000) + "Q";
         else
             coinText.text = "F U";
     }

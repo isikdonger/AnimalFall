@@ -4,8 +4,9 @@ using UnityEngine;
 
 public static class LocalBackupManager
 {
-    private const string ProgressFile = "gameProgress.dat";
     private const string UserDataFile = "userData.dat";
+    private const string ObjectivesProgressFile = "objectivesProgress.dat";
+    private const string ProgressFile = "gameProgress.dat";
     private const string StoreDataFile = "storeData.dat";
 
     /// <summary>
@@ -28,6 +29,29 @@ public static class LocalBackupManager
 
         string jsonData = JsonUtility.ToJson(data);
         SecureDataManager.SaveEncryptedData(UserDataFile, jsonData, encryptionKey);
+        Debug.Log("Game progress saved locally.");
+    }
+
+    /// <summary>
+    /// Saves the player's objectives progress to local storage.
+    /// </summary>
+    public static void SaveObjectivesProgress(ObjectivesProgress progress)
+    {
+        if (progress == null)
+        {
+            Debug.LogError("Progress data is null.");
+            return;
+        }
+
+        byte[] encryptionKey = FirestoreManager.GetEncryptionKey();
+        if (encryptionKey == null || encryptionKey.Length != 32)
+        {
+            Debug.LogError("Encryption key not available.");
+            return;
+        }
+
+        string jsonData = JsonUtility.ToJson(progress);
+        SecureDataManager.SaveEncryptedData(ObjectivesProgressFile, jsonData, encryptionKey);
         Debug.Log("Game progress saved locally.");
     }
 
@@ -99,6 +123,27 @@ public static class LocalBackupManager
     }
 
     /// <summary>
+    /// Loads the player's objectives progress from local storage.
+    /// </summary>
+    public static ObjectivesProgress LoadObjectivesProgress()
+    {
+        byte[] encryptionKey = FirestoreManager.GetEncryptionKey();
+        if (encryptionKey == null || encryptionKey.Length != 32)
+        {
+            Debug.LogError("Encryption key not available.");
+            return new ObjectivesProgress();
+        }
+
+        string jsonData = SecureDataManager.LoadEncryptedData(ObjectivesProgressFile, encryptionKey);
+        if (!string.IsNullOrEmpty(jsonData))
+        {
+            Debug.Log("Loaded progress from local storage.");
+            return JsonUtility.FromJson<ObjectivesProgress>(jsonData);
+        }
+        return new ObjectivesProgress();
+    }
+
+    /// <summary>
     /// Loads the player's progress from local storage.
     /// </summary>
     public static GameProgress LoadProgress()
@@ -143,7 +188,7 @@ public static class LocalBackupManager
     /// <summary>
     /// Updates the high score in local progress.
     /// </summary>
-    public static void SetHighScore(long newHighScore)
+    public static void SetHighScore(int newHighScore)
     {
         UserData data = LoadUserData();
         data.highScore = Math.Max(data.highScore, newHighScore);
@@ -163,7 +208,7 @@ public static class LocalBackupManager
     /// <summary>
     /// Increments the total score in user data.
     /// </summary>
-    public static void IncrementTotalScore(long score)
+    public static void IncrementTotalScore(int score)
     {
         UserData data = LoadUserData();
         data.totalScore += score;
@@ -173,17 +218,27 @@ public static class LocalBackupManager
     /// <summary>
     /// Increments the total coins gained in user data.
     /// </summary>
-    public static void IncrementTotalCoins(long coinsGained)
+    public static void IncrementCoinsGained(int coinsGained)
     {
         UserData data = LoadUserData();
-        data.totalCoins += coinsGained;
+        data.coinsGained += coinsGained;
+        SaveUserData(data);
+    }
+
+    /// <summary>
+    /// Increments the total time played in user data.
+    /// </summary>
+    public static void IncrementTotalTime(float time)
+    {
+        UserData data = LoadUserData();
+        data.totalTimePlayed += time;
         SaveUserData(data);
     }
 
     /// <summary>
     /// Adds spent coins to coin spent in user data.
     /// </summary>
-    public static void IncrementCoinSpent(long amount)
+    public static void IncrementCoinSpent(int amount)
     {
         UserData data = LoadUserData();
         data.coinSpent += amount;
@@ -196,8 +251,47 @@ public static class LocalBackupManager
     public static void IncrementCompletedAchievements()
     {
         UserData data = LoadUserData();
-        data.totalCoins++;
+        data.coinsGained++;
         SaveUserData(data);
+    }
+
+    /// <summary>
+    /// Increments the step of the score objective in objectives progress.
+    /// </summary>
+    public static void IncrementScoreObjectiveStep()
+    {
+        ObjectivesProgress progress = LoadObjectivesProgress();
+        if (progress.scoreObjectiveStep < progress.scoreGoals.Count - 1)
+        {
+            progress.scoreObjectiveStep++;
+            SaveObjectivesProgress(progress);
+        }
+    }
+
+    /// <summary>
+    /// Increments the step of the coin objective in objectives progress.
+    /// </summary>
+    public static void IncrementCoinObjectiveStep()
+    {
+        ObjectivesProgress progress = LoadObjectivesProgress();
+        if (progress.coinObjectiveStep < progress.scoreGoals.Count - 1)
+        {
+            progress.coinObjectiveStep++;
+            SaveObjectivesProgress(progress);
+        }
+    }
+
+    /// <summary>
+    /// Increments the step of the time objective in objectives progress.
+    /// </summary>
+    public static void IncrementTimeObjectiveStep()
+    {
+        ObjectivesProgress progress = LoadObjectivesProgress();
+        if (progress.timeObjectiveStep < progress.scoreGoals.Count - 1)
+        {
+            progress.timeObjectiveStep++;
+            SaveObjectivesProgress(progress);
+        }
     }
 
     /// <summary>
@@ -324,32 +418,82 @@ public static class LocalBackupManager
     /// <summary>
     /// Gets the high score from local progress.
     /// </summary>
-    public static long GetHighScore() => LoadUserData().highScore;
+    public static int GetHighScore() => LoadUserData().highScore;
 
     /// <summary>
     /// Gets the total games from user data.
     /// </summary>
-    public static long GetTotalGames() => LoadUserData().totalGames;
+    public static int GetTotalGames() => LoadUserData().totalGames;
 
     /// <summary>
     /// Gets the total score from user data.
     /// </summary>
-    public static long GetTotalScore() => LoadUserData().totalScore;
+    public static int GetTotalScore() => LoadUserData().totalScore;
 
     /// <summary>
     /// Gets the total coins gained from user data.
     /// </summary>
-    public static long GetTotalCoins() => LoadUserData().totalCoins;
+    public static int GetCoinsGained() => LoadUserData().coinsGained;
+
+    /// <summary>
+    /// Gets the total time played from user data.
+    /// </summary>
+    public static float GetTotalTime() => LoadUserData().totalTimePlayed;
 
     /// <summary>
     /// Gets the coins spent from user data.
     /// </summary>
-    public static long GetSpentCoins() => LoadUserData().coinSpent;
+    public static int GetSpentCoins() => LoadUserData().coinSpent;
 
     /// <summary>
     /// Gets the count of completed achievements from user data.
     /// </summary>
     public static int GetCompletedAchievements() => LoadUserData().achievementsCompleted;
+
+    /// <summary>
+    /// Gets the current reward of score objective in objectives progress.
+    /// </summary>
+    public static int GetScoreReward() => LoadObjectivesProgress().objectiveRewards[LoadObjectivesProgress().scoreObjectiveStep];
+
+    /// <summary>
+    /// Gets the current reward of coin objective in objectives progress.
+    /// </summary>
+    public static int GetCoinReward() => LoadObjectivesProgress().objectiveRewards[LoadObjectivesProgress().coinObjectiveStep];
+
+    /// <summary>
+    /// Gets the current reward of time objective in objectives progress.
+    /// </summary>
+    public static int GetTimeReward() => LoadObjectivesProgress().objectiveRewards[LoadObjectivesProgress().timeObjectiveStep];
+
+    /// <summary>
+    /// Gets the current goal of the score objective in objectives progress.
+    /// </summary>
+    public static int GetScoreGoal() => LoadObjectivesProgress().scoreGoals[LoadObjectivesProgress().scoreObjectiveStep];
+
+    /// <summary>
+    /// Gets the current goal of the coin objective in objectives progress.
+    /// </summary>
+    public static int GetCoinGoal() => LoadObjectivesProgress().coinGoals[LoadObjectivesProgress().timeObjectiveStep];
+
+    /// <summary>
+    /// Gets the current goal of the time objective in objectives progress.
+    /// </summary>
+    public static float GetTimeGoal() => LoadObjectivesProgress().timeGoals[LoadObjectivesProgress().timeObjectiveStep];
+
+    /// <summary>
+    /// Gets the step of the score objective in objectives progress.
+    /// </summary>
+    public static int GetScoreObjectiveStep() => LoadObjectivesProgress().scoreObjectiveStep < 10 ? LoadObjectivesProgress().scoreObjectiveStep : -1;
+
+    /// <summary>
+    /// Gets the step of the coin objective in objectives progress.
+    /// </summary>
+    public static int GetCoinObjectiveStep() => LoadObjectivesProgress().coinObjectiveStep < 10 ? LoadObjectivesProgress().coinObjectiveStep : -1;
+
+    /// <summary>
+    /// Gets the step of the time objective in objectives progress.
+    /// </summary>
+    public static int GetTimeObjectiveStep() => LoadObjectivesProgress().timeObjectiveStep < 10 ? LoadObjectivesProgress().timeObjectiveStep : -1;
 
     /// <summary>
     /// Gets the character count from local progress.

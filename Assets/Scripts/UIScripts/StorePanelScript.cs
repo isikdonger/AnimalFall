@@ -46,6 +46,7 @@ public class StorePanelScript : MonoBehaviour
         {
             LocalBackupManager.UnlockCharacter(characterName);
             LocalBackupManager.SubtractCoins(price);
+            LocalBackupManager.IncrementCoinSpent(price);
             coinText.text = LocalBackupManager.GetAvailableCoins().ToString();
             Destroy(GameObject.Find(characterName));
         }
