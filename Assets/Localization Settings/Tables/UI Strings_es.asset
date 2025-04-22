@@ -148,6 +148,30 @@ MonoBehaviour:
     m_Localized: Cargando...
     m_Metadata:
       m_Items: []
+  - m_Id: 15796456654635008
+    m_Localized: 'Premio:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15796456709160960
+    m_Localized: "Llegar A {0} Puntuaci\xF3n Total"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15796456709160961
+    m_Localized: Llegar A {0} Moneda Total
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798682890534912
+    m_Localized: "\xA1Objetivo Completado!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798682890534913
+    m_Localized: '{0} Monedas'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16216636522233856
+    m_Localized: Llegar Al {0} Tiempo Total
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

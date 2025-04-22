@@ -78,7 +78,7 @@ public class AccountMenuScript : MonoBehaviour
 
     public void SetTotalCoins()
     {
-        TotalCoins.text = LocalBackupManager.GetTotalCoins().ToString();
+        TotalCoins.text = LocalBackupManager.GetCoinsGained().ToString();
     }
 
     public void SetCoinsSpent()

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class CustomizePanelScript : MonoBehaviour
 {
-    private CanvasGroup CustomizePanel;
+    private GameObject CustomizePanel;
 
     private void Start()
     {
@@ -40,7 +40,7 @@ public class CustomizePanelScript : MonoBehaviour
         }
         else
         {
-            CentralUIController.Instance.ToggleMenu(CentralUIController.Instance.storePanel);
+            CentralUIController.Instance.ToggleMenu(CentralUIController.Instance.storePanel.GetComponent<CanvasGroup>());
         }
     }
 
@@ -58,6 +58,6 @@ public class CustomizePanelScript : MonoBehaviour
 #endif
         }
         PlayerPrefs.SetInt("characterIndex", index);
-        CentralUIController.Instance.ToggleMenu(CustomizePanel);
+        CentralUIController.Instance.ToggleMenu(CustomizePanel.GetComponent<CanvasGroup>());
     }
 }

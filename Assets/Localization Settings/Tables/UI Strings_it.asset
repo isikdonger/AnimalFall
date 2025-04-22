@@ -148,6 +148,30 @@ MonoBehaviour:
     m_Localized: Caricamento...
     m_Metadata:
       m_Items: []
+  - m_Id: 15796456654635008
+    m_Localized: 'Ricompensa:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15796456709160960
+    m_Localized: Raggiungi {0} Punteggio Totale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15796456709160961
+    m_Localized: Raggiungi {0} Monete Totali
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798682890534912
+    m_Localized: Obiettivo Completato!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798682890534913
+    m_Localized: '{0} Monete'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16216636522233856
+    m_Localized: Raggiungi {0} Tempo Totale
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

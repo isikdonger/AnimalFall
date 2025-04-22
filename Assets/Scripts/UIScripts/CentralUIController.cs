@@ -8,8 +8,9 @@ public class CentralUIController : MonoBehaviour
 
     [Header("UI References")]
     public CanvasGroup tapToStartScreen;
-    public CanvasGroup customizePanel;
-    public CanvasGroup storePanel;
+    public GameObject objectivesMenu;
+    public GameObject customizePanel;
+    public GameObject storePanel;
 
     private CanvasGroup _currentMenu;
     private Coroutine _activeTransition;

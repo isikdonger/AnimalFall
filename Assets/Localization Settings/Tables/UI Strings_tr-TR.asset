@@ -148,6 +148,30 @@ MonoBehaviour:
     m_Localized: "Y\xFCkleniyor..."
     m_Metadata:
       m_Items: []
+  - m_Id: 15796456654635008
+    m_Localized: "\xD6d\xFCl:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15796456709160960
+    m_Localized: "{0} Toplam Puana Ula\u015F\u0131n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15796456709160961
+    m_Localized: "{0} Toplam Paraya Ula\u015F\u0131n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798682890534912
+    m_Localized: "Hedef Tamamland\u0131!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798682890534913
+    m_Localized: '{0} Para'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16216636522233856
+    m_Localized: "{0} Toplam S\xFCreye Ula\u015F\u0131n"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
