@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 
 public class LoadingScene : MonoBehaviour
@@ -32,6 +33,7 @@ public class LoadingScene : MonoBehaviour
 
     private async void Start()
     {
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[PlayerPrefs.GetInt("LocaleKey")];
         AsyncOperation uiLoadOp = SceneManager.LoadSceneAsync("AnimalFall UI", LoadSceneMode.Additive);
         uiLoadOp.allowSceneActivation = false;
 

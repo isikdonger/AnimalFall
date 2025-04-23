@@ -172,6 +172,54 @@ MonoBehaviour:
     m_Localized: "{0} Toplam S\xFCreye Ula\u015F\u0131n"
     m_Metadata:
       m_Items: []
+  - m_Id: 16673722183974912
+    m_Localized: "Bayku\u015F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695168
+    m_Localized: "K\xF6pek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695170
+    m_Localized: "Tav\u015Fan"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695171
+    m_Localized: Panda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695172
+    m_Localized: Penguen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695173
+    m_Localized: Zebra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695174
+    m_Localized: Gergedan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695175
+    m_Localized: Goril
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695176
+    m_Localized: Okyanus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695177
+    m_Localized: Polonyatopu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695178
+    m_Localized: Ay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16683218482495488
+    m_Localized: "Deniz Gergedan\u0131"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -155,6 +155,54 @@ MonoBehaviour:
     m_Key: Objective Completed!
     m_Metadata:
       m_Items: []
+  - m_Id: 16673722183974912
+    m_Key: Owl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695168
+    m_Key: Dog
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16683218482495488
+    m_Key: Narwhal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695170
+    m_Key: Rabbit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695171
+    m_Key: Panda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695172
+    m_Key: Penguin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695173
+    m_Key: Zebra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695174
+    m_Key: Rhino
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695175
+    m_Key: Gorilla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695176
+    m_Key: Ocean
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695177
+    m_Key: Polandball
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695178
+    m_Key: Moon
+    m_Metadata:
+      m_Items: []
   - m_Id: 15796456709160960
     m_Key: Get to {0} Total Score
     m_Metadata:

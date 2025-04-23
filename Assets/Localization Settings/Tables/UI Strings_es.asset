@@ -172,6 +172,54 @@ MonoBehaviour:
     m_Localized: Llegar Al {0} Tiempo Total
     m_Metadata:
       m_Items: []
+  - m_Id: 16673722183974912
+    m_Localized: "B\xFAho"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695168
+    m_Localized: Perro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695170
+    m_Localized: Conejo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695171
+    m_Localized: Panda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695172
+    m_Localized: "Ping\xFCino"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695173
+    m_Localized: Cebra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695174
+    m_Localized: Rinoceronte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695175
+    m_Localized: Gorila
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695176
+    m_Localized: "Oc\xE9ano"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695177
+    m_Localized: Poloniaball
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695178
+    m_Localized: Luna
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16683218482495488
+    m_Localized: Narval
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
