@@ -9,7 +9,7 @@ public class CentralUIController : MonoBehaviour
     [Header("UI References")]
     public CanvasGroup tapToStartScreen;
     public GameObject objectivesMenu;
-    public GameObject customizePanel;
+    public GameObject charactersPanel;
     public GameObject storePanel;
 
     private CanvasGroup _currentMenu;
@@ -20,11 +20,6 @@ public class CentralUIController : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            // No initialization needed - everything is pre-configured
-            LocalizationSettings.InitializationOperation.Completed += _ =>
-            {
-                tapToStartScreen.gameObject.SetActive(true);
-            };
         }
         else
         {

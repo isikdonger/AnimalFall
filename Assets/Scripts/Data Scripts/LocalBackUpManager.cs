@@ -531,6 +531,11 @@ public static class LocalBackupManager
     public static List<string> GetAllCharacters() => LoadStoreData().Characters;
 
     /// <summary>
+    /// Gets the index of a character from store data.
+    /// <summary>
+    public static int GetCharacterIndex(string characterName) => LoadStoreData().Characters.IndexOf(characterName);
+
+    /// <summary>
     /// Gets a characters price from store data.
     /// <summary>
     public static int GetCharacterPrice(int index) { return LoadStoreData().characterPrices[index]; }

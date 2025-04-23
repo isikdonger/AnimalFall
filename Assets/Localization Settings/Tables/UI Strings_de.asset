@@ -153,7 +153,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 15796456709160960
-    m_Localized: Erreichen Sie Die Gesamtpunktzahl {0}
+    m_Localized: Erreichen Sie Die Gesamtpunktzahl Von {0}
     m_Metadata:
       m_Items: []
   - m_Id: 15796456709160961
@@ -170,6 +170,54 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 16216636522233856
     m_Localized: Erreichen Sie Die Gesamtzeit Von {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722183974912
+    m_Localized: Eule
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695168
+    m_Localized: Hund
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695170
+    m_Localized: Kaninchen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695171
+    m_Localized: Panda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695172
+    m_Localized: Pinguin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695173
+    m_Localized: Zebra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695174
+    m_Localized: Nashorn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695175
+    m_Localized: Gorilla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695176
+    m_Localized: Ozean
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695177
+    m_Localized: Polandball
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16673722242695178
+    m_Localized: Mond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16683218482495488
+    m_Localized: Narwal
     m_Metadata:
       m_Items: []
   references:

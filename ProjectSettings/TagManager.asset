@@ -15,6 +15,7 @@ TagManager:
   - BeamPlatform
   - FreezeController
   - LockPanel
+  - CharacterItem
   layers:
   - Default
   - TransparentFX

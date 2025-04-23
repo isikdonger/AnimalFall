@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 public class CustomizePanelScript : MonoBehaviour
 {
-    private GameObject CustomizePanel;
+    private GameObject CharactersPanel;
 
     private void Start()
     {
-        CustomizePanel = CentralUIController.Instance.customizePanel;
+        CharactersPanel = CentralUIController.Instance.charactersPanel;
         LockCharacters();
     }
 
@@ -19,13 +19,15 @@ public class CustomizePanelScript : MonoBehaviour
     {
         List<string> unlockedCharacters = LocalBackupManager.GetUnlockedCharacters();
 
-        foreach (Transform child in CustomizePanel.transform)
+        foreach (Transform child in CharactersPanel.transform)
         {
             string childName = child.name;
-            string characterName = childName.Remove(childName.Length - 3); // Remove the "Btn"
             Debug.Log("Child Name: " + childName);
+            string characterName = childName.Remove(childName.Length - 3); // Remove the "Btn"
+            Debug.Log("Character Name: " + characterName);
             if (unlockedCharacters.Contains(characterName))
             {
+                Debug.Log("Unlocked Character: " + characterName);
                 child.GetChild(1).gameObject.SetActive(false);
             }
         }
@@ -59,6 +61,6 @@ public class CustomizePanelScript : MonoBehaviour
 #endif
         }
         PlayerPrefs.SetInt("characterIndex", index);
-        CentralUIController.Instance.ToggleMenu(CustomizePanel.GetComponent<CanvasGroup>());
+        CentralUIController.Instance.ToggleMenu(CharactersPanel.GetComponent<CanvasGroup>());
     }
 }

@@ -40,7 +40,7 @@ public class StoreData
 {
     public readonly List<string> Characters = new List<string>
     {
-        "Owl", "Narwhal", "Rabbit", "Panda", "Penguin", "Zebra", "Rhino", "Gorilla", "Ocean", "Polandball", "Moon"
+        "Owl", "Dog", "Narwhal", "Rabbit", "Panda", "Penguin", "Zebra", "Rhino", "Gorilla", "Ocean", "Polandball", "Moon"
     };
     public readonly List<int> characterPrices = new List<int>
     {

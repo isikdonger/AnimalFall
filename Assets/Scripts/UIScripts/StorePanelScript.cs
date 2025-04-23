@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Tables;
 using UnityEngine.UI;
 
 public class StorePanelScript : MonoBehaviour
@@ -11,11 +14,13 @@ public class StorePanelScript : MonoBehaviour
     [SerializeField] private GameObject characterButtonPrefab;
     [SerializeField] private GameObject CharactersParent;
     [SerializeField] private Sprite[] chracterSprites;
+    private GameObject CharactersPanel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         coinText.text = LocalBackupManager.GetAvailableCoins().ToString();
+        CharactersPanel = CentralUIController.Instance.charactersPanel;
         InitiliazeCharacters();
     }
 
@@ -25,14 +30,17 @@ public class StorePanelScript : MonoBehaviour
 
         foreach (string character in lockedCharacters)
         {
-            int index = LocalBackupManager.GetAllCharacters().IndexOf(character);
+            int index = LocalBackupManager.GetCharacterIndex(character);
             GameObject characterButton = Instantiate(characterButtonPrefab, CharactersParent.transform);
             characterButton.transform.SetParent(CharactersParent.transform);
             characterButton.GetComponent<Button>().onClick.AddListener(() => BuyCharacter(character));
             characterButton.name = character;
-            characterButton.transform.GetChild(0).GetComponent<TMP_Text>().text = character;
+            LocalizeStringEvent nameLocalizer = characterButton.transform.GetChild(0).GetComponent<LocalizeStringEvent>();
+            LocalizedString localizedName = new LocalizedString { TableReference = "UI Strings", TableEntryReference = character };
+            nameLocalizer.StringReference = localizedName;
             characterButton.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = chracterSprites[index];
-            characterButton.transform.GetChild(2).GetComponent<TMP_Text>().text = LocalBackupManager.GetCharacterPrice(index) + " Coins";
+            characterButton.transform.GetChild(2).GetComponent<LocalizeStringEvent>().StringReference.Arguments = new object[] { LocalBackupManager.GetCharacterPrice(index) };
+            //characterButton.transform.GetChild(2).GetComponent<TMP_Text>().text = LocalBackupManager.GetCharacterPrice(index) + " Coins";
             CharactersParent.GetComponent<RectTransform>().anchoredPosition = new Vector2(int.MaxValue, 0);
         }
     }
@@ -40,7 +48,7 @@ public class StorePanelScript : MonoBehaviour
     private void BuyCharacter(string characterName)
     {
         //string characterName = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
-        int characterIndex = LocalBackupManager.GetAllCharacters().IndexOf(characterName);
+        int characterIndex = LocalBackupManager.GetCharacterIndex(characterName);
         int price = LocalBackupManager.GetCharacterPrice(characterIndex);
         if (LocalBackupManager.GetAvailableCoins() >= price)
         {
@@ -48,6 +56,7 @@ public class StorePanelScript : MonoBehaviour
             LocalBackupManager.SubtractCoins(price);
             LocalBackupManager.IncrementCoinSpent(price);
             coinText.text = LocalBackupManager.GetAvailableCoins().ToString();
+            CharactersPanel.transform.GetChild(characterIndex).GetChild(1).gameObject.SetActive(false);
             Destroy(GameObject.Find(characterName));
         }
     }
