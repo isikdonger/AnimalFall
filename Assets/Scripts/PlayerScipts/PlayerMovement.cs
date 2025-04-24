@@ -122,14 +122,14 @@ public class PlayerMovement : MonoBehaviour
         if (rightCounter>leftCounter)
         {
             moveSpeed += HOLDING_SPEED_CURVE.Invoke(rightHoldingTime*0.01f);
-            rb.linearVelocity = new Vector2(moveSpeed, rb.linearVelocity.y);
+            
             rightHoldingTime++;
             leftHoldingTime = 0;
         }
         else if(leftCounter>rightCounter)
         {
             moveSpeed += HOLDING_SPEED_CURVE.Invoke(leftHoldingTime * 0.01f);
-            rb.linearVelocity = new Vector2(-moveSpeed, rb.linearVelocity.y);
+            moveSpeed *= -1;
             leftHoldingTime++;
             rightHoldingTime = 0;
         }
@@ -137,6 +137,11 @@ public class PlayerMovement : MonoBehaviour
         {
             rightHoldingTime = 0;
             leftHoldingTime = 0;
+        }
+
+        if (rightCounter!=leftCounter && (Mathf.Sign(moveSpeed) != Mathf.Sign(rb.linearVelocityX) || Mathf.Abs(moveSpeed) > Mathf.Abs(rb.linearVelocityX)))
+        {
+            rb.linearVelocity = new Vector2(moveSpeed, rb.linearVelocity.y);
         }
 
         if (currentPlatform != null)
@@ -176,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void PcMove()
     {
-        List<Touch> touches = new List<Touch>();
+        List<Touch> touches = new();
         if (Input.GetAxisRaw("Horizontal") > 0f)
         {
             Touch t = new()
