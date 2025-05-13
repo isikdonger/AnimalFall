@@ -74,3 +74,7 @@ crashlytics-build.properties
 
 Assets/Firebase/Plugins/x86_64/FirebaseCppApp-12_7_0.bundle
 Assets/Firebase/Plugins/x86_64/FirebaseCppApp-12_7_0.so
+
+/google-services.json
+/Assets/Firebase/*.json
+/Assets/Plugins/Android/FirebaseApp.androidlib/res/values/google-services.xml
