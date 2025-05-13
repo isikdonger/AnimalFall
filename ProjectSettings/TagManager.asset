@@ -16,7 +16,6 @@ TagManager:
   - FreezeController
   - LockPanel
   - CharacterItem
-  - MovingPlatform
   layers:
   - Default
   - TransparentFX

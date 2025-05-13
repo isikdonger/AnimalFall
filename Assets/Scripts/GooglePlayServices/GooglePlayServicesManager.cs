@@ -7,7 +7,6 @@ using System;
 using System.Collections;
 using UnityEngine.UI;
 using System.Reflection;
-using UnityEngine.XR;
 
 public static class GooglePlayServicesManager
 {
@@ -62,7 +61,7 @@ public static class GooglePlayServicesManager
     {
         if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
-            string leaderboardID = GPGSIds.leaderboard_score_leaderboard;
+            string leaderboardID = GPGSIds.leaderboard_score;
             PlayGamesPlatform.Instance.ReportScore(score, leaderboardID, (bool success) =>
             {
                 Debug.Log(success ? "Score reported successfully!" : "Failed to report score.");
@@ -103,7 +102,7 @@ public static class GooglePlayServicesManager
         }
 
         // Retrieve the leaderboard ID asynchronously
-        string leaderboardID = GPGSIds.leaderboard_score_leaderboard;
+        string leaderboardID = GPGSIds.leaderboard_score;
 
         if (string.IsNullOrEmpty(leaderboardID))
         {
@@ -154,27 +153,34 @@ public static class GooglePlayServicesManager
     }
 
     /// <summary>
-    /// Unlock an achievement asynchronously.
+    /// Unlock an achievement using a coroutine.
     /// </summary>
-    public static async Task UnlockAchievement(string achievementName)
+    public static IEnumerator UnlockAchievementCoroutine(string achievementName)
     {
         Debug.Log("Unlocking achievement: " + achievementName);
-
-        if (!PlayGamesPlatform.Instance.IsAuthenticated()) return;
-
-        string achievementID = GetAchievementID("achievement_" + achievementName.ToLower().Replace(" ", "_"));
-        if (string.IsNullOrEmpty(achievementID)) return;
-
-        var tcs = new TaskCompletionSource<bool>();
-
-        PlayGamesPlatform.Instance.ReportProgress(achievementID, 100.0f, (bool success) =>
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
-            Debug.Log(success ? "Achievement unlocked!" : "Failed to unlock achievement.");
-            if (success) LocalBackupManager.IncrementCompletedAchievements();
-            tcs.SetResult(success);
-        });
+            // Retrieve the achievement ID
+            string achievementID = GetAchievementID("achievement_" + achievementName.ToLower().Replace(" ", "_"));
+            Debug.Log("Achievement ID: " + achievementID);
 
-        await tcs.Task;
+            if (string.IsNullOrEmpty(achievementID))
+            {
+                yield break;
+            }
+
+            // Report the achievement progress
+            PlayGamesPlatform.Instance.ReportProgress(achievementID, 100.0f, (bool success) =>
+            {
+                Debug.Log(success ? "Achievement unlocked!" : "Failed to unlock achievement.");
+
+                if (success)
+                {
+                    Debug.Log("Achievement Unlocked! Incrementing completed achievements...");
+                    LocalBackupManager.IncrementCompletedAchievements();
+                }
+            });
+        }
     }
 
     /// <summary>
@@ -194,28 +200,24 @@ public static class GooglePlayServicesManager
     }
 
     /// <summary>
-    ///  Increment Objectives asynchronously.
+    ///  Increment Objectives
     /// </summary>
-    public static async Task IncrementObjective(string objectiveName)
+    public static IEnumerator IncrementObjectiveCoroutine(string objectiveName)
     {
-        if (!PlayGamesPlatform.Instance.IsAuthenticated()) return;
-
-        string achievementID = GetAchievementID("achievement_" + objectiveName.ToLower().Replace(" ", "_"));
-        if (string.IsNullOrEmpty(achievementID))
+        if (PlayGamesPlatform.Instance.IsAuthenticated())
         {
-            Debug.LogError("Failed to retrieve achievement ID.");
-            return;
+            string achievementID = GetAchievementID("achievement_" + objectiveName.ToLower().Replace(" ", "_"));
+            Debug.Log("Incrementing objective: " + achievementID);
+            if (string.IsNullOrEmpty(achievementID))
+            {
+                Debug.LogError("Failed to retrieve achievement ID.");
+                yield break;
+            }
+            PlayGamesPlatform.Instance.IncrementAchievement(achievementID, 1, (bool success) =>
+            {
+                Debug.Log(success ? "Objective incremented!" : "Failed to increment objective.");
+            });
         }
-
-        var tcs = new TaskCompletionSource<bool>();
-
-        PlayGamesPlatform.Instance.IncrementAchievement(achievementID, 1, (bool success) =>
-        {
-            Debug.Log(success ? "Objective incremented!" : "Failed to increment objective.");
-            tcs.SetResult(success);
-        });
-
-        await tcs.Task;
     }
 }
 #endif

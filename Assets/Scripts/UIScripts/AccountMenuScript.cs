@@ -58,10 +58,7 @@ public class AccountMenuScript : MonoBehaviour
     {
         try
         {
-            int rank = 0;
-#if UNITY_ANDROID
-            rank = await GooglePlayServicesManager.GetLeaderboardRankAsync();
-#endif
+            int rank = await GooglePlayServicesManager.GetLeaderboardRankAsync();
             LeaderboardRank.text = rank.ToString();
         }
         catch (Exception ex)

@@ -40,6 +40,7 @@ public class StorePanelScript : MonoBehaviour
             nameLocalizer.StringReference = localizedName;
             characterButton.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = chracterSprites[index];
             characterButton.transform.GetChild(2).GetComponent<LocalizeStringEvent>().StringReference.Arguments = new object[] { LocalBackupManager.GetCharacterPrice(index) };
+            //characterButton.transform.GetChild(2).GetComponent<TMP_Text>().text = LocalBackupManager.GetCharacterPrice(index) + " Coins";
             CharactersParent.GetComponent<RectTransform>().anchoredPosition = new Vector2(int.MaxValue, 0);
         }
     }
@@ -54,23 +55,9 @@ public class StorePanelScript : MonoBehaviour
             LocalBackupManager.UnlockCharacter(characterName);
             LocalBackupManager.SubtractCoins(price);
             LocalBackupManager.IncrementCoinSpent(price);
-            CoinSpentAchievement();
             coinText.text = LocalBackupManager.GetAvailableCoins().ToString();
             CharactersPanel.transform.GetChild(characterIndex).GetChild(1).gameObject.SetActive(false);
             Destroy(GameObject.Find(characterName));
-        }
-    }
-
-    private void CoinSpentAchievement()
-    {
-        int coinSpent = LocalBackupManager.GetSpentCoins();
-        if (coinSpent == 2000)
-        {
-#if UNITY_ANDROID
-            GooglePlayServicesManager.UnlockAchievement("Hey Big Spender");
-#elif UNITY_IOS
-            GameCenterManager.UnlockAchievement("Hey Big Spender");
-#endif
         }
     }
 

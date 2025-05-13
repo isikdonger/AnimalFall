@@ -22,9 +22,12 @@ public class CustomizePanelScript : MonoBehaviour
         foreach (Transform child in CharactersPanel.transform)
         {
             string childName = child.name;
+            Debug.Log("Child Name: " + childName);
             string characterName = childName.Remove(childName.Length - 3); // Remove the "Btn"
+            Debug.Log("Character Name: " + characterName);
             if (unlockedCharacters.Contains(characterName))
             {
+                Debug.Log("Unlocked Character: " + characterName);
                 child.GetChild(1).gameObject.SetActive(false);
             }
         }
@@ -51,9 +54,10 @@ public class CustomizePanelScript : MonoBehaviour
         if (LocalBackupManager.GetCharacterCount() == 3)
         {
 #if UNITY_ANDROID
-            GooglePlayServicesManager.UnlockAchievement("This is Getting Out of Hand");
+            Debug.Log("Unity Android");
+            GooglePlayServicesManager.UnlockAchievementCoroutine("This is Getting Out of Hand");
 #elif UNITY_IOS
-            GameCenterManager.UnlockAchievement("This is Getting Out of Hand");
+            GameCenterManager.UnlockAchievementCoroutine("This is Getting Out of Hand");
 #endif
         }
         PlayerPrefs.SetInt("characterIndex", index);

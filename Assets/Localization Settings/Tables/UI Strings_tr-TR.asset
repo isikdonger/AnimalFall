@@ -32,7 +32,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22240034818
-    m_Localized: Toplam Skor
+    m_Localized: Toplam Puan
     m_Metadata:
       m_Items: []
   - m_Id: 22240034819
@@ -140,7 +140,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 752814403616768
-    m_Localized: 'Skor: {0}'
+    m_Localized: 'Puan: {0}'
     m_Metadata:
       m_Items:
       - rid: 4042693398148415493
@@ -153,7 +153,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 15796456709160960
-    m_Localized: "{0} Toplam Skora Ula\u015F\u0131n"
+    m_Localized: "{0} Toplam Puana Ula\u015F\u0131n"
     m_Metadata:
       m_Items: []
   - m_Id: 15796456709160961
@@ -218,94 +218,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 16683218482495488
     m_Localized: "Deniz Gergedan\u0131"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17884612065492992
-    m_Localized: sn
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17884612107436032
-    m_Localized: dk
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17884612107436033
-    m_Localized: sa
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17884612107436034
-    m_Localized: g
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17884612107436035
-    m_Localized: bin
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17884612107436036
-    m_Localized: Mn
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18050939090632704
-    m_Localized: 'Ses:'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18050939149352960
-    m_Localized: "M\xFCzik:"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18050939149352961
-    m_Localized: 'Dil:'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18050939149352962
-    m_Localized: 'Kredi:'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18050939149352963
-    m_Localized: 'Destek:'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18050939149352964
-    m_Localized: 'Skor Tablosu:'
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18050939149352965
-    m_Localized: "Ba\u015Far\u0131lar:"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18053674624090112
-    m_Localized: "G\xF6ster"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18775420088090624
-    m_Localized: "D\xFC\u015Ft\xFCn"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18775420134227968
-    m_Localized: Dondun
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18775420134227969
-    m_Localized: "Kaz\u0131\u011Fa Oturdun"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18775420134227970
-    m_Localized: Tekrar Oynamak Ister Misin?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18775420134227971
-    m_Localized: "Men\xFCye D\xF6nmek Istiyor Musunuz?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18775420134227972
-    m_Localized: Tekrar Oyna
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18775420134227973
-    m_Localized: "Geri D\xF6nmek"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 18795334265995264
-    m_Localized: "\xD6ld\xFCr\xFCld\xFCn"
     m_Metadata:
       m_Items: []
   references:

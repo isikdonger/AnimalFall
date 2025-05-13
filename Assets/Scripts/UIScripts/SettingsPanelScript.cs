@@ -58,11 +58,4 @@ public class SettingsPanelScript : MonoBehaviour
             CreditsBtn.SetActive(true);
         }
     }
-
-    public async void OpenMailApp()
-    {
-        string mail = await FirestoreManager.GetSupportMail();
-        string mailtoUrl = $"mailto:{mail}";
-        Application.OpenURL(mailtoUrl);
-    }
 }

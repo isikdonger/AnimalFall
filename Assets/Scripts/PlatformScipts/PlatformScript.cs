@@ -3,13 +3,11 @@
 public class PlatformScript : MonoBehaviour
 {
     private GameObject BreakablePltatform;
-    private GameObject PlatformSpawner;
     public static float move_Speed;
-    public bool is_Standart, is_Breakable, movingPlatfromLeft, movingPlatfromRight, is_Freeze, is_Beam;
+    public bool is_Breakable, is_Platform, is_Freeze, movingPlatfromLeft, movingPlatfromRight, is_Beam;
     private Animator animBreak, animFreeze;
     void Start()
     {
-        PlatformSpawner = GameObject.Find("Platform Spawner");
         if (is_Breakable)
         {
             BreakablePltatform = GameObject.FindGameObjectWithTag("BreakablePlatform");
@@ -49,58 +47,31 @@ public class PlatformScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     void OnCollisionEnter2D(Collision2D target)
     {
         if (target.gameObject.tag == "Player")
         {
             //SoundManager.instance.LandSound();
-            if (Mathf.Approximately(target.transform.position.y, PlatformSpawner.transform.position.y))
+            if (is_Breakable)
             {
-#if UNITY_ANDROID
-                GooglePlayServicesManager.UnlockAchievement("Dream On");
-#elif UNITY_IOS
-                GameCenterManager.UnlockAchievement("Dream On");
-#endif
+                animBreak.Play("Break");
             }
-
-            if (is_Standart)
+            else if (is_Freeze)
             {
-                LocalBackupManager.IncrementStandartCount();
-                if (LocalBackupManager.GetStandartCount() == 10)
+                if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
                 {
-#if UNITY_ANDROID
-                    GooglePlayServicesManager.UnlockAchievement("Field of Hopes and Dreams");
-#elif UNITY_IOS
-                    GameCenterManager.UnlockAchievement("Field of Hopes and Dreams");
-#endif
+                    animFreeze.Play("Freeze");
                 }
-            }
-            else
-            {
-                LocalBackupManager.ResetStandartCount();
-                if (is_Breakable)
+                else if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("Unfreeze"))
                 {
-                    animBreak.Play("Break");
-                }
-                else if (is_Freeze)
-                {
-                    if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-                    {
-                        animFreeze.Play("Freeze");
-                    }
-                    else if (animFreeze.GetCurrentAnimatorStateInfo(0).IsName("Unfreeze"))
-                    {
-                        float unfreezeTime = animFreeze.GetCurrentAnimatorStateInfo(0).normalizedTime;
-                        unfreezeTime = Mathf.Clamp01(unfreezeTime); // just to be safe
-                        float freezeStartTime = 1.0f - unfreezeTime;
-                        animFreeze.Play("Freeze", 0, freezeStartTime);
-                    }
+                    float unfreezeTime = animFreeze.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                    unfreezeTime = Mathf.Clamp01(unfreezeTime); // just to be safe
+                    float freezeStartTime = 1.0f - unfreezeTime;
+                    animFreeze.Play("Freeze", 0, freezeStartTime);
                 }
             }
         }
     }
-
     void OnCollisionExit2D(Collision2D collision)
     {
         if (is_Freeze)
@@ -111,13 +82,6 @@ public class PlatformScript : MonoBehaviour
                 freezeTime = Mathf.Clamp01(freezeTime); // just to be safe
                 float unfreezeStartTime = 1.0f - freezeTime;
                 animFreeze.Play("Unfreeze", 0, unfreezeStartTime);
-            }
-        }
-        else if (is_Breakable)
-        {
-            if (LocalBackupManager.GetAllCharacters()[PlayerPrefs.GetInt("characterIndex")].Equals("Narwhal"))
-            {
-                LocalBackupManager.ResetBreakCount();
             }
         }
     }
@@ -167,12 +131,12 @@ public class PlatformScript : MonoBehaviour
             if (LocalBackupManager.GetAllCharacters()[PlayerPrefs.GetInt("characterIndex")].Equals("Narwhal"))
             {
                 LocalBackupManager.IncrementBreakCount();
-                if (LocalBackupManager.GetBreakCount() == 3)
+                if (LocalBackupManager.GetBreakCount() == 10)
                 {
 #if UNITY_ANDROID
-                    GooglePlayServicesManager.UnlockAchievement("Narwhal Blast");
+                    GooglePlayServicesManager.UnlockAchievementCoroutine("Narwhal Blast");
 #elif UNITY_IOS
-                    GameCenterManager.UnlockAchievement("Narwhal Blast");
+                    GameCenterManager.UnlockAchievementCoroutine("Narwhal Blast");
 #endif
                 }
             }

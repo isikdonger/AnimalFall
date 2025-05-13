@@ -54,7 +54,6 @@ SpriteRenderer:
   m_RayTraceProcedural: 0
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -138,7 +137,7 @@ BoxCollider2D:
   m_EdgeRadius: 0
 --- !u!50 &503846302175451565
 Rigidbody2D:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -149,8 +148,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 23b1709e68957d24f8f9dc549417f24a, type: 2}
   m_IncludeLayers:
@@ -175,9 +174,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1413d421c881ce742b322218a904258e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  is_Standart: 1
   is_Breakable: 0
+  is_Platform: 1
+  is_Freeze: 0
   movingPlatfromLeft: 0
   movingPlatfromRight: 0
-  is_Freeze: 0
   is_Beam: 0

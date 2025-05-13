@@ -12,28 +12,7 @@
           "package_name": "com.IshigoGames.AnimalFall"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "580825207428-0mvp3pq8b34qojtdndifbqvpcrh0k7jr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.IshigoGames.AnimalFall",
-            "certificate_hash": "f5146eaf2a7874842028abb09a7637fd03c01a2e"
-          }
-        },
-        {
-          "client_id": "580825207428-f7mo746e48l1k2bv03i04443e9cninti.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.IshigoGames.AnimalFall",
-            "certificate_hash": "252f4fdb7849c38f8fec6c53350ddd726b779b6b"
-          }
-        },
-        {
-          "client_id": "580825207428-d7ucd22csr2el4h0tromv7m70mjnhe99.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyBId_wWUEEEokypSGvHsQhgw3KLYAyUKWo"
@@ -41,12 +20,7 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "580825207428-d7ucd22csr2el4h0tromv7m70mjnhe99.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

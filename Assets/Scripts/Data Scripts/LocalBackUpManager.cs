@@ -323,22 +323,22 @@ public static class LocalBackupManager
     }
 
     /// <summary>
-    /// Increments the win count in local progress.
+    /// Increments the break count in local progress.
     /// </summary>
-    public static void IncrementWinCount()
+    public static void IncrementBreakCount()
     {
         GameProgress progress = LoadProgress();
-        progress.winCount++;
+        progress.breakCount++;
         SaveProgress(progress);
     }
 
     /// <summary>
-    /// Resets the win count in local progress.
+    /// Increments the spike death count in local progress.
     /// </summary>
-    public static void ResetWinCount()
+    public static void IncrementSpikeDeathCount()
     {
         GameProgress progress = LoadProgress();
-        progress.winCount = 0;
+        progress.spikeDeathCount++;
         SaveProgress(progress);
     }
 
@@ -363,82 +363,22 @@ public static class LocalBackupManager
     }
 
     /// <summary>
-    /// Increments the standart count in local progress.
+    /// Increments the win count in local progress.
     /// </summary>
-    public static void IncrementStandartCount()
+    public static void IncrementWinCount()
     {
         GameProgress progress = LoadProgress();
-        progress.standartCount++;
-        SaveProgress(progress);
-    }
-
-    /// <summary>
-    /// Resets the standart count in local progress.
-    /// </summary>
-    public static void ResetStandartCount()
-    {
-        GameProgress progress = LoadProgress();
-        progress.standartCount = 0;
-        SaveProgress(progress);
-    }
-
-    /// <summary>
-    /// Increments the break count in local progress.
-    /// </summary>
-    public static void IncrementBreakCount()
-    {
-        GameProgress progress = LoadProgress();
-        progress.breakCount++;
-        SaveProgress(progress);
-    }
-
-    /// <summary>
-    /// Resets the break count in local progress.
-    /// </summary>
-    public static void ResetBreakCount()
-    {
-        GameProgress progress = LoadProgress();
-        progress.breakCount = 0;
-        SaveProgress(progress);
-    }
-
-    /// <summary>
-    /// Increments the freeze count in local progress.
-    /// </summary>
-    public static void IncrementFreezeCount()
-    {
-        GameProgress progress = LoadProgress();
-        progress.freezeCount++;
-        SaveProgress(progress);
-    }
-
-    /// <summary>
-    /// Resets the freeze count in local progress.
-    /// </summary>
-    public static void ResetFreezeCount()
-    {
-        GameProgress progress = LoadProgress();
-        progress.freezeCount = 0;
-        SaveProgress(progress);
-    }
-
-    /// <summary>
-    /// Increments the spike death count in local progress.
-    /// </summary>
-    public static void IncrementSpikeCount()
-    {
-        GameProgress progress = LoadProgress();
-        progress.spikeCount++;
+        progress.winCount++;
         SaveProgress(progress);
     }
 
     /// <summary>
     /// Resets the win count in local progress.
     /// </summary>
-    public static void ResetSpikeCount()
+    public static void ResetWinCount()
     {
         GameProgress progress = LoadProgress();
-        progress.spikeCount = 0;
+        progress.winCount = 0;
         SaveProgress(progress);
     }
 
@@ -533,26 +473,12 @@ public static class LocalBackupManager
     /// <summary>
     /// Gets the current goal of the coin objective in objectives progress.
     /// </summary>
-    public static int GetCoinGoal() => LoadObjectivesProgress().coinGoals[LoadObjectivesProgress().coinObjectiveStep];
+    public static int GetCoinGoal() => LoadObjectivesProgress().coinGoals[LoadObjectivesProgress().timeObjectiveStep];
 
     /// <summary>
     /// Gets the current goal of the time objective in objectives progress.
     /// </summary>
     public static int GetTimeGoal() => LoadObjectivesProgress().timeGoals[LoadObjectivesProgress().timeObjectiveStep];
-
-    /// <summary>
-    /// Gets the current formatted goal of the time objective in objectives progress.
-    /// </summary>
-    public static string GetFormattedTime()
-    {
-        int totalSeconds = Mathf.FloorToInt(LocalBackupManager.GetTimeGoal());
-        int days = totalSeconds / 86400;
-        if (days > 0) return $"{days}:days";
-        int hours = totalSeconds / 3600;
-        if (hours > 0) return $"{hours}:hours";
-        int minutes = totalSeconds / 60;
-        return $"{minutes}:minutes";
-    }
 
     /// <summary>
     /// Gets the step of the score objective in objectives progress.
@@ -580,24 +506,14 @@ public static class LocalBackupManager
     public static int GetCharacterCount() => LoadProgress().characterCount;
 
     /// <summary>
-    /// Gets the standart count from local progress.
-    /// </summary>
-    public static int GetStandartCount() => LoadProgress().standartCount;
-
-    /// <summary>
     /// Gets the break count from local progress.
     /// </summary>
     public static int GetBreakCount() => LoadProgress().breakCount;
 
     /// <summary>
-    /// Gets the freeze count from local progress.
-    /// </summary>
-    public static int GetFreezeCount() => LoadProgress().freezeCount;
-
-    /// <summary>
     /// Gets the spike death count from local progress.
     /// </summary>
-    public static int GetSpikeDeathCount() => LoadProgress().spikeCount;
+    public static int GetSpikeDeathCount() => LoadProgress().spikeDeathCount;
 
     /// <summary>
     /// Gets the loss count from local progress.
