@@ -54,13 +54,13 @@ public class ScreenAdjuster : MonoBehaviour
         }
 
         // Pause Menu Ajustments
-        RectTransform backToGameButtonRT = backToGameButton.GetComponent<RectTransform>(), backToMenuButtonRT = backToMenuButton.GetComponent<RectTransform>();
+        /*RectTransform backToGameButtonRT = backToGameButton.GetComponent<RectTransform>(), backToMenuButtonRT = backToMenuButton.GetComponent<RectTransform>();
         int width = 200 + scale, height = 150 + scale;
         backToGameButtonRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
         backToGameButtonRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
         backToGameButtonRT.anchoredPosition = new Vector2(-width / 2, height / 2);
         backToMenuButtonRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
         backToMenuButtonRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-        backToMenuButtonRT.anchoredPosition = new Vector2(width / 2, height / 2);
+        backToMenuButtonRT.anchoredPosition = new Vector2(width / 2, height / 2);*/
     }
 }

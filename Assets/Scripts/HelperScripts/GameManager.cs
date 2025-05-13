@@ -1,34 +1,57 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    private GameObject player;
+    private Vector3 playerVelocity;
+    private IEnumerable<GameObject> platforms;
+    private IEnumerable<GameObject> coins;
 
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    private void Start()
-    {
         InitiliazeGame();
     }
 
-    public void Death()
+    public void DeactiveGameObjects()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerVelocity = player.GetComponent<Rigidbody2D>().linearVelocity;
+        player.SetActive(false);
+        platforms = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None).Where(obj => obj.tag.Contains("Platform"));
+        coins = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None).Where(obj => obj.tag.Contains("Coin"));
+        foreach (GameObject obj in platforms.Concat(coins))
+        {
+            obj.SetActive(false);
+        }
+    }
+
+    public void ReactiveGameObject()
+    {
+        player.SetActive(true);
+        player.GetComponent<Rigidbody2D>().linearVelocity = playerVelocity;
+        foreach (GameObject obj in platforms.Concat(coins))
+        {
+            obj.SetActive(true);
+        }
+    }
+
+    public async void Death(string message)
+    {
+        DeathMenuScript.ShowDeathMenu(message);
 #if !UNITY_EDITOR
-        ExitGame();
+        await ExitGame();
 #endif
-        RestartGame();
     }
 
     public static void InitiliazeGame()
@@ -39,104 +62,102 @@ public class GameManager : MonoBehaviour
         PlatformScript.InitiliazeGame();
         CoinSpawner.InitializeGame();
         ScoreTextScript.InitiliazeGame();
-        ScoreTextScript.InitiliazeGame();
         CoinTextScript.InitiliazeGame();
     }
 
     public void RestartGame()
     {
-        Invoke("RestartAfterTime", 0.5f);
-        InitiliazeGame();
-    }
-
-    static void RestartAfterTime()
-    {
         SceneManager.LoadScene("AnimalFall", LoadSceneMode.Single);
     }
 
-    public void ExitGame()
+    public async Task ExitGame()
     {
+        // Local saves
         LocalBackupManager.IncrementTotalGames();
         LocalBackupManager.SetHighScore(ScoreTextScript.scoreValue);
         LocalBackupManager.IncrementTotalScore(ScoreTextScript.scoreValue);
         LocalBackupManager.IncrementCoinsGained(CoinTextScript.coinAmount);
         LocalBackupManager.AddCoins(CoinTextScript.coinAmount);
-        ScoreObjective();
-        CoinObjective();
-        TimeObjective();
-        LossCountAchievement();
-        WinCountAchievement();
-        PolandballAchievement();
-        HundredAchievement();
-        ComeOnAchievement();
+
+        // Start all achievements in parallel
+        var tasks = new List<Task>
+        {
+            ScoreObjective(),
+            CoinObjective(),
+            TimeObjective(),
+            LossCountAchievement(),
+            ComeOnAchievement(),
+            HundredAchievement(),
+            StandartPlatformAchievement(),
+            WinCountAchievement(),
+            PolandballAchievement()
+        };
+
+        await Task.WhenAll(tasks);
     }
 
-    public void ScoreObjective()
+    public async Task ScoreObjective()
     {
         if (LocalBackupManager.GetTotalScore() >= LocalBackupManager.GetScoreGoal())
         {
 #if UNITY_ANDROID
-            GooglePlayServicesManager.IncrementObjectiveCoroutine("Score Goal");
+            await GooglePlayServicesManager.IncrementObjective("Score Objective");
             LocalBackupManager.AddCoins(LocalBackupManager.GetScoreReward());
             LocalBackupManager.IncrementScoreObjectiveStep();
 #endif
         }
     }
 
-    public void CoinObjective()
+    public async Task CoinObjective()
     {
         if (LocalBackupManager.GetCoinsGained() >= LocalBackupManager.GetCoinGoal())
         {
 #if UNITY_ANDROID
-            GooglePlayServicesManager.IncrementObjectiveCoroutine("Coin Goal");
+            await GooglePlayServicesManager.IncrementObjective("Coin Objective");
             LocalBackupManager.AddCoins(LocalBackupManager.GetCoinReward());
             LocalBackupManager.IncrementCoinObjectiveStep();
 #endif
         }
     }
 
-    public void TimeObjective()
+    public async Task TimeObjective()
     {
         if (LocalBackupManager.GetTotalTime() >= LocalBackupManager.GetTimeGoal())
         {
 #if UNITY_ANDROID
-            GooglePlayServicesManager.IncrementObjectiveCoroutine("Time Goal");
+            await GooglePlayServicesManager.IncrementObjective("Time Objective");
             LocalBackupManager.AddCoins(LocalBackupManager.GetTimeReward());
             LocalBackupManager.IncrementTimeObjectiveStep();
 #endif
         }
     }
 
-    public void LossCountAchievement()
+    public async Task LossCountAchievement()
     {
-        LocalBackupManager.IncrementLossCount();
         if (ScoreTextScript.scoreValue < 10)
         {
+            LocalBackupManager.IncrementLossCount();
             int currentCount = LocalBackupManager.GetLossCount();
-            if (currentCount == 8)
+            string achievementName;
+            switch (currentCount)
             {
-#if UNITY_ANDROID
-                GooglePlayServicesManager.UnlockAchievementCoroutine("EIGTH!?");
-#elif UNITY_IOS
-                GameCenterManager.UnlockAchievementCoroutine("EIGTH!?");
-#endif
+                case 8:
+                    achievementName = "EIGHT";
+                    break;
+                case 9:
+                    achievementName = "NINE";
+                    break;
+                case 10:
+                    achievementName = "TEN";
+                    break;
+                default:
+                    return; // No achievement to unlock
             }
-            else if (currentCount == 9)
-            {
 #if UNITY_ANDROID
-                GooglePlayServicesManager.UnlockAchievementCoroutine("NINE!?");
+            await GooglePlayServicesManager.UnlockAchievement(achievementName);
 #elif UNITY_IOS
-                GameCenterManager.UnlockAchievementCoroutine("NINE!?");
+            await GameCenterManager.UnlockAchievement(achievementName);
 #endif
-            }
-            else if (currentCount == 10)
-            {
-#if UNITY_ANDROID
-                GooglePlayServicesManager.UnlockAchievementCoroutine("TEN!?");
-#elif UNITY_IOS
-                GameCenterManager.UnlockAchievementCoroutine("TEN!?");
-#endif
-            }
         }
         else
         {
@@ -144,7 +165,40 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void WinCountAchievement()
+    public async Task ComeOnAchievement()
+    {
+        if (ScoreTextScript.scoreValue == 0)
+        {
+#if UNITY_ANDROID
+            await GooglePlayServicesManager.UnlockAchievement("Come On");
+#elif UNITY_IOS
+            await GameCenterManager.UnlockAchievement("Come On");
+#endif
+        }
+    }
+
+    public async Task HundredAchievement()
+    {
+        if (LocalBackupManager.GetHighScore() == 100)
+        {
+#if UNITY_ANDROID
+            await GooglePlayServicesManager.UnlockAchievement("HUNDRED");
+#elif UNITY_IOS
+            await GameCenterManager.UnlockAchievement("HUNDRED");
+#endif
+        }
+    }
+
+    public async Task StandartPlatformAchievement()
+    {
+#if UNITY_ANDROID
+        await GooglePlayServicesManager.UnlockAchievement("Field of Hopes and Dreams");
+#elif UNITY_IOS
+        await GameCenterManager.UnlockAchievement("Field of Hopes and Dreams");
+#endif
+    }
+
+    public async Task WinCountAchievement()
     {
         if (ScoreTextScript.scoreValue >= 10)
         {
@@ -152,9 +206,9 @@ public class GameManager : MonoBehaviour
             if (winCount == 10)
             {
 #if UNITY_ANDROID
-                GooglePlayServicesManager.UnlockAchievementCoroutine("Cook");
+                await GooglePlayServicesManager.UnlockAchievement("Cook");
 #elif UNITY_IOS
-                GameCenterManager.UnlockAchievementCoroutine("Cook");
+                await GameCenterManager.UnlockAchievement("Cook");
 #endif
             }
             else
@@ -169,38 +223,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PolandballAchievement()
+    public async Task PolandballAchievement()
     {
         if (ScoreTextScript.scoreValue == 1000)
         {
 #if UNITY_ANDROID
-            GooglePlayServicesManager.UnlockAchievementCoroutine("Poland Cannot Into Space");
+            await GooglePlayServicesManager.UnlockAchievement("Poland Cannot Into Space");
 #elif UNITY_IOS
-            GameCenterManager.UnlockAchievementCoroutine("Poland Cannot Into Space");
-#endif
-        }
-    }
-
-    public void HundredAchievement()
-    {
-        if (LocalBackupManager.GetHighScore() == 100)
-        {
-#if UNITY_ANDROID
-            GooglePlayServicesManager.UnlockAchievementCoroutine("HUNDRED");
-#elif UNITY_IOS
-            GameCenterManager.UnlockAchievementCoroutine("HUNDRED");
-#endif
-        }
-    }
-
-    public void ComeOnAchievement()
-    {
-        if (ScoreTextScript.scoreValue == 0)
-        {
-#if UNITY_ANDROID
-            GooglePlayServicesManager.UnlockAchievementCoroutine("Come On");
-#elif UNITY_IOS
-            GameCenterManager.UnlockAchievementCoroutine("Come On");
+            await GameCenterManager.UnlockAchievement("Poland Cannot Into Space");
 #endif
         }
     }

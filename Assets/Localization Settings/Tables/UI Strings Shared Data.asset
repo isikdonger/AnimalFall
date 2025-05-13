@@ -83,24 +83,32 @@ MonoBehaviour:
     m_Key: Settings
     m_Metadata:
       m_Items: []
-  - m_Id: 15954224087040
-    m_Key: Sound
+  - m_Id: 18050939090632704
+    m_Key: 'Sound:'
     m_Metadata:
       m_Items: []
-  - m_Id: 15954224087041
-    m_Key: Music
+  - m_Id: 18050939149352960
+    m_Key: 'Music:'
     m_Metadata:
       m_Items: []
-  - m_Id: 15954224087042
-    m_Key: Language
+  - m_Id: 18050939149352961
+    m_Key: 'Language:'
     m_Metadata:
       m_Items: []
-  - m_Id: 15954186338304
-    m_Key: Credits
+  - m_Id: 18050939149352962
+    m_Key: 'Credits:'
     m_Metadata:
       m_Items: []
-  - m_Id: 15954224087043
-    m_Key: Support
+  - m_Id: 18050939149352963
+    m_Key: 'Support:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352964
+    m_Key: 'Leaderboard:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352965
+    m_Key: 'Achievements:'
     m_Metadata:
       m_Items: []
   - m_Id: 15954224087044
@@ -221,6 +229,118 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 752814403616768
     m_Key: 'Score: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436036
+    m_Key: Million
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15796456709160960
+    m_Key: Get to {0} Total Score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15796456709160961
+    m_Key: Get to {0} Total Coin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16216636522233856
+    m_Key: Get to {0} Total Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15798682890534913
+    m_Key: '{0} Coins'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 752814403616768
+    m_Key: 'Score: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18053674624090112
+    m_Key: Show
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420088090624
+    m_Key: Fell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227968
+    m_Key: Froze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227969
+    m_Key: Spiked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227970
+    m_Key: Do you want to play again?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227971
+    m_Key: Do you want to return to menu?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227972
+    m_Key: Play Again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227973
+    m_Key: Return
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18795334265995264
+    m_Key: Killed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227970
+    m_Key: Do you want to play again?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227971
+    m_Key: Do you want to return to menu?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227972
+    m_Key: Play Again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227973
+    m_Key: Return
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087040
+    m_Key: Sound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087041
+    m_Key: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087042
+    m_Key: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15954224087043
+    m_Key: Support
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612065492992
+    m_Key: Second
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436032
+    m_Key: Minute
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436033
+    m_Key: Hour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436034
+    m_Key: Day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436035
+    m_Key: Thousand
     m_Metadata:
       m_Items: []
   m_Metadata:

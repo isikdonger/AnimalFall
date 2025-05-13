@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      polandball_0: -3610553583711682117
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

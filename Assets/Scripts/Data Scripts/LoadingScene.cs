@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Localization.Components;
@@ -28,12 +29,12 @@ public class LoadingScene : MonoBehaviour
         loadingTextRT.anchoredPosition = new Vector2(0, -(heightDimension / 2 + 100));
 
         // Localize text
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[PlayerPrefs.GetInt("LocaleKey")];
         loadingText.GetComponent<LocalizeStringEvent>().RefreshString();
     }
 
     private async void Start()
     {
-        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[PlayerPrefs.GetInt("LocaleKey")];
         AsyncOperation uiLoadOp = SceneManager.LoadSceneAsync("AnimalFall UI", LoadSceneMode.Additive);
         uiLoadOp.allowSceneActivation = false;
 
@@ -49,21 +50,17 @@ public class LoadingScene : MonoBehaviour
             {
 #if UNITY_ANDROID
                 // Android initialization sequence
-                bool playGamesSuccess = await GooglePlayServicesManager.Initialize();
-                bool firebaseSuccess = await FirestoreManager.Initialize();
-                if (firebaseSuccess && playGamesSuccess)
+                bool[] success = await Task.WhenAll(GooglePlayServicesManager.Initialize(), FirestoreManager.Initialize());
+                if (success.All(x => x))
                 {
-                    await FirestoreManager.AuthenticateFirebase();
-                    await FirestoreManager.SyncWithCloud();
+                    await Task.WhenAll(FirestoreManager.AuthenticateFirebase(), FirestoreManager.SyncWithCloud());
                 }
 #elif UNITY_IOS
                 // iOS initialization sequence
-                bool gameCenterSuccess = await GameCenterManager.Initialize();
-                bool firebaseSuccess = await FirestoreManager.Initialize();
-                if (firebaseSuccess && gameCenterSuccess)
+                bool[] success = await Task.WhenAll(GameCenterManager.Initialize(), FirestoreManager.Initialize());
+                if (success.All(x => x))
                 {
-                    await FirestoreManager.AuthenticateFirebase();
-                    await FirestoreManager.SyncWithCloud();
+                    await Task.WhenAll(FirestoreManager.AuthenticateFirebase(), FirestoreManager.SyncWithCloud());
                 }
 #endif
             }

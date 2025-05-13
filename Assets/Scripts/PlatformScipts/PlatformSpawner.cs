@@ -57,80 +57,80 @@ public class PlatformSpawner : MonoBehaviour
     {
         if (current_Platform_Spawn_Timer >= platform_Spawn_Timer)
         {
-            Vector3 temp = transform.position;
-            temp.x = Random.Range(min_X, max_X);
+            Vector3 spawnPosition = transform.position;
+            spawnPosition.x = Random.Range(min_X, max_X);
             GameObject newPlatform = null;
             scoreTextScript.AddScore();
             if (ScoreTextScript.scoreValue <= 5)
             {
-                newPlatform = Instantiate(platformPrefab, temp, Quaternion.identity);
+                newPlatform = Instantiate(platformPrefab, spawnPosition, Quaternion.identity);
             }
             else if (ScoreTextScript.scoreValue > 5 && ScoreTextScript.scoreValue <= 10)
             {
                 if (Random.Range(0, 2) > 0)
                 {
-                    newPlatform = Instantiate(platformPrefab, temp, Quaternion.identity);
+                    newPlatform = Instantiate(platformPrefab, spawnPosition, Quaternion.identity);
                 }
                 else
                 {
-                    newPlatform = Instantiate(movingPlatforms[Random.Range(0, movingPlatforms.Length)], temp, Quaternion.identity);
+                    newPlatform = Instantiate(movingPlatforms[Random.Range(0, movingPlatforms.Length)], spawnPosition, Quaternion.identity);
                 }
             }
             else if (ScoreTextScript.scoreValue > 10 && ScoreTextScript.scoreValue <= 16)
             {
                 if (Random.Range(0, 3) > 1)
                 {
-                    newPlatform = Instantiate(platformPrefab, temp, Quaternion.identity);
+                    newPlatform = Instantiate(platformPrefab, spawnPosition, Quaternion.identity);
                 }
                 else if (Random.Range(0, 3) > 0)
                 {
-                    newPlatform = Instantiate(movingPlatforms[Random.Range(0, movingPlatforms.Length)], temp, Quaternion.identity);
+                    newPlatform = Instantiate(movingPlatforms[Random.Range(0, movingPlatforms.Length)], spawnPosition, Quaternion.identity);
                 }
                 else
                 {
-                    newPlatform = Instantiate(breakablePlatform, temp, Quaternion.identity);
+                    newPlatform = Instantiate(breakablePlatform, spawnPosition, Quaternion.identity);
                 }
             }
             else if (ScoreTextScript.scoreValue > 16 && ScoreTextScript.scoreValue <= 23)
             {
                 if (Random.Range(0, 4) > 2)
                 {
-                    newPlatform = Instantiate(platformPrefab, temp, Quaternion.identity);
+                    newPlatform = Instantiate(platformPrefab, spawnPosition, Quaternion.identity);
                 }
                 else if (Random.Range(0, 4) > 1)
                 {
-                    newPlatform = Instantiate(movingPlatforms[Random.Range(0, movingPlatforms.Length)], temp, Quaternion.identity);
+                    newPlatform = Instantiate(movingPlatforms[Random.Range(0, movingPlatforms.Length)], spawnPosition, Quaternion.identity);
                 }
                 else if (Random.Range(0, 4) > 0)
                 {
-                    newPlatform = Instantiate(breakablePlatform, temp, Quaternion.identity);
+                    newPlatform = Instantiate(breakablePlatform, spawnPosition, Quaternion.identity);
                 }
                 else
                 {
-                    newPlatform = Instantiate(freezePlatform, temp, Quaternion.identity);
+                    newPlatform = Instantiate(freezePlatform, spawnPosition, Quaternion.identity);
                 }
             }
             else if (ScoreTextScript.scoreValue > 23)
             {
                 if (Random.Range(0, 5) > 3)
                 {
-                    newPlatform = Instantiate(platformPrefab, temp, Quaternion.identity);
+                    newPlatform = Instantiate(platformPrefab, spawnPosition, Quaternion.identity);
                 }
                 else if (Random.Range(0, 5) > 2)
                 {
-                    newPlatform = Instantiate(movingPlatforms[Random.Range(0, movingPlatforms.Length)], temp, Quaternion.identity);
+                    newPlatform = Instantiate(movingPlatforms[Random.Range(0, movingPlatforms.Length)], spawnPosition, Quaternion.identity);
                 }
                 else if (Random.Range(0, 5) > 1)
                 {
-                    newPlatform = Instantiate(breakablePlatform, temp, Quaternion.identity);
+                    newPlatform = Instantiate(breakablePlatform, spawnPosition, Quaternion.identity);
                 }
                 else if (Random.Range(0, 5) > 0)
                 {
-                    newPlatform = Instantiate(freezePlatform, temp, Quaternion.identity);
+                    newPlatform = Instantiate(freezePlatform, spawnPosition, Quaternion.identity);
                 }
                 else
                 {
-                    newPlatform = Instantiate(beamPlatform, temp, Quaternion.identity);
+                    newPlatform = Instantiate(beamPlatform, spawnPosition, Quaternion.identity);
                 }
             }
             if (newPlatform)

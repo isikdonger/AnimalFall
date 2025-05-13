@@ -39,7 +39,16 @@ public class PlayerBounds : MonoBehaviour
             {
                 out_of_Bounds = true;
                 //SoundManager.instance.DeathSound();
-                GameManager.Instance.Death();
+                GameManager.Instance.Death("Fell");
+                LocalBackupManager.ResetStandartCount();
+                if (LocalBackupManager.GetAllCharacters()[PlayerPrefs.GetInt("characterIndex")].Equals("Ocean"))
+                {
+                    LocalBackupManager.ResetFreezeCount();
+                }
+                else if (LocalBackupManager.GetAllCharacters()[PlayerPrefs.GetInt("characterIndex")].Equals("Moon"))
+                {
+                    LocalBackupManager.ResetSpikeCount();
+                }
             }
         }
     }
@@ -49,25 +58,39 @@ public class PlayerBounds : MonoBehaviour
         {
             //SoundManager.instance.DeathSound();
             Destroy(gameObject);
-            GameManager.Instance.Death();
+            GameManager.Instance.Death("Spiked");
+            LocalBackupManager.ResetStandartCount();
             if (LocalBackupManager.GetAllCharacters()[PlayerPrefs.GetInt("characterIndex")].Equals("Moon"))
             {
-                LocalBackupManager.IncrementSpikeDeathCount();
-                if (LocalBackupManager.GetBreakCount() == 5)
+                LocalBackupManager.IncrementSpikeCount();
+                if (LocalBackupManager.GetSpikeDeathCount() == 5)
                 {
 #if UNITY_ANDROID
-                    GooglePlayServicesManager.UnlockAchievementCoroutine("That's Rough Buddy");
+                    GooglePlayServicesManager.UnlockAchievement("Thats Rough Buddy");
 #elif UNITY_IOS
-                    GameCenterManager.UnlockAchievementCoroutine("That's Rough Buddy");
+                    GameCenterManager.UnlockAchievement("Thats Rough Buddy");
 #endif
                 }
+            }
+            else if (LocalBackupManager.GetAllCharacters()[PlayerPrefs.GetInt("characterIndex")].Equals("Ocean"))
+            {
+                LocalBackupManager.ResetFreezeCount();
             }
         }
         else if (target.tag ==  "KillCoin")
         {
             //SoundManager.instance.DeathSound();
             Destroy(gameObject);
-            GameManager.Instance.Death();
+            GameManager.Instance.Death("Killed");
+            LocalBackupManager.ResetStandartCount();
+            if (LocalBackupManager.GetAllCharacters()[PlayerPrefs.GetInt("characterIndex")].Equals("Ocean"))
+            {
+                LocalBackupManager.ResetFreezeCount();
+            }
+            else if (LocalBackupManager.GetAllCharacters()[PlayerPrefs.GetInt("characterIndex")].Equals("Moon"))
+            {
+                LocalBackupManager.ResetSpikeCount();
+            }
         }
     }
 }

@@ -220,6 +220,94 @@ MonoBehaviour:
     m_Localized: Narval
     m_Metadata:
       m_Items: []
+  - m_Id: 17884612065492992
+    m_Localized: s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436032
+    m_Localized: min
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436033
+    m_Localized: h
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436034
+    m_Localized: j
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436035
+    m_Localized: k
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436036
+    m_Localized: M
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939090632704
+    m_Localized: 'Son:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352960
+    m_Localized: 'Musique:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352961
+    m_Localized: 'Langue:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352962
+    m_Localized: "Cr\xE9dits :"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352963
+    m_Localized: 'Soutien:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352964
+    m_Localized: "Classement\_:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352965
+    m_Localized: "R\xE9alisations\_:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18053674624090112
+    m_Localized: Montrer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420088090624
+    m_Localized: "Est Tomb\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227968
+    m_Localized: "Gel\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227969
+    m_Localized: "\xC0 Pointes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227970
+    m_Localized: Voulez-Vous Rejouer ?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227971
+    m_Localized: "Voulez-Vous Revenir Au Menu\_?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227972
+    m_Localized: Rejouer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227973
+    m_Localized: Retour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18795334265995264
+    m_Localized: "Tu\xE9"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

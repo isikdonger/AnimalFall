@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Apple.GameKit.Leaderboards;
 using System.Collections;
 using Apple.Core.Runtime;
+using UnityEngine.SocialPlatforms.Impl;
+using System.Linq;
 
 public static class GameCenterManager
 {
@@ -24,15 +26,15 @@ public static class GameCenterManager
         }
     }
 
-    public static async void ReportScore(long score)
+    public static void ReportScore(int score)
     {
         if (GKLocalPlayer.Local.IsAuthenticated)
         {
             try
             {
-                string leaderboardID = "";
-                var leaderboard = await GKLeaderboard.LoadLeaderboards(leaderboardID);
-                await leaderboard[0].SubmitScore(score, 0, GKLocalPlayer.Local);
+                ReportLeaderboard(score, "main_score_leaderboard");
+                ReportLeaderboard(score, "daily_score_leaderboard");
+                ReportLeaderboard(score, "weekly_score_leaderboard");
                 Debug.Log("Score reported: " + score);
             }
             catch (Exception e)
@@ -40,6 +42,17 @@ public static class GameCenterManager
                 Debug.LogError("Failed to report score: " + e.Message);
             }
         }
+    }
+
+    public static async void ReportLeaderboard(int score, string leaderboardID)
+    {
+        var leaderboard = await GKLeaderboard.LoadLeaderboards(leaderboardID);
+        if (leaderboard == null)
+        {
+            Debug.LogError("Leaderboard not found or failed to load.");
+            return;
+        }
+        await leaderboard[0].SubmitScore(score, 0, GKLocalPlayer.Local);
     }
 
     public static async void ShowLeaderboard()
@@ -55,29 +68,27 @@ public static class GameCenterManager
         }
     }
 
-    /*public static async Task<int> GetLeaderboardRankAsync()
+    public static async Task<int> GetPlayerRankAsync(string leaderboardID)
     {
-        // Ensure the local player is authenticated
         if (!GKLocalPlayer.Local.IsAuthenticated)
         {
-            Debug.LogError("Local player is not authenticated.");
-            return -1; // Indicate an error
+            Debug.LogError("Player is not authenticated.");
+            return -1;
         }
 
-        // Load the specified leaderboard
-        string leaderboardID = "";
-        var leaderboard = await GKLeaderboard.LoadLeaderboards(leaderboardID);
-        if (leaderboard == null)
+        var leaderboards = (await GKLeaderboard.LoadLeaderboards(leaderboardID)).ToArray();
+        if (leaderboards.Length == 0)
         {
             Debug.LogError($"Leaderboard with ID {leaderboardID} not found.");
             return -1;
         }
 
-        // Load the local player's entry
-        var result = await leaderboard.LoadEntriesAsync(
+        GKLeaderboard leaderboard = leaderboards[0];
+
+        var result = await leaderboard.LoadEntries(
             GKLeaderboard.PlayerScope.Global,
             GKLeaderboard.TimeScope.AllTime,
-            new NSRange(1, 1)
+            0, 2147483647
         );
 
         var localPlayerEntry = result.LocalPlayerEntry;
@@ -85,11 +96,11 @@ public static class GameCenterManager
         if (localPlayerEntry == null)
         {
             Debug.Log("No entry found for local player on the leaderboard.");
-            return -1; // Indicate no rank
+            return -1;
         }
 
         return (int)localPlayerEntry.Rank;
-    }*/
+    }
 
     public static async Task<GKAchievement> GetAchievement(string achievementID)
     {
@@ -106,24 +117,28 @@ public static class GameCenterManager
         return null;
     }
 
-    public static IEnumerator UnlockAchievementCoroutine(string achievementName)
+    public static async Task UnlockAchievement(string achievementName)
     {
-        if (!GKLocalPlayer.Local.IsAuthenticated)
-        {
-            Debug.LogWarning("Player is not authenticated. Cannot unlock achievement.");
-            yield break;
-        }
+        if (!GKLocalPlayer.Local.IsAuthenticated) return;
 
-        string achievementID = ""; // Use the achievement name as the ID
-        GKAchievement achievement = GetAchievement(achievementID).Result;
-        achievement ??= GKAchievement.Init(achievementID);
+        string achievementID = achievementName.ToLower().Replace(" ", "_"); // Match your App Store Connect ID format
 
-        if (!achievement.IsCompleted)
+        var achievement = await GetAchievement(achievementID) ?? GKAchievement.Init(achievementID);
+
+        if (achievement.IsCompleted) return;
+
+        achievement.PercentComplete = 100;
+        achievement.ShowCompletionBanner = true;
+
+        try
         {
-            achievement.PercentComplete = 100;
-            achievement.ShowCompletionBanner = true;
-            GKAchievement.Report(achievement);
+            await GKAchievement.Report(achievement);
             LocalBackupManager.IncrementCompletedAchievements();
+            Debug.Log("Achievement unlocked: " + achievementID);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Failed to report achievement: " + achievementID + " | " + ex.Message);
         }
     }
 

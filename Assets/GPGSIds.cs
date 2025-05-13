@@ -24,27 +24,26 @@
 
 public static class GPGSIds
 {
-        public const string achievement_narwhal_blast = "CgkI1ZL9iP0bEAIQBQ"; // <GPGSID>
-        public const string achievement_playing_time_objective = "CgkI1ZL9iP0bEAIQGw"; // <GPGSID>
-        public const string achievement_nine = "CgkI1ZL9iP0bEAIQDA"; // <GPGSID>
-        public const string achievement_you_have_all_the_power_in_the_world = "CgkI1ZL9iP0bEAIQEg"; // <GPGSID>
-        public const string achievement_this_is_getting_out_of_hand = "CgkI1ZL9iP0bEAIQBA"; // <GPGSID>
-        public const string achievement_water_tribe = "CgkI1ZL9iP0bEAIQGA"; // <GPGSID>
-        public const string achievement_come_on = "CgkI1ZL9iP0bEAIQDw"; // <GPGSID>
-        public const string achievement_you_are_still_too_weak = "CgkI1ZL9iP0bEAIQEw"; // <GPGSID>
-        public const string achievement_ten = "CgkI1ZL9iP0bEAIQDQ"; // <GPGSID>
-        public const string achievement_cook = "CgkI1ZL9iP0bEAIQEA"; // <GPGSID>
-        public const string achievement_hundred = "CgkI1ZL9iP0bEAIQDg"; // <GPGSID>
-        public const string achievement_thats_rough_buddy = "CgkI1ZL9iP0bEAIQBg"; // <GPGSID>
-        public const string achievement_dream_on = "CgkI1ZL9iP0bEAIQEQ"; // <GPGSID>
-        public const string leaderboard_score = "CgkI1ZL9iP0bEAIQAg"; // <GPGSID>
-        public const string achievement_hey_big_spender = "CgkI1ZL9iP0bEAIQCA"; // <GPGSID>
-        public const string achievement_score_objective = "CgkI1ZL9iP0bEAIQGQ"; // <GPGSID>
-        public const string achievement_field_of_hopes_and_dreams = "CgkI1ZL9iP0bEAIQCQ"; // <GPGSID>
-        public const string achievement_king_of_the_week = "CgkI1ZL9iP0bEAIQCg"; // <GPGSID>
-        public const string achievement_coin_objective = "CgkI1ZL9iP0bEAIQGg"; // <GPGSID>
-        public const string achievement_poland_cannot_into_space = "CgkI1ZL9iP0bEAIQBw"; // <GPGSID>
-        public const string achievement_eight = "CgkI1ZL9iP0bEAIQCw"; // <GPGSID>
+        public const string achievement_time_objective = "CgkIhKWF3_MQEAIQAw"; // <GPGSID>
+        public const string achievement_water_tribe = "CgkIhKWF3_MQEAIQEQ"; // <GPGSID>
+        public const string achievement_nine = "CgkIhKWF3_MQEAIQCA"; // <GPGSID>
+        public const string achievement_you_have_all_the_power_in_the_world = "CgkIhKWF3_MQEAIQFA"; // <GPGSID>
+        public const string achievement_this_is_getting_out_of_hand = "CgkIhKWF3_MQEAIQCg"; // <GPGSID>
+        public const string achievement_narwhal_blast = "CgkIhKWF3_MQEAIQEA"; // <GPGSID>
+        public const string achievement_come_on = "CgkIhKWF3_MQEAIQCw"; // <GPGSID>
+        public const string achievement_you_are_still_too_weak = "CgkIhKWF3_MQEAIQFQ"; // <GPGSID>
+        public const string achievement_ten = "CgkIhKWF3_MQEAIQCQ"; // <GPGSID>
+        public const string achievement_cook = "CgkIhKWF3_MQEAIQDg"; // <GPGSID>
+        public const string achievement_hundred = "CgkIhKWF3_MQEAIQDA"; // <GPGSID>
+        public const string achievement_thats_rough_buddy = "CgkIhKWF3_MQEAIQEg"; // <GPGSID>
+        public const string achievement_dream_on = "CgkIhKWF3_MQEAIQDw"; // <GPGSID>
+        public const string achievement_hey_big_spender = "CgkIhKWF3_MQEAIQBg"; // <GPGSID>
+        public const string achievement_score_objective = "CgkIhKWF3_MQEAIQAQ"; // <GPGSID>
+        public const string achievement_field_of_hopes_and_dreams = "CgkIhKWF3_MQEAIQDQ"; // <GPGSID>
+        public const string achievement_coin_objective = "CgkIhKWF3_MQEAIQAg"; // <GPGSID>
+        public const string achievement_poland_cannot_into_space = "CgkIhKWF3_MQEAIQEw"; // <GPGSID>
+        public const string achievement_eight = "CgkIhKWF3_MQEAIQBw"; // <GPGSID>
+        public const string leaderboard_score_leaderboard = "CgkIhKWF3_MQEAIQFg"; // <GPGSID>
 
 }
 

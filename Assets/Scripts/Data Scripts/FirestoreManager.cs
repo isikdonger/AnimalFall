@@ -276,10 +276,12 @@ public static class FirestoreManager
             GameProgress mergedProgress = new GameProgress()
             {
                 // Counters (take maximum to prevent inflation)
-                breakCount = Mathf.Max(localProgress.breakCount, cloudProgress.breakCount),
-                spikeDeathCount = Mathf.Max(localProgress.spikeDeathCount, cloudProgress.spikeDeathCount),
                 winCount = Mathf.Max(localProgress.winCount, cloudProgress.winCount),
                 lossCount = Mathf.Max(localProgress.lossCount, cloudProgress.lossCount),
+                standartCount = Mathf.Max(localProgress.standartCount, cloudProgress.standartCount),
+                breakCount = Mathf.Max(localProgress.breakCount, cloudProgress.breakCount),
+                freezeCount = Mathf.Max(localProgress.freezeCount, cloudProgress.freezeCount),
+                spikeCount = Mathf.Max(localProgress.spikeCount, cloudProgress.spikeCount),
 
                 // TEMPORARY: Prioritize local characters
                 usedCharacters = new List<string>(localProgress.usedCharacters)
@@ -355,6 +357,13 @@ public static class FirestoreManager
         }
     }
 #endif
+
+    public static async Task<string> GetSupportMail()
+    {
+        await FirebaseRemoteConfig.DefaultInstance.FetchAndActivateAsync();
+        string supportMail = FirebaseRemoteConfig.DefaultInstance.GetValue("support_mail").StringValue;
+        return supportMail;
+    }
 
     /// <summary>
     /// Retrieves a specific field value from any document in any Firestore collection.

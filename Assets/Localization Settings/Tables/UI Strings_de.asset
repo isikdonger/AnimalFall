@@ -220,6 +220,94 @@ MonoBehaviour:
     m_Localized: Narwal
     m_Metadata:
       m_Items: []
+  - m_Id: 17884612065492992
+    m_Localized: s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436032
+    m_Localized: min
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436033
+    m_Localized: h
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436034
+    m_Localized: d
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436035
+    m_Localized: T
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436036
+    m_Localized: Mio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939090632704
+    m_Localized: 'Klang:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352960
+    m_Localized: 'Musik:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352961
+    m_Localized: 'Sprache:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352962
+    m_Localized: 'Credits:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352963
+    m_Localized: "Unterst\xFCtzung:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352964
+    m_Localized: 'Bestenliste:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352965
+    m_Localized: 'Erfolge:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18053674624090112
+    m_Localized: Zeigen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420088090624
+    m_Localized: "F\xE4llen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227968
+    m_Localized: Eingefroren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227969
+    m_Localized: Mit Stacheln Versehen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227970
+    m_Localized: Willst Du Noch Einmal Spielen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227971
+    m_Localized: "M\xF6chten Sie Zum Men\xFC Zur\xFCckkehren?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227972
+    m_Localized: Spielen Sie Noch Einmal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227973
+    m_Localized: "Zur\xFCckkehren"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18795334265995264
+    m_Localized: "Get\xF6tet"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -4,8 +4,8 @@ using UnityEngine;
 public class CoinSpawner : MonoBehaviour   
 {
     public GameObject bronzeCoin, silverCoin, goldCoin, killCoin;
-    public static float coin_Spawn_Time = 3f;
-    public static float current_Coin_Spawn_Timer = 0f;
+    public static float coin_Spawn_Time;
+    public static float current_Coin_Spawn_Timer;
     private float min_X = -1.68f, max_X = 1.68f, min_Y = -3.65f, max_Y = 2.65f;
     private GameObject oldbCoin, oldsCoin, oldgCoin, oldkCoin;
     public static void InitializeGame()

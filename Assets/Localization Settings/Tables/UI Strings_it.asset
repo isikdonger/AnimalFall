@@ -220,6 +220,94 @@ MonoBehaviour:
     m_Localized: Narvalo
     m_Metadata:
       m_Items: []
+  - m_Id: 17884612065492992
+    m_Localized: s
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436032
+    m_Localized: min
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436033
+    m_Localized: h
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436034
+    m_Localized: g
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436035
+    m_Localized: m
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17884612107436036
+    m_Localized: Mln
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939090632704
+    m_Localized: 'Suono:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352960
+    m_Localized: 'Musica:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352961
+    m_Localized: 'Lingua:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352962
+    m_Localized: 'Crediti:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352963
+    m_Localized: 'Supporto:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352964
+    m_Localized: 'Classifica:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18050939149352965
+    m_Localized: 'Risultati:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18053674624090112
+    m_Localized: Spettacolo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420088090624
+    m_Localized: Caduto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227968
+    m_Localized: Congelato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227969
+    m_Localized: Spike
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227970
+    m_Localized: Vuoi Giocare Di Nuovo?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227971
+    m_Localized: Vuoi Tornare Al Menu?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227972
+    m_Localized: Gioca Di Nuovo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18775420134227973
+    m_Localized: Ritorno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18795334265995264
+    m_Localized: Ucciso
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

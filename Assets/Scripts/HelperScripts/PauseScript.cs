@@ -6,48 +6,39 @@ using System.Linq;
 
 public class PauseScript : MonoBehaviour
 {
-    public GameObject PauseMenu, LanguageMenu, Sound, Back;
-    public GameObject SoundManager;
-    private IEnumerable<GameObject> platforms;
+    [SerializeField] private GameObject PauseMenu;
+    [SerializeField] private GameObject SoundOnBtn;
+    [SerializeField] private GameObject SoundOffBtn;
+    [SerializeField] private GameObject MusicOnBtn;
+    [SerializeField] private GameObject MusicOffBtn;
+    [SerializeField] private GameObject LanguageMenu;
+    [SerializeField] private GameObject leadberboardBtn;
+    [SerializeField] private GameObject achievementsBtn;
+
     void Awake()
     {
         PauseMenu.SetActive(false);
-        //LanguageMenu.SetActive(false);
+        LanguageMenu.SetActive(false);
     }
+
     public void PauseBtn()
     {
         if (PauseMenu.activeSelf == false)
         {
-            platforms = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None).Where(obj => obj.name.Contains("(Clone)"));
-            foreach (GameObject obj in platforms)
-            {
-                obj.SetActive(false);
-            }
+            GameManager.Instance.DeactiveGameObjects();
             PauseMenu.SetActive(true);
             Time.timeScale = 0;
             PlatformSpawner.isPaused = true;
         }
         else
         {
-            foreach (GameObject obj in platforms)
-            {
-                obj.SetActive(true);
-            }
+            GameManager.Instance.ReactiveGameObject();
             PauseMenu.SetActive(false);
             Time.timeScale = 1;
             PlatformSpawner.isPaused = false;
         }
     }
-    public void BacktoGame()
-    {
-        foreach (GameObject obj in platforms)
-        {
-            obj.SetActive(true);
-        }
-        PauseMenu.SetActive(false);
-        Time.timeScale = 1;
-        PlatformSpawner.isPaused = false;
-    }
+
     public async void BacktoMenu()
     {
         PauseMenu.SetActive(false);
@@ -59,18 +50,54 @@ public class PauseScript : MonoBehaviour
 #endif
         SceneManager.LoadScene("AnimalFall UI", LoadSceneMode.Single);
     }
-    public void SoundOn()
+
+    public void BacktoGame()
     {
-        SoundManager.SetActive(true);
+        GameManager.Instance.ReactiveGameObject();
+        PauseMenu.SetActive(false);
+        Time.timeScale = 1;
+        PlatformSpawner.isPaused = false;
     }
-    public void SoundOff()
+
+    public void SoundOn_Off()
     {
-        SoundManager.SetActive(false);
+        if (SoundOnBtn.activeSelf == true)
+        {
+            SoundOnBtn.SetActive(false);
+            SoundOffBtn.SetActive(true);
+        }
+        else
+        {
+            SoundOffBtn.SetActive(false);
+            SoundOnBtn.SetActive(true);
+        }
     }
-    public void OpenLanguageMenu()
+    public void MusicOn_Off()
     {
-        LanguageMenu.SetActive(true);
-        Sound.SetActive(false);
-        Back.SetActive(false);
+        if (MusicOnBtn.activeSelf == true)
+        {
+            MusicOnBtn.SetActive(false);
+            MusicOffBtn.SetActive(true);
+        }
+        else
+        {
+            MusicOffBtn.SetActive(false);
+            MusicOnBtn.SetActive(true);
+        }
+    }
+    public void Open_CloseLanguageMenu()
+    {
+        if (LanguageMenu.activeSelf == false)
+        {
+            leadberboardBtn.SetActive(false);
+            achievementsBtn.SetActive(false);
+            LanguageMenu.SetActive(true);
+        }
+        else
+        {
+            LanguageMenu.SetActive(false);
+            leadberboardBtn.SetActive(true);
+            achievementsBtn.SetActive(true);
+        }
     }
 }

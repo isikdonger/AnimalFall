@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using System.Collections;
+using UnityEngine.UI;
+using TMPro;
 
 public class CentralUIController : MonoBehaviour
 {
